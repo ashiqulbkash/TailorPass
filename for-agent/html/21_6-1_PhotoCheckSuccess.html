@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="bn"><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>ছবি যাচাই — সফল</title>
+<style>x-dc{display:none!important}</style>
+<style data-dc-tpl="3">
+body{margin:0}
+button{font-family:inherit}
+a{color:#1B3A6B}a:hover{color:#122848}
+</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="PhotoCheckSuccess"><div data-dc-tpl="4" style="width: 360px; height: 800px; box-sizing: border-box; background: rgb(245, 246, 248); font-family: &quot;Hind Siliguri&quot;, sans-serif; color: rgb(25, 28, 32); display: flex; flex-direction: column; overflow: hidden;"><header data-dc-tpl="5" style="height: 68px; flex: 0 0 auto; padding: 8px 12px 0px 4px; display: flex; align-items: center; gap: 4px;"><a data-dc-tpl="6" href="Camera.dc.html" aria-label="পেছনে যান" style="width: 48px; height: 48px; border-radius: 24px; display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="7" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#191C20" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="8" d="M19 12 H5 M11 6 L5 12 L11 18"></path></svg></a><div data-dc-tpl="9" style="display: flex; flex-direction: column; line-height: 1.2;"><h1 data-dc-tpl="10" style="margin: 0px; font-size: 21px; font-weight: 700;">ছবি যাচাই</h1><span data-dc-tpl="11" style="font-size: 14px; color: rgb(72, 80, 92);">পাঞ্জাবি · রাহাত</span></div></header><main data-dc-tpl="12" style="flex: 1 1 0%; padding: 6px 16px 24px; display: flex; flex-direction: column; gap: 12px; min-height: 0px;"><div data-dc-tpl="13" role="status" style="align-self: flex-start; height: 34px; padding: 0px 14px 0px 10px; border-radius: 17px; background: rgb(220, 252, 231); color: rgb(22, 101, 52); display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600;"><svg data-dc-tpl="14" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="15" d="M5 12.5 L10 17.5 L19 7"></path></svg>
+দুটি ছবিই ঠিক আছে
+</div><div data-dc-tpl="16" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 10px;"><div data-dc-tpl="17" style="display: flex; flex-direction: column; gap: 6px;"><div data-dc-tpl="18" role="img" aria-label="সামনের ছবি" style="height: 190px; box-sizing: border-box; border-radius: 14px; border: 3px solid rgb(21, 128, 61); background: rgb(218, 221, 226); display: flex; align-items: center; justify-content: center; position: relative;"><svg data-dc-tpl="19" aria-hidden="true" width="62" height="160" viewBox="0 0 200 520" fill="#8A929E"><ellipse data-dc-tpl="20" cx="100" cy="40" rx="26" ry="32"></ellipse><path data-dc-tpl="21" d="M88 74 L88 88 C72 92 54 96 44 108 C36 140 30 200 24 290 L38 294 C46 240 52 190 60 150 L62 250 C60 330 64 420 66 500 L92 500 L98 300 L102 300 L108 500 L134 500 C136 420 140 330 138 250 L140 150 C148 190 154 240 162 294 L176 290 C170 200 164 140 156 108 C146 96 128 92 112 88 L112 74 Z"></path></svg><span data-dc-tpl="22" style="position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 13px; background: rgb(21, 128, 61); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="23" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="24" d="M5 12.5 L10 17.5 L19 7"></path></svg></span></div><span data-dc-tpl="25" style="font-size: 16px; font-weight: 600; text-align: center;">সামনের ছবি</span></div><div data-dc-tpl="26" style="display: flex; flex-direction: column; gap: 6px;"><div data-dc-tpl="27" role="img" aria-label="পাশের ছবি" style="height: 190px; box-sizing: border-box; border-radius: 14px; border: 3px solid rgb(21, 128, 61); background: rgb(218, 221, 226); display: flex; align-items: center; justify-content: center; position: relative;"><svg data-dc-tpl="28" aria-hidden="true" width="62" height="160" viewBox="0 0 200 520" fill="#8A929E"><ellipse data-dc-tpl="29" cx="104" cy="40" rx="24" ry="32"></ellipse><path data-dc-tpl="30" d="M96 72 L96 88 C82 94 78 112 80 150 C82 200 80 240 84 272 L86 500 L112 500 L114 282 C120 242 124 200 122 150 C120 112 116 92 108 86 L110 72 Z"></path></svg><span data-dc-tpl="31" style="position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 13px; background: rgb(21, 128, 61); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="32" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="33" d="M5 12.5 L10 17.5 L19 7"></path></svg></span></div><span data-dc-tpl="34" style="font-size: 16px; font-weight: 600; text-align: center;">পাশের ছবি</span></div></div><section data-dc-tpl="35" aria-label="অগ্রগতি" style="background: rgb(255, 255, 255); border: 1px solid rgb(213, 218, 225); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px;"><div data-dc-tpl="36" style="display: flex; align-items: baseline; justify-content: space-between;"><h2 data-dc-tpl="37" style="margin: 0px; font-size: 20px; font-weight: 700;">মাপ বের করা হচ্ছে…</h2><span data-dc-tpl="38" style="font-size: 22px; font-weight: 700; color: rgb(27, 58, 107);">৬৮%</span></div><div data-dc-tpl="39" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" aria-label="মাপ বের করার অগ্রগতি" style="height: 12px; border-radius: 6px; background: rgb(225, 228, 233); overflow: hidden;"><div data-dc-tpl="40" style="width: 68%; height: 12px; border-radius: 6px; background: rgb(27, 58, 107);"></div></div><ul data-dc-tpl="41" style="margin: 0px; padding: 0px; list-style: none; display: flex; flex-direction: column; gap: 8px;"><li data-dc-tpl="42" style="display: flex; align-items: center; gap: 10px; font-size: 16px;"><svg data-dc-tpl="43" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="44" d="M5 12.5 L10 17.5 L19 7"></path></svg>শরীরের আকার চেনা হয়েছে</li><li data-dc-tpl="45" style="display: flex; align-items: center; gap: 10px; font-size: 16px;"><svg data-dc-tpl="46" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="47" d="M5 12.5 L10 17.5 L19 7"></path></svg>উচ্চতার সাথে মেলানো হয়েছে</li><li data-dc-tpl="48" style="display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700;"><svg data-dc-tpl="49" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1B3A6B" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path data-dc-tpl="50" d="M12 4 A8 8 0 1 1 4.5 9.5"></path></svg>মাপ হিসাব হচ্ছে</li><li data-dc-tpl="51" style="display: flex; align-items: center; gap: 10px; font-size: 16px; color: rgb(91, 99, 112);"><svg data-dc-tpl="52" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8A929E" stroke-width="2.4" aria-hidden="true"><circle data-dc-tpl="53" cx="12" cy="12" r="7.5"></circle></svg>সাইজ সাজেশন</li></ul></section><p data-dc-tpl="54" style="margin: 0px 4px; font-size: 15px; color: rgb(72, 80, 92); display: flex; align-items: center; gap: 8px;"><svg data-dc-tpl="55" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#48505C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto;"><rect data-dc-tpl="56" x="5" y="10.5" width="14" height="10" rx="2"></rect><path data-dc-tpl="57" d="M8 10.5 V7.5 C8 5.3 9.8 3.5 12 3.5 C14.2 3.5 16 5.3 16 7.5 V10.5"></path></svg>ইন্টারনেট লাগছে না, সব হিসাব ফোনেই হচ্ছে</p><a data-dc-tpl="58" href="Method.dc.html" style="margin-top: auto; height: 52px; box-sizing: border-box; border-radius: 26px; border: 1.5px solid rgb(138, 146, 158); background: rgb(255, 255, 255); color: rgb(51, 55, 61); text-decoration: none; font-size: 17px; font-weight: 600; display: flex; align-items: center; justify-content: center;">বাতিল করুন</a></main></div></div></div>
+
+
+
+</body></html>

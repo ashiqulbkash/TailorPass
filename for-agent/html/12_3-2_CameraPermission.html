@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="bn"><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>ক্যামেরা ব্যবহারের অনুমতি</title>
+<style>x-dc{display:none!important}</style>
+<style data-dc-tpl="3">
+body{margin:0}
+button{font-family:inherit}
+a{color:#1B3A6B}a:hover{color:#122848}
+</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="CameraPermission"><div data-dc-tpl="4" style="width: 360px; height: 800px; box-sizing: border-box; background: rgb(245, 246, 248); font-family: &quot;Hind Siliguri&quot;, sans-serif; color: rgb(25, 28, 32); display: flex; flex-direction: column; overflow: hidden;"><header data-dc-tpl="5" style="height: 64px; flex: 0 0 auto; padding: 8px 12px 0px 4px; display: flex; align-items: center;"><a data-dc-tpl="6" href="Method.dc.html" aria-label="পেছনে যান" style="width: 48px; height: 48px; border-radius: 24px; display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="7" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#191C20" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="8" d="M19 12 H5 M11 6 L5 12 L11 18"></path></svg></a></header><main data-dc-tpl="9" style="flex: 1 1 0%; padding: 0px 24px 28px; display: flex; flex-direction: column;"><div data-dc-tpl="10" style="flex: 1 1 0%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 16px;"><div data-dc-tpl="11" style="width: 112px; height: 112px; border-radius: 56px; background: rgb(230, 236, 245); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="12" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#1B3A6B" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path data-dc-tpl="13" d="M3 7.5 H6.5 L8 5 H16 L17.5 7.5 H21 V19 H3 Z"></path><circle data-dc-tpl="14" cx="12" cy="13" r="3.8"></circle></svg></div><h1 data-dc-tpl="15" style="margin: 8px 0px 0px; font-size: 24px; font-weight: 700; line-height: 1.3;">ক্যামেরা ব্যবহারের অনুমতি</h1><p data-dc-tpl="16" style="margin: 0px; font-size: 17px; line-height: 1.55; color: rgb(51, 55, 61);">শুধু মাপ নেওয়ার জন্য। ছবি কোথাও সেভ বা পাঠানো হয় না, মাপ বের হলেই মুছে যায়।</p><div data-dc-tpl="17" style="margin-top: 6px; padding: 10px 14px; border-radius: 14px; background: rgb(255, 255, 255); border: 1px solid rgb(213, 218, 225); display: flex; align-items: center; gap: 10px; text-align: left;"><svg data-dc-tpl="18" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto;"><rect data-dc-tpl="19" x="5" y="10.5" width="14" height="10" rx="2"></rect><path data-dc-tpl="20" d="M8 10.5 V7.5 C8 5.3 9.8 3.5 12 3.5 C14.2 3.5 16 5.3 16 7.5 V10.5"></path></svg><span data-dc-tpl="21" style="font-size: 15px; line-height: 1.4; color: rgb(51, 55, 61);">পরের পর্দায় ফোন অনুমতি চাইলে "অনুমতি দিন" চাপুন</span></div></div><div data-dc-tpl="22" style="display: flex; flex-direction: column; gap: 8px;"><a data-dc-tpl="23" href="PoseGuide.dc.html" style="height: 56px; border-radius: 28px; background: rgb(27, 58, 107); color: rgb(255, 255, 255); text-decoration: none; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center;">অনুমতি দিন</a><a data-dc-tpl="24" href="ManualEntry.dc.html" style="height: 48px; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 600; color: rgb(27, 58, 107); text-decoration: underline; text-underline-offset: 4px;">ফিতা দিয়ে মাপুন</a></div></main></div></div></div>
+
+
+
+</body></html>

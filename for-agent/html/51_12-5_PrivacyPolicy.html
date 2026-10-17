@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="bn"><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>গোপনীয়তা নীতি</title>
+<style>x-dc{display:none!important}</style>
+<style data-dc-tpl="3">
+body{margin:0}
+a{color:#1B3A6B}a:hover{color:#122848}
+</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="PrivacyPolicy"><div data-dc-tpl="4" style="width: 360px; height: 800px; box-sizing: border-box; background: rgb(245, 246, 248); font-family: &quot;Hind Siliguri&quot;, sans-serif; color: rgb(25, 28, 32); display: flex; flex-direction: column; overflow: hidden;"><header data-dc-tpl="5" style="height: 64px; flex: 0 0 auto; padding: 8px 12px 0px 4px; display: flex; align-items: center; gap: 4px;"><a data-dc-tpl="6" href="Settings.dc.html" aria-label="পেছনে যান" style="width: 48px; height: 48px; border-radius: 24px; display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="7" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#191C20" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="8" d="M19 12 H5 M11 6 L5 12 L11 18"></path></svg></a><div data-dc-tpl="9" style="display: flex; flex-direction: column; line-height: 1.2;"><h1 data-dc-tpl="10" style="margin: 0px; font-size: 21px; font-weight: 700;">গোপনীয়তা নীতি</h1><span data-dc-tpl="11" style="font-size: 14px; color: rgb(72, 80, 92);">হালনাগাদ: ১৬ অক্টোবর ২০২৬</span></div></header><main data-dc-tpl="12" style="flex: 1 1 0%; padding: 4px 16px 20px; display: flex; flex-direction: column; gap: 10px;"><p data-dc-tpl="13" style="margin: 0px; padding: 10px 14px; border-radius: 14px; background: rgb(220, 252, 231); color: rgb(20, 83, 45); font-size: 16px; font-weight: 600; line-height: 1.45; display: flex; gap: 10px;"><svg data-dc-tpl="14" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; margin-top: 2px;"><rect data-dc-tpl="15" x="5" y="10.5" width="14" height="10" rx="2"></rect><path data-dc-tpl="16" d="M8 10.5 V7.5 C8 5.3 9.8 3.5 12 3.5 C14.2 3.5 16 5.3 16 7.5 V10.5"></path></svg>সংক্ষেপে: আপনার সব তথ্য শুধু আপনার ফোনেই থাকে।</p><div data-dc-tpl="17" style="background: rgb(255, 255, 255); border: 1px solid rgb(213, 218, 225); border-radius: 16px; padding: 4px 14px; display: flex; flex-direction: column;"><section data-dc-tpl="18" style="display: flex; gap: 12px; padding: 12px 0px; border-bottom: 1px solid rgb(230, 233, 238);"><span data-dc-tpl="19" style="width: 32px; height: 32px; flex: 0 0 auto; border-radius: 10px; background: rgb(230, 236, 245); color: rgb(27, 58, 107); font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center;">১</span><div data-dc-tpl="20" style="display: flex; flex-direction: column; gap: 2px;"><h2 data-dc-tpl="21" style="margin: 0px; font-size: 17px; font-weight: 700;">কী তথ্য রাখা হয়</h2><p data-dc-tpl="22" style="margin: 0px; font-size: 16px; line-height: 1.5; color: rgb(51, 55, 61);">প্রোফাইলের নাম, লিঙ্গ, উচ্চতা, ফিট পছন্দ, মাপ আর দর্জির নোট।</p></div></section><section data-dc-tpl="23" style="display: flex; gap: 12px; padding: 12px 0px; border-bottom: 1px solid rgb(230, 233, 238);"><span data-dc-tpl="24" style="width: 32px; height: 32px; flex: 0 0 auto; border-radius: 10px; background: rgb(230, 236, 245); color: rgb(27, 58, 107); font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center;">২</span><div data-dc-tpl="25" style="display: flex; flex-direction: column; gap: 2px;"><h2 data-dc-tpl="26" style="margin: 0px; font-size: 17px; font-weight: 700;">কোথায় থাকে</h2><p data-dc-tpl="27" style="margin: 0px; font-size: 16px; line-height: 1.5; color: rgb(51, 55, 61);">শুধু আপনার ফোনে। কোনো সার্ভারে বা অন্য কারও কাছে যায় না।</p></div></section><section data-dc-tpl="28" style="display: flex; gap: 12px; padding: 12px 0px; border-bottom: 1px solid rgb(230, 233, 238);"><span data-dc-tpl="29" style="width: 32px; height: 32px; flex: 0 0 auto; border-radius: 10px; background: rgb(230, 236, 245); color: rgb(27, 58, 107); font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center;">৩</span><div data-dc-tpl="30" style="display: flex; flex-direction: column; gap: 2px;"><h2 data-dc-tpl="31" style="margin: 0px; font-size: 17px; font-weight: 700;">ছবির কী হয়</h2><p data-dc-tpl="32" style="margin: 0px; font-size: 16px; line-height: 1.5; color: rgb(51, 55, 61);">মাপ বের হলেই ছবি মুছে যায়। কোথাও সেভ বা পাঠানো হয় না।</p></div></section><section data-dc-tpl="33" style="display: flex; gap: 12px; padding: 12px 0px; border-bottom: 1px solid rgb(230, 233, 238);"><span data-dc-tpl="34" style="width: 32px; height: 32px; flex: 0 0 auto; border-radius: 10px; background: rgb(230, 236, 245); color: rgb(27, 58, 107); font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center;">৪</span><div data-dc-tpl="35" style="display: flex; flex-direction: column; gap: 2px;"><h2 data-dc-tpl="36" style="margin: 0px; font-size: 17px; font-weight: 700;">ইন্টারনেট লাগে না</h2><p data-dc-tpl="37" style="margin: 0px; font-size: 16px; line-height: 1.5; color: rgb(51, 55, 61);">অ্যাপ ইন্টারনেট ব্যবহার করে না। শেয়ার করলে শুধু আপনার বেছে নেওয়া অ্যাপে যায়।</p></div></section><section data-dc-tpl="38" style="display: flex; gap: 12px; padding: 12px 0px;"><span data-dc-tpl="39" style="width: 32px; height: 32px; flex: 0 0 auto; border-radius: 10px; background: rgb(230, 236, 245); color: rgb(27, 58, 107); font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center;">৫</span><div data-dc-tpl="40" style="display: flex; flex-direction: column; gap: 2px;"><h2 data-dc-tpl="41" style="margin: 0px; font-size: 17px; font-weight: 700;">কীভাবে মুছবেন</h2><p data-dc-tpl="42" style="margin: 0px; font-size: 16px; line-height: 1.5; color: rgb(51, 55, 61);">সেটিংস › "সব ডেটা মুছুন" চাপুন। অ্যাপ আনইনস্টল করলেও সব মুছে যায়।</p></div></section></div></main></div></div></div>
+
+
+
+</body></html>

@@ -1,0 +1,52 @@
+# --- Gradle / Kotlin ---
+.gradle
+.kotlin
+**/build/
+!src/**/build/
+local.properties
+*.log
+*.hprof
+
+# --- IDE (Android Studio / IntelliJ / Fleet / VS Code) ---
+*.iml
+.idea
+.fleet
+.vscode
+captures
+.externalNativeBuild
+.cxx
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Android build outputs and signing (never commit keys) ---
+*.apk
+*.aab
+output-metadata.json
+*.jks
+*.keystore
+keystore.properties
+
+# --- Xcode ---
+xcuserdata
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+*.hmap
+*.ipa
+*.dSYM
+*.dSYM.zip
+.build/
+
+# --- CocoaPods (MediaPipe, Step 11): keep Podfile + Podfile.lock, ignore installed pods ---
+iosApp/Pods/
+
+# --- Claude Code per-user files (shared settings.json stays tracked) ---
+.claude/settings.local.json
+CLAUDE.local.md
+
+node_modules/

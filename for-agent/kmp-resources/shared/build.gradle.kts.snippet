@@ -1,0 +1,18 @@
+// ⚠ OBSOLETE — do not use. Old native-UI setup (androidTarget(), iosX64(), no Compose).
+// The current shared/build.gradle.kts rules are in CLAUDE.md §2 "Gradle" and plan.md Step 0.
+//
+// shared/build.gradle.kts — প্রাসঙ্গিক অংশ। shared মডিউলে কোনো Compose/রিসোর্স লাইব্রেরি লাগে না।
+kotlin {
+    androidTarget()
+    listOf(iosX64(), iosArm64(), iosSimulatorArm64()).forEach {
+        it.binaries.framework {
+            baseName = "Shared"      // Swift-এ `import Shared`
+            isStatic = true
+        }
+    }
+    sourceSets {
+        commonMain.dependencies {
+            // model/ আর util/ শুধু Kotlin stdlib ব্যবহার করে
+        }
+    }
+}

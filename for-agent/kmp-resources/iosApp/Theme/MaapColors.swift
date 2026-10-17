@@ -1,0 +1,45 @@
+import SwiftUI
+
+/// Assets.xcassets/Colors-এর রং। প্রতিটির লাইট + ডার্ক মান অ্যাসেটে দেওয়া আছে,
+/// তাই সিস্টেমের ডার্ক মোডে নিজে থেকেই বদলায়। Android-এর MaapTheme.colors-এর সমান।
+extension Color {
+    enum Maap {
+        static let primary = Color("Primary")
+        static let onPrimary = Color("OnPrimary")
+        static let primaryContainer = Color("PrimaryContainer")
+        static let onPrimaryContainer = Color("OnPrimaryContainer")
+        static let background = Color("Background")
+        static let surface = Color("Surface")
+        static let surfaceVariant = Color("SurfaceVariant")
+        static let textPrimary = Color("TextPrimary")
+        static let textSecondary = Color("TextSecondary")
+        static let textTertiary = Color("TextTertiary")
+        static let outline = Color("Outline")
+        static let outlineVariant = Color("OutlineVariant")
+        static let divider = Color("Divider")
+        static let success = Color("Success")
+        static let successContainer = Color("SuccessContainer")
+        static let onSuccessContainer = Color("OnSuccessContainer")
+        static let warning = Color("Warning")
+        static let warningContainer = Color("WarningContainer")
+        static let warningBorder = Color("WarningBorder")
+        static let onWarningContainer = Color("OnWarningContainer")
+        static let warningBadge = Color("WarningBadge")
+        static let onWarningBadge = Color("OnWarningBadge")
+        static let warningRow = Color("WarningRow")
+        static let neutralBadge = Color("NeutralBadge")
+        static let onNeutralBadge = Color("OnNeutralBadge")
+        static let danger = Color("Danger")
+        static let dangerContainer = Color("DangerContainer")
+        static let onDangerContainer = Color("OnDangerContainer")
+        static let diagramOutline = Color("DiagramOutline")
+        static let disabledContainer = Color("DisabledContainer")
+        static let onDisabled = Color("OnDisabled")
+        static let cameraTop = Color("CameraTop")
+        static let cameraFloor = Color("CameraFloor")
+        static let cameraPanel = Color("CameraPanel")
+        static let cameraBanner = Color("CameraBanner")
+        static let primaryGreen = Color("PrimaryGreen")
+        static let primaryGreenContainer = Color("PrimaryGreenContainer")
+    }
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- shared মডিউলের key দিয়ে getIdentifier-এ খোঁজা রিসোর্স যেন shrink-এ মুছে না যায় -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@string/m_*,@string/garment_*,@string/accuracy_*,@string/badge_*,@string/length_*,@string/depth_*,@string/fit_*,@string/gender_*,@string/manual_*,@drawable/*" />
