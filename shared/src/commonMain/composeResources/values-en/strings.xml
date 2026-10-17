@@ -102,6 +102,26 @@
     <string name="saved_menu_edit">Edit measurements</string>
     <string name="saved_menu_remeasure">Measure again</string>
     <string name="saved_menu_delete">Delete</string>
+    <string name="home_saved_size">Size %1$s</string>
+    <string name="home_saved_value">%1$s %2$s"</string>
+    <string name="home_saved_subtitle">%1$s · %2$s</string>
+    <string name="home_profile_chip_cd">Change profile, now %1$s</string>
+    <string name="home_share_cd">Share measurements: %1$s</string>
+    <string name="profile_edit_cd">Edit profile: %1$s</string>
+    <!-- Dates: day month year (16 Oct 2026) -->
+    <string name="date_day_month_year">%1$s %2$s %3$s</string>
+    <string name="month_1">Jan</string>
+    <string name="month_2">Feb</string>
+    <string name="month_3">Mar</string>
+    <string name="month_4">Apr</string>
+    <string name="month_5">May</string>
+    <string name="month_6">Jun</string>
+    <string name="month_7">Jul</string>
+    <string name="month_8">Aug</string>
+    <string name="month_9">Sep</string>
+    <string name="month_10">Oct</string>
+    <string name="month_11">Nov</string>
+    <string name="month_12">Dec</string>
 
     <string name="method_title">How do you want to measure?</string>
     <string name="method_ai_title">Measure with photos (AI)</string>

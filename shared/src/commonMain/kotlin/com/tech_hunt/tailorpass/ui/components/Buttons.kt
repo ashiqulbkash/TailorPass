@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -16,8 +17,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,7 +59,7 @@ fun PrimaryButton(
     }
 }
 
-/** Secondary button: 56dp pill, 1.5dp primary border, white background, 17 bold. */
+/** Secondary button: 56dp pill, 1.5dp primary border, white background, 17 bold (18 on 2.4 / 6.3). */
 @Composable
 fun OutlinedPillButton(
     text: String,
@@ -64,6 +67,8 @@ fun OutlinedPillButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     icon: Painter? = null,
+    fontSize: TextUnit = 17.sp,
+    iconSize: Dp = Dimens.iconSize,
 ) {
     OutlinedButton(
         onClick = onClick,
@@ -77,7 +82,7 @@ fun OutlinedPillButton(
         ),
         contentPadding = PaddingValues(horizontal = Dimens.space16),
     ) {
-        ButtonContent(text, icon, 17.sp)
+        ButtonContent(text, icon, fontSize, iconSize = iconSize)
     }
 }
 
@@ -99,14 +104,35 @@ fun TextPillButton(
     }
 }
 
+/** Round 48dp icon button without background (help, share, edit). */
 @Composable
-private fun ButtonContent(text: String, icon: Painter?, fontSize: TextUnit, trailingIcon: Painter? = null) {
+fun MaapIconButton(
+    icon: Painter,
+    contentDescription: String?,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    tint: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    iconSize: Dp = Dimens.iconSize,
+) {
+    IconButton(onClick = onClick, modifier = modifier.size(Dimens.minTouchTarget)) {
+        Icon(icon, contentDescription = contentDescription, tint = tint, modifier = Modifier.size(iconSize))
+    }
+}
+
+@Composable
+private fun ButtonContent(
+    text: String,
+    icon: Painter?,
+    fontSize: TextUnit,
+    trailingIcon: Painter? = null,
+    iconSize: Dp = Dimens.iconSize,
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Dimens.space8),
     ) {
         if (icon != null) {
-            Icon(icon, contentDescription = null, modifier = Modifier.size(Dimens.iconSize))
+            Icon(icon, contentDescription = null, modifier = Modifier.size(iconSize))
         }
         Text(text = text, style = MaterialTheme.typography.labelLarge, fontSize = fontSize, maxLines = 1)
         if (trailingIcon != null) {

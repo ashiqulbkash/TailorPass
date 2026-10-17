@@ -9,6 +9,8 @@ import com.tech_hunt.tailorpass.model.LengthPreset
 import com.tech_hunt.tailorpass.model.MeasurementKey
 import com.tech_hunt.tailorpass.model.NeckDepthPreset
 import com.tech_hunt.tailorpass.model.SourceBadge
+import com.tech_hunt.tailorpass.ui.screens.home.HomeState
+import com.tech_hunt.tailorpass.ui.screens.home.SavedDetail
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -51,6 +53,14 @@ class ResourceKeysTest {
             Fit.entries.map { it.labelKey } +
             Gender.entries.map { it.labelKey } +
             (GarmentMeasurements.panjabiManualOrder + GarmentMeasurements.salwarKameez).mapNotNull { it.titleKey }
+        assertEquals(emptyList(), used.filterNot { it in keys }, "keys missing in strings.xml")
+    }
+
+    @Test
+    fun homeSampleStringKeysExist() {
+        val keys = stringKeys("values")
+        val used = HomeState.Sample.saved.mapNotNull { (it.detail as? SavedDetail.Value)?.labelKey } +
+            (1..12).map { "month_$it" }
         assertEquals(emptyList(), used.filterNot { it in keys }, "keys missing in strings.xml")
     }
 

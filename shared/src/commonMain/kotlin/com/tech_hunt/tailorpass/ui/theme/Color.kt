@@ -145,6 +145,12 @@ data class MaapExtendedColors(
     val onDisabled: Color,
     // Onboarding page dots (not the current page)
     val dotInactive: Color,
+    // Bottom nav top border
+    val navDivider: Color,
+    // Darker body text (empty state, unselected avatar letter)
+    val textEmphasis: Color,
+    // Dashed border of the empty saved-list box
+    val dashedBorder: Color,
 )
 
 val MaapLightExtended = MaapExtendedColors(
@@ -172,6 +178,9 @@ val MaapLightExtended = MaapExtendedColors(
     disabledContainer = Color(0xFFDDE1E6),
     onDisabled = Color(0xFF6B7280),
     dotInactive = Color(0xFFB9C0CA),
+    navDivider = Color(0xFFE1E4E9),
+    textEmphasis = Color(0xFF33373D),
+    dashedBorder = Color(0xFFB9C0CA),
 )
 
 val MaapDarkExtended = MaapExtendedColors(
@@ -199,4 +208,7 @@ val MaapDarkExtended = MaapExtendedColors(
     disabledContainer = Color(0xFF2C3037),
     onDisabled = Color(0xFF8A919B),
     dotInactive = Color(0xFF5B6370),
+    navDivider = Color(0xFF2C3037),
+    textEmphasis = Color(0xFFCDD1D7),
+    dashedBorder = Color(0xFF5B6370),
 )

@@ -107,6 +107,26 @@
     <string name="saved_menu_edit">মাপ এডিট করুন</string>
     <string name="saved_menu_remeasure">আবার মাপ নিন</string>
     <string name="saved_menu_delete">মুছে ফেলুন</string>
+    <string name="home_saved_size">সাইজ %1$s</string>
+    <string name="home_saved_value">%1$s %2$s"</string>
+    <string name="home_saved_subtitle">%1$s · %2$s</string>
+    <string name="home_profile_chip_cd">প্রোফাইল বদলান, এখন %1$s</string>
+    <string name="home_share_cd">মাপ শেয়ার করুন: %1$s</string>
+    <string name="profile_edit_cd">প্রোফাইল এডিট করুন: %1$s</string>
+    <!-- Dates: day month year (১৬ অক্টোবর ২০২৬) -->
+    <string name="date_day_month_year">%1$s %2$s %3$s</string>
+    <string name="month_1">জানুয়ারি</string>
+    <string name="month_2">ফেব্রুয়ারি</string>
+    <string name="month_3">মার্চ</string>
+    <string name="month_4">এপ্রিল</string>
+    <string name="month_5">মে</string>
+    <string name="month_6">জুন</string>
+    <string name="month_7">জুলাই</string>
+    <string name="month_8">আগস্ট</string>
+    <string name="month_9">সেপ্টেম্বর</string>
+    <string name="month_10">অক্টোবর</string>
+    <string name="month_11">নভেম্বর</string>
+    <string name="month_12">ডিসেম্বর</string>
 
     <!-- 3. Start measuring -->
     <string name="method_title">কীভাবে মাপ নেবেন?</string>

@@ -41,7 +41,7 @@ The whole UI is written **once** in Compose (`commonMain`), and that same UI run
 **Product scope** comes from [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md): which features, garments, measurements and privacy promises v1 must have (§3–§5), what is v2/v3 (§6, not built now) and what is still open (§7). No step may break or drop a v1 item from it. If the Overview and a design or this plan disagree on *what* exists, stop and ask. The list below decides *how* it looks and behaves:
 
 1. [`html/NN_*.html`](html/) — exact static HTML + inline CSS for every screen: spacing, sizes, colors, radius, font sizes, text.
-2. [`screens/NN_*.png`](screens/) — rendered images (2×), for comparison.
+2. [`screens/NN_*.png`](screens/) — rendered images (2×), for comparison. **Font note (checked in Step 2):** the PNGs were rendered with a narrower fallback Bengali font, not Hind Siliguri (Hind Siliguri text at the HTML sizes is ~28–35% wider and ~10% taller than in the PNGs; no Hind Siliguri weight/size reproduces them). Decision: keep Hind Siliguri at the HTML's sizes. Compare PNGs for layout, spacing, colours, icons and text content — not for text width/height, and do not list that difference per screen.
 3. [`SCREENS.md`](SCREENS.md) / [`screens.json`](screens.json) — each screen's purpose, overlay base, navigation, and all visible text.
 4. [`navigation.json`](navigation.json) — screen → which screens it goes to (build the nav graph from this **plus the missing links in §5 rule 7** — the file was extracted from the HTML links and has gaps).
 5. [`design-tokens.json`](design-tokens.json) — colors, type scale, sizes.
