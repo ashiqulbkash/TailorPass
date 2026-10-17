@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pose guide 4.4: front pose (female), arms slightly out (arrows). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp" android:height="520dp"
+    android:viewportWidth="200" android:viewportHeight="520">
+  <path android:pathData="M76,40 a24,31 0 1,0 48,0 a24,31 0 1,0 -48,0 Z" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF5B6370" android:strokeWidth="5"/>
+  <path android:pathData="M90,74 L90,88 C76,92 62,96 54,106 C44,140 32,200 20,284 L32,290 C42,240 54,196 64,158 C62,180 64,205 70,232 C64,255 58,275 58,300 C60,380 62,450 62,500 L90,500 L99,320 L101,320 L110,500 L138,500 C138,450 140,380 142,300 C142,275 136,255 130,232 C136,205 138,180 136,158 C146,196 158,240 168,290 L180,284 C168,200 156,140 146,106 C138,96 124,92 110,88 L110,74" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF5B6370" android:strokeWidth="5"/>
+  <path android:pathData="M36,236 L58,236 M44,228 L36,236 L44,244 M50,228 L58,236 L50,244" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF1B3A6B" android:strokeWidth="5"/>
+  <path android:pathData="M142,236 L164,236 M150,228 L142,236 L150,244 M156,228 L164,236 L156,244" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF1B3A6B" android:strokeWidth="5"/>
+</vector>

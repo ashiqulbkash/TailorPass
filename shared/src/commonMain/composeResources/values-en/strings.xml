@@ -123,6 +123,7 @@
     <string name="month_11">Nov</string>
     <string name="month_12">Dec</string>
 
+    <string name="garment_profile_subtitle">%1$s · %2$s</string>
     <string name="method_title">How do you want to measure?</string>
     <string name="method_ai_title">Measure with photos (AI)</string>
     <string name="method_ai_desc">Take two photos, front and side, and the app works out the measurements.</string>

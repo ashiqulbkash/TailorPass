@@ -151,6 +151,8 @@ data class MaapExtendedColors(
     val textEmphasis: Color,
     // Dashed border of the empty saved-list box
     val dashedBorder: Color,
+    // Border of an unticked checkbox (checklist 4.1/4.2)
+    val checkboxBorder: Color,
 )
 
 val MaapLightExtended = MaapExtendedColors(
@@ -181,6 +183,7 @@ val MaapLightExtended = MaapExtendedColors(
     navDivider = Color(0xFFE1E4E9),
     textEmphasis = Color(0xFF33373D),
     dashedBorder = Color(0xFFB9C0CA),
+    checkboxBorder = Color(0xFF6B7380),
 )
 
 val MaapDarkExtended = MaapExtendedColors(
@@ -211,4 +214,5 @@ val MaapDarkExtended = MaapExtendedColors(
     navDivider = Color(0xFF2C3037),
     textEmphasis = Color(0xFFCDD1D7),
     dashedBorder = Color(0xFF5B6370),
+    checkboxBorder = Color(0xFF8A919B),
 )

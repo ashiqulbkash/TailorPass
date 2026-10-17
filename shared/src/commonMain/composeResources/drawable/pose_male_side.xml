@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pose guide 4.3: side pose, right side to the camera. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp" android:height="520dp"
+    android:viewportWidth="200" android:viewportHeight="520">
+  <path android:pathData="M80,40 a24,32 0 1,0 48,0 a24,32 0 1,0 -48,0 Z" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF5B6370" android:strokeWidth="5"/>
+  <path android:pathData="M96,72 L96,88 C82,94 78,112 80,150 C82,200 80,240 84,272 L86,500 L112,500 L114,282 C120,242 124,200 122,150 C120,112 116,92 108,86 L110,72" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF5B6370" android:strokeWidth="5"/>
+  <path android:pathData="M102,100 C108,160 108,220 104,290" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF5B6370" android:strokeWidth="5"/>
+  <path android:pathData="M60,506 H140" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF5B6370" android:strokeWidth="4"/>
+  <path android:pathData="M128,40 L146,40 M140,34 L146,40 L140,46" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF1B3A6B" android:strokeWidth="5"/>
+</vector>

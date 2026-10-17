@@ -11,6 +11,7 @@ import com.tech_hunt.tailorpass.model.NeckDepthPreset
 import com.tech_hunt.tailorpass.model.SourceBadge
 import com.tech_hunt.tailorpass.ui.screens.home.HomeState
 import com.tech_hunt.tailorpass.ui.screens.home.SavedDetail
+import com.tech_hunt.tailorpass.ui.screens.prep.PrepGuide
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -62,6 +63,27 @@ class ResourceKeysTest {
         val used = HomeState.Sample.saved.mapNotNull { (it.detail as? SavedDetail.Value)?.labelKey } +
             (1..12).map { "month_$it" }
         assertEquals(emptyList(), used.filterNot { it in keys }, "keys missing in strings.xml")
+    }
+
+    /** Every garment, both variants: checklist, tips and pose guide keys and drawables. */
+    private val prepItems = listOf(false, true).flatMap { PrepGuide.checklist(it) }
+    private val prepTips = Garment.entries.mapNotNull { PrepGuide.tip(it) }
+    private val poseTips = listOf(false, true).flatMap { PrepGuide.poseTips(it) }
+
+    @Test
+    fun prepStringKeysExist() {
+        val keys = stringKeys("values")
+        val used = prepItems.flatMap { listOf(it.titleKey, it.subtitleKey) } +
+            prepTips.flatMap { listOf(it.titleKey, it.bodyKey) } + poseTips.map { it.textKey }
+        assertEquals(emptyList(), used.filterNot { it in keys }, "keys missing in strings.xml")
+    }
+
+    @Test
+    fun prepDrawableNamesExist() {
+        val drawables = File(resDir, "drawable").listFiles()!!.map { it.nameWithoutExtension }.toSet()
+        val used = prepItems.map { it.iconName } + prepTips.map { it.iconName } + poseTips.map { it.iconName } +
+            listOf(false, true).map { PrepGuide.poses(it) }.flatMap { listOf(it.front, it.side, it.distance) }
+        assertEquals(emptyList(), used.filterNot { it in drawables }, "drawables missing")
     }
 
     @Test

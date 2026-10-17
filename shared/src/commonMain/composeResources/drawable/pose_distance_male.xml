@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pose guide 4.3: phone at waist height, 2–3 m away. Labels (waist height, 2–3 m pill) are drawn on top in PoseGuideScreen. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="304dp" android:height="122dp"
+    android:viewportWidth="304" android:viewportHeight="122">
+  <path android:pathData="M8,110 H296" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF9AA2AE" android:strokeWidth="2"/>
+  <path android:pathData="M36,70 V110 M36,76 L24,110 M36,76 L48,110" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF5B6370" android:strokeWidth="2.4"/>
+  <path android:pathData="M32,44 H40 Q43,44 43,47 V67 Q43,70 40,70 H32 Q29,70 29,67 V47 Q29,44 32,44 Z" android:fillColor="#FFE6ECF5" android:strokeColor="#FF1B3A6B" android:strokeWidth="2.6" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M46,57 L50,57 M55,57 L59,57 M64,57 L68,57 M73,57 L77,57 M82,57 L86,57 M91,57 L95,57 M100,57 L104,57 M109,57 L113,57 M118,57 L122,57 M127,57 L131,57 M136,57 L140,57 M145,57 L149,57 M154,57 L158,57 M163,57 L167,57 M172,57 L176,57 M181,57 L185,57 M190,57 L194,57 M199,57 L203,57 M208,57 L212,57 M217,57 L221,57 M226,57 L230,57 M235,57 L239,57 M244,57 L248,57 M253,57 L257,57" android:fillColor="#00000000" android:strokeColor="#FF8A929E" android:strokeWidth="1.6" android:strokeLineCap="round"/>
+  <path android:pathData="M260,20 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0 Z" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF5B6370" android:strokeWidth="2.4"/>
+  <path android:pathData="M268,28 V70 M268,70 L258,110 M268,70 L278,110 M268,38 L254,62 M268,38 L282,62" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF5B6370" android:strokeWidth="2.4"/>
+  <path android:pathData="M56,88 H252 M62,83 L56,88 L62,93 M246,83 L252,88 L246,93" android:fillColor="#00000000" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeColor="#FF1B3A6B" android:strokeWidth="2.6"/>
+</vector>

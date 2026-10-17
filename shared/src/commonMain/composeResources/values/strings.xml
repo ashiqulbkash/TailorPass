@@ -129,6 +129,7 @@
     <string name="month_12">ডিসেম্বর</string>
 
     <!-- 3. Start measuring -->
+    <string name="garment_profile_subtitle">%1$s · %2$s</string>
     <string name="method_title">কীভাবে মাপ নেবেন?</string>
     <string name="method_ai_title">ছবি দিয়ে মাপ (AI)</string>
     <string name="method_ai_desc">সামনে ও পাশ থেকে দুটি ছবি তুললেই অ্যাপ মাপ বের করে দেবে।</string>
