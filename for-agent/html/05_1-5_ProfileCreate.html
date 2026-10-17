@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="bn"><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>প্রোফাইল তৈরি</title>
+<style>x-dc{display:none!important}</style>
+<style data-dc-tpl="3">
+body{margin:0}
+button,input{font-family:inherit}
+a{color:#1B3A6B}a:hover{color:#122848}
+</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="ProfileCreate"><div data-dc-tpl="4" style="width: 360px; height: 800px; box-sizing: border-box; background: rgb(245, 246, 248); font-family: &quot;Hind Siliguri&quot;, sans-serif; color: rgb(25, 28, 32); display: flex; flex-direction: column; overflow: hidden;"><header data-dc-tpl="5" style="height: 68px; flex: 0 0 auto; padding: 8px 12px 0px 4px; display: flex; align-items: center; gap: 4px;"><a data-dc-tpl="6" href="Onboarding3.dc.html" aria-label="পেছনে যান" style="width: 48px; height: 48px; border-radius: 24px; display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="7" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#191C20" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="8" d="M19 12 H5 M11 6 L5 12 L11 18"></path></svg></a><div data-dc-tpl="9" style="display: flex; flex-direction: column; line-height: 1.2;"><h1 data-dc-tpl="10" style="margin: 0px; font-size: 21px; font-weight: 700;">প্রোফাইল তৈরি</h1><span data-dc-tpl="11" style="font-size: 14px; color: rgb(72, 80, 92);">যার মাপ নেবেন, তার তথ্য দিন</span></div></header><main data-dc-tpl="12" style="flex: 1 1 0%; padding: 8px 16px 24px; display: flex; flex-direction: column; gap: 18px; min-height: 0px;"><div data-dc-tpl="13" style="display: flex; flex-direction: column; gap: 6px;"><label data-dc-tpl="14" for="p-name" style="font-size: 16px; font-weight: 600;">নাম</label><input data-dc-tpl="15" id="p-name" type="text" value="রাহাত" style="box-sizing: border-box; width: 100%; height: 56px; padding: 0px 16px; border: 1px solid rgb(138, 146, 158); border-radius: 12px; background: rgb(255, 255, 255); font-size: 18px; color: rgb(25, 28, 32);"></div><div data-dc-tpl="16" role="group" aria-labelledby="g-label" style="display: flex; flex-direction: column; gap: 6px;"><span data-dc-tpl="17" id="g-label" style="font-size: 16px; font-weight: 600;">লিঙ্গ</span><div data-dc-tpl="18" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 10px;"><button data-dc-tpl="19" aria-pressed="true" style="height: 56px; border: 2px solid rgb(27, 58, 107); border-radius: 14px; background: rgb(230, 236, 245); color: rgb(27, 58, 107); font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;"><svg data-dc-tpl="20" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B3A6B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="21" d="M5 12.5 L10 17.5 L19 7"></path></svg>ছেলে</button><button data-dc-tpl="22" aria-pressed="false" style="height: 56px; border: 1px solid rgb(138, 146, 158); border-radius: 14px; background: rgb(255, 255, 255); color: rgb(25, 28, 32); font-size: 18px; font-weight: 500; cursor: pointer;">মেয়ে</button></div></div><div data-dc-tpl="23" style="display: flex; flex-direction: column; gap: 6px;"><div data-dc-tpl="24" style="display: flex; align-items: center; justify-content: space-between;"><span data-dc-tpl="25" style="font-size: 16px; font-weight: 600;">উচ্চতা</span><div data-dc-tpl="26" role="group" aria-label="উচ্চতার একক" style="display: flex; border: 1px solid rgb(138, 146, 158); border-radius: 22px; overflow: hidden; height: 44px; box-sizing: border-box;"><button data-dc-tpl="27" aria-pressed="true" style="padding: 0px 14px; border: none; background: rgb(27, 58, 107); color: rgb(255, 255, 255); font-size: 15px; font-weight: 700; cursor: pointer;">ফুট-ইঞ্চি</button><button data-dc-tpl="28" aria-pressed="false" style="padding: 0px 16px; border: none; background: rgb(255, 255, 255); color: rgb(51, 55, 61); font-size: 15px; font-weight: 500; cursor: pointer;">সেমি</button></div></div><div data-dc-tpl="29" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 10px;"><label data-dc-tpl="30" style="height: 64px; box-sizing: border-box; border: 1px solid rgb(138, 146, 158); border-radius: 12px; background: rgb(255, 255, 255); display: flex; align-items: center; justify-content: center; gap: 8px;"><input data-dc-tpl="31" type="text" inputmode="numeric" aria-label="ফুট" value="৫" style="width: 44px; border: none; background: transparent; text-align: right; font-size: 30px; font-weight: 700; color: rgb(25, 28, 32); padding: 0px;"><span data-dc-tpl="32" style="font-size: 17px; color: rgb(72, 80, 92);">ফুট</span></label><label data-dc-tpl="33" style="height: 64px; box-sizing: border-box; border: 1px solid rgb(138, 146, 158); border-radius: 12px; background: rgb(255, 255, 255); display: flex; align-items: center; justify-content: center; gap: 8px;"><input data-dc-tpl="34" type="text" inputmode="numeric" aria-label="ইঞ্চি" value="৭" style="width: 44px; border: none; background: transparent; text-align: right; font-size: 30px; font-weight: 700; color: rgb(25, 28, 32); padding: 0px;"><span data-dc-tpl="35" style="font-size: 17px; color: rgb(72, 80, 92);">ইঞ্চি</span></label></div><span data-dc-tpl="36" style="font-size: 14px; color: rgb(72, 80, 92);">= প্রায় ১৭০ সেমি · জুতা ছাড়া মাপুন</span></div><div data-dc-tpl="37" role="group" aria-labelledby="fit-label" style="display: flex; flex-direction: column; gap: 6px;"><span data-dc-tpl="38" id="fit-label" style="font-size: 16px; font-weight: 600;">কেমন ফিট পছন্দ?</span><div data-dc-tpl="39" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 10px;"><button data-dc-tpl="40" aria-pressed="false" style="height: 108px; border: 1px solid rgb(213, 218, 225); border-radius: 14px; background: rgb(255, 255, 255); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; color: rgb(25, 28, 32);"><svg data-dc-tpl="41" width="52" height="52" viewBox="0 0 40 40" fill="none" aria-hidden="true"><g data-dc-tpl="42" transform="translate(20 20) scale(1.05 1.45) translate(-12 -12)" stroke="#5B6370" stroke-width="1.1" stroke-linejoin="round"><path data-dc-tpl="43" d="M8.5 3 L4 5.5 L2 10.5 L5 11.5 L6 9.5 V21 H18 V9.5 L19 11.5 L22 10.5 L20 5.5 L15.5 3 L12 6.5 Z"></path></g></svg><span data-dc-tpl="44" style="font-size: 16px; font-weight: 500;">স্লিম</span></button><button data-dc-tpl="45" aria-pressed="true" style="height: 108px; border: 2px solid rgb(27, 58, 107); border-radius: 14px; background: rgb(230, 236, 245); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; color: rgb(27, 58, 107); position: relative;"><span data-dc-tpl="46" style="position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 11px; background: rgb(27, 58, 107); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="47" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="48" d="M5 12.5 L10 17.5 L19 7"></path></svg></span><svg data-dc-tpl="49" width="52" height="52" viewBox="0 0 40 40" fill="none" aria-hidden="true"><g data-dc-tpl="50" transform="translate(20 20) scale(1.3 1.45) translate(-12 -12)" stroke="#1B3A6B" stroke-width="1.1" stroke-linejoin="round"><path data-dc-tpl="51" d="M8.5 3 L4 5.5 L2 10.5 L5 11.5 L6 9.5 V21 H18 V9.5 L19 11.5 L22 10.5 L20 5.5 L15.5 3 L12 6.5 Z"></path></g></svg><span data-dc-tpl="52" style="font-size: 16px; font-weight: 700;">রেগুলার</span></button><button data-dc-tpl="53" aria-pressed="false" style="height: 108px; border: 1px solid rgb(213, 218, 225); border-radius: 14px; background: rgb(255, 255, 255); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; color: rgb(25, 28, 32);"><svg data-dc-tpl="54" width="52" height="52" viewBox="0 0 40 40" fill="none" aria-hidden="true"><g data-dc-tpl="55" transform="translate(20 20) scale(1.6 1.45) translate(-12 -12)" stroke="#5B6370" stroke-width="0.9" stroke-linejoin="round"><path data-dc-tpl="56" d="M8.5 3 L4 5.5 L2 10.5 L5 11.5 L6 9.5 V21 H18 V9.5 L19 11.5 L22 10.5 L20 5.5 L15.5 3 L12 6.5 Z"></path></g></svg><span data-dc-tpl="57" style="font-size: 16px; font-weight: 500;">লুজ</span></button></div></div><a data-dc-tpl="58" href="Main.dc.html" style="margin-top: auto; height: 56px; border-radius: 28px; background: rgb(27, 58, 107); color: rgb(255, 255, 255); text-decoration: none; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center;">প্রোফাইল সেভ করুন</a></main></div></div></div>
+
+
+
+</body></html>

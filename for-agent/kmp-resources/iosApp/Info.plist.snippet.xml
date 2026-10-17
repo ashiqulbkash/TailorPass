@@ -1,0 +1,29 @@
+<!-- iosApp/Info.plist-এ যোগ করুন -->
+
+<!-- Hind Siliguri ফন্ট (ফাইলগুলো টার্গেটে যোগ করা থাকতে হবে) -->
+<key>UIAppFonts</key>
+<array>
+    <string>HindSiliguri-Regular.ttf</string>
+    <string>HindSiliguri-Medium.ttf</string>
+    <string>HindSiliguri-SemiBold.ttf</string>
+    <string>HindSiliguri-Bold.ttf</string>
+</array>
+
+<!-- বাংলা ডিফল্ট, ইংরেজি দ্বিতীয় -->
+<key>CFBundleDevelopmentRegion</key>
+<string>bn</string>
+<key>CFBundleLocalizations</key>
+<array>
+    <string>bn</string>
+    <string>en</string>
+</array>
+
+<!-- ক্যামেরা অনুমতির লেখা InfoPlist.xcstrings থেকে আসবে; এখানে শুধু ফলব্যাক -->
+<key>NSCameraUsageDescription</key>
+<string>শুধু মাপ নেওয়ার জন্য। ছবি কোথাও সেভ বা পাঠানো হয় না, মাপ বের হলেই মুছে যায়।</string>
+
+<!-- অ্যাপ শুধু খাড়া (portrait) -->
+<key>UISupportedInterfaceOrientations</key>
+<array>
+    <string>UIInterfaceOrientationPortrait</string>
+</array>

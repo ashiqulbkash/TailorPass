@@ -1,0 +1,22 @@
+{
+  "font": {"family": "Hind Siliguri", "weights": [400, 500, 600, 700], "minBodySp": 16},
+  "color": {
+    "light": {"primary": "#1B3A6B", "onPrimary": "#FFFFFF", "primaryContainer": "#E6ECF5", "background": "#F5F6F8", "surface": "#FFFFFF",
+      "surfaceVariant": "#EEF0F3", "text": "#191C20", "textSecondary": "#48505C", "textTertiary": "#5B6370", "outline": "#8A929E", "outlineVariant": "#D5DAE1", "divider": "#E6E9EE",
+      "success": "#15803D", "successContainer": "#DCFCE7", "onSuccessContainer": "#166534",
+      "warning": "#B8470F", "warningContainer": "#FFF1E5", "warningBorder": "#F0B27F", "onWarningContainer": "#7C2D12", "warningBadge": "#FFE4CC", "onWarningBadge": "#9A3412", "warningRow": "#FFF6EC",
+      "neutralBadge": "#E8ECF2", "onNeutralBadge": "#33415C", "danger": "#B3261E", "dangerContainer": "#FCE8E6", "diagramOutline": "#9AA2AE", "scrim": "rgba(13,17,23,0.5)"},
+    "dark": {"primary": "#A9C4F0", "onPrimary": "#0E2747", "primaryContainer": "#263B5E", "background": "#111316", "surface": "#1C1F24",
+      "text": "#E4E6EA", "textSecondary": "#A9AFB8", "outline": "#5B6370", "outlineVariant": "#353A42", "divider": "#2C3037",
+      "successContainer": "#173A25", "onSuccessContainer": "#8FE3A9", "warningContainer": "#4A2A12", "onWarningBadge": "#FFB77A", "warningRow": "#2A1E15",
+      "neutralBadge": "#2C333D", "onNeutralBadge": "#C9D1DC", "diagramOutline": "#6B7380"},
+    "altBrand": {"lightPrimary": "#1D5B3C", "lightContainer": "#E2EFE6", "darkPrimary": "#9DD3B0", "darkContainer": "#1F4630", "darkOnPrimary": "#0B2E1A"},
+    "camera": {"top": "#2B3037", "floor": "#1E2125", "panel": "#111418", "banner": "#B8470F"}
+  },
+  "type": {"display": 88, "sizeLetter": 54, "inputNumber": 44, "headlineL": 26, "headlineM": 24, "dialogTitle": 22, "appBarTitle": 21, "button": 18,
+    "listValue": 24, "rowTitle": 17, "body": 16, "meta": 14, "badge": 13},
+  "space": {"screenPadding": 16, "gapS": 8, "gapM": 10, "gapL": 12, "section": 24},
+  "size": {"frame": "360x800", "appBar": 64, "bottomNav": 80, "button": 56, "buttonCompact": 46, "dialogButton": 52, "segmented": 44,
+    "garmentCard": 80, "listRow": 52, "savedRow": 64, "numberField": 72, "stepperButton": 56, "iconTile": 48, "minTouch": 48},
+  "radius": {"badge": 10, "input": 14, "card": 16, "pill": 999, "sheet": 28, "dialog": 28, "pdfBox": 10}
+}

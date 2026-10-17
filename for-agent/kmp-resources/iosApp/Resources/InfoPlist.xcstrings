@@ -1,0 +1,38 @@
+{
+  "sourceLanguage": "bn",
+  "version": "1.0",
+  "strings": {
+    "NSCameraUsageDescription": {
+      "localizations": {
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "শুধু মাপ নেওয়ার জন্য। ছবি কোথাও সেভ বা পাঠানো হয় না, মাপ বের হলেই মুছে যায়।"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only to take measurements. Photos are never saved or sent, and are deleted as soon as measuring is done."
+          }
+        }
+      }
+    },
+    "CFBundleDisplayName": {
+      "localizations": {
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TailorPass"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TailorPass"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,278 @@
+{
+ "Language": [
+  "Onboarding1",
+  "Onboarding1"
+ ],
+ "Onboarding1": [
+  "ProfileCreate",
+  "Onboarding2"
+ ],
+ "Onboarding2": [
+  "ProfileCreate",
+  "Onboarding3"
+ ],
+ "Onboarding3": [
+  "ProfileCreate"
+ ],
+ "ProfileCreate": [
+  "Onboarding3",
+  "Main"
+ ],
+ "Main": [
+  "Result",
+  "Result",
+  "Result",
+  "SizeChart",
+  "Settings"
+ ],
+ "MainDark": [
+  "ResultDark",
+  "ResultDark",
+  "ResultDark",
+  "SizeChart",
+  "Settings"
+ ],
+ "HomeEmpty": [
+  "ProfileSheet",
+  "Method",
+  "Method",
+  "Method",
+  "Method",
+  "Method",
+  "Method",
+  "SizeChart",
+  "Settings"
+ ],
+ "ProfileSheet": [
+  "Result",
+  "Result",
+  "Result",
+  "Main",
+  "SizeChart",
+  "Settings",
+  "ProfileCreate"
+ ],
+ "SavedMenuSheet": [
+  "Result",
+  "Result",
+  "Result",
+  "Main",
+  "SizeChart",
+  "Settings",
+  "Result",
+  "Verify",
+  "Method"
+ ],
+ "Method": [
+  "Main",
+  "Checklist",
+  "ManualEntry"
+ ],
+ "CameraPermission": [
+  "Method",
+  "PoseGuide",
+  "ManualEntry"
+ ],
+ "Checklist": [
+  "Method"
+ ],
+ "ChecklistFemale": [
+  "Method"
+ ],
+ "PoseGuide": [
+  "Checklist",
+  "Camera"
+ ],
+ "PoseGuideFemale": [
+  "ChecklistFemale",
+  "CameraFemale"
+ ],
+ "Camera": [
+  "Main"
+ ],
+ "CameraDark": [
+  "MainDark"
+ ],
+ "CameraFemale": [
+  "Main"
+ ],
+ "CameraSide": [
+  "Main"
+ ],
+ "PhotoCheckSuccess": [
+  "Camera",
+  "Method"
+ ],
+ "PhotoCheckProblem": [
+  "Camera",
+  "Camera"
+ ],
+ "AIFailed": [
+  "Main",
+  "Camera",
+  "ManualEntry"
+ ],
+ "ManualPrep": [
+  "Method",
+  "ManualList"
+ ],
+ "ManualList": [
+  "ManualPrep",
+  "ManualEntry",
+  "ManualEntry",
+  "ManualEntry",
+  "ManualEntry",
+  "ManualEntry",
+  "ManualSleeve",
+  "ManualLength",
+  "ManualLength",
+  "ManualEntry"
+ ],
+ "ManualEntry": [
+  "ManualList",
+  "ManualList",
+  "ManualList",
+  "ManualSleeve"
+ ],
+ "ManualSleeve": [
+  "ManualEntry",
+  "ManualList",
+  "ManualList",
+  "ManualLength"
+ ],
+ "ManualWarnSheet": [
+  "ManualList",
+  "ManualList",
+  "ManualList",
+  "ManualSleeve",
+  "ManualEntry"
+ ],
+ "ManualLength": [
+  "ManualSleeve",
+  "ManualList",
+  "ManualSummary"
+ ],
+ "ManualSummary": [
+  "ManualLength",
+  "ManualList",
+  "ManualList",
+  "ManualEntry",
+  "ManualList",
+  "ManualEntry",
+  "ManualSleeve",
+  "ManualList",
+  "ManualLength",
+  "VerifyManual",
+  "VerifyManual"
+ ],
+ "ManualExitDialog": [
+  "ManualList",
+  "ManualList",
+  "ManualList",
+  "ManualSleeve",
+  "HomeIncomplete",
+  "ManualEntry"
+ ],
+ "HomeIncomplete": [
+  "ProfileSheet",
+  "Method",
+  "Method",
+  "Method",
+  "Method",
+  "Method",
+  "Method",
+  "ManualList",
+  "Result",
+  "Result",
+  "SizeChart",
+  "Settings"
+ ],
+ "ManualNeckDepth": [
+  "ManualList",
+  "ManualList",
+  "ManualList",
+  "ManualList"
+ ],
+ "Verify": [
+  "Camera",
+  "Result"
+ ],
+ "VerifyDark": [
+  "CameraDark",
+  "ResultDark"
+ ],
+ "EditSheet": [
+  "Camera",
+  "Result",
+  "Verify"
+ ],
+ "VerifySK": [
+  "CameraFemale",
+  "ResultSK"
+ ],
+ "VerifyManual": [
+  "ManualSummary",
+  "Result"
+ ],
+ "Result": [
+  "Verify",
+  "Main",
+  "SizeChart",
+  "Settings"
+ ],
+ "ResultDark": [
+  "VerifyDark",
+  "MainDark",
+  "SizeChart",
+  "Settings"
+ ],
+ "ResultSK": [
+  "VerifySK",
+  "Main",
+  "SizeChart",
+  "Settings"
+ ],
+ "GenjiResult": [
+  "Main",
+  "SizeChart",
+  "Main",
+  "SizeChart",
+  "Settings"
+ ],
+ "TailorPDF": [],
+ "TailorPDFSK": [],
+ "SharePNG": [],
+ "SizeChart": [
+  "Main",
+  "Settings"
+ ],
+ "Settings": [
+  "Main",
+  "SizeChart"
+ ],
+ "BackupSnackbar": [
+  "Main",
+  "SizeChart",
+  "Settings"
+ ],
+ "RestoreDialog": [
+  "Main",
+  "SizeChart",
+  "Settings",
+  "Settings"
+ ],
+ "DeleteDialog": [
+  "Main",
+  "SizeChart",
+  "Settings",
+  "Settings"
+ ],
+ "PrivacyPolicy": [
+  "Settings"
+ ],
+ "About": [
+  "Settings",
+  "mailto:[যোগাযোগের-ইমেইল]",
+  "PrivacyPolicy"
+ ]
+}

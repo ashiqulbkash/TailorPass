@@ -1,0 +1,403 @@
+# TailorPass — Implementation Plan (Compose Multiplatform · Android + iOS)
+
+> Coding agent: **read this whole file before starting work.** It replaces the old `AGENT_GUIDE.md` — every instruction from that file is kept here (sections 2–6).
+> The original Bengali version of this plan is kept as [`plan.bn.md`](plan.bn.md).
+
+---
+
+## 1. App overview
+
+**TailorPass** — a fully offline clothing-measurement app for people in Bangladesh.
+
+> **App name:** **"TailorPass"** in both languages (`app_name`, iOS `CFBundleDisplayName`, `onb_welcome` = "TailorPass-এ স্বাগতম" / "Welcome to TailorPass" — already changed in `kmp-resources`). The design HTML/PNGs still show the old name **"মাপ" / "Maap"** — match everything else in them exactly except the name; you do not need to list the name difference in the comparison list. Old names inside the code (`MaapTheme`, `Dimens`, etc.) stay as they are.
+
+- **What it does:** takes garment measurements for a profile (name, gender, height, fit preference) — in two ways:
+  1. **With AI from photos:** two photos, front and side → measurements are computed on the phone (on-device), and each measurement gets an accuracy badge (● high / ◐ medium / ▲ low).
+  2. **By hand with a tape:** enter measurements one at a time while looking at a picture/diagram; preference measurements (length, neck depth) are picked from picture cards.
+- **Then:** verify and edit the measurements → result (numbered diagram + suggested ready-made size) → share with the tailor as a **PDF (A4)** or an **image (PNG)**.
+- **Garments:** shirt, pants, panjabi, pajama (men), salwar kameez (women), genji/undershirt (size suggestion only).
+- **Other:** multiple profiles, list of saved measurements, resume an incomplete measurement later, size chart, backup/restore (JSON file), delete all data, Bengali/English, light/dark mode.
+- **Privacy:** no internet permission; photos are deleted as soon as measurements are extracted; all data stays on the phone only.
+- **Language:** Bengali by default, English second. Numbers in Bengali digits.
+
+### Platform and approach — **Compose Multiplatform (CMP)**
+The whole UI is written **once** in Compose (`commonMain`), and that same UI runs on both Android and iOS. **No separate UI will be built in SwiftUI.**
+
+- `shared` (Kotlin Multiplatform + Compose Multiplatform):
+  - `commonMain/kotlin/com/tech_hunt/tailorpass/`
+    - `model/`, `util/`, later `data/` — models, business logic, data, view-model/state.
+    - `ui/` — **all screens, components, theme, navigation** (`App.kt`, `ui/theme/`, `ui/components/`, `ui/screens/<section>/`, `ui/nav/`).
+  - `commonMain/composeResources/` — `values/strings.xml` (bn, default), `values-en/strings.xml`, `drawable/` (63 VectorDrawable XMLs), `font/` (Hind Siliguri). In code: `Res.string.*`, `Res.drawable.*`, `Res.font.*`.
+  - `androidMain` / `iosMain` — only platform-dependent parts (`expect`/`actual`): language switching, camera, share/PDF, file picker, storage path.
+  - `iosMain/.../MainViewController.kt` — `fun MainViewController() = ComposeUIViewController { App() }`.
+- `androidApp` — thin shell: `MainActivity` → `setContent { App() }`, manifest, launcher icon.
+- `iosApp` — thin shell: `ContentView` is a `UIViewControllerRepresentable` that shows `MainViewControllerKt.MainViewController()` (`.ignoresSafeArea()`), `Info.plist`, `InfoPlist.xcstrings`.
+- **Our order — Android only for now:** build the design section by section in `commonMain` (with sample data), run it on Android / check it in previews, and match it against the PNGs. Because the code is written in common, the same UI will later run on iOS, but **no iOS work (iosMain, iosApp, iOS build/test) is done now** — that happens separately, on a Mac, in Step 11. After the design is finished: data/logic and the Android platform parts (camera, share).
+- **Reference project:** JetBrains' [`examples/chat`](https://github.com/JetBrains/compose-multiplatform/tree/master/examples/chat) — same structure: `shared` (`kotlinMultiplatform` + `composeCompiler` + `androidMultiplatformLibrary` + `composeMultiplatform`, `android { androidResources { enable = true } }`), UI and `composeResources/` in `shared/commonMain`, `api(activity-compose, appcompat, core-ktx)` in `androidMain`, only `MainActivity` → `setContent { … }` in `androidApp`, `ComposeUIViewController { … }` on iOS + `UIViewControllerRepresentable` in Swift. When in doubt about the setup, look at it.
+- Design frame **360×800** (CSS px = dp = iOS pt) — must be matched pixel-accurately.
+
+---
+
+## 2. Sources of truth (in priority order)
+
+1. [`html/NN_*.html`](html/) — exact static HTML + inline CSS for every screen: spacing, sizes, colors, radius, font sizes, text.
+2. [`screens/NN_*.png`](screens/) — rendered images (2×), for comparison.
+3. [`SCREENS.md`](SCREENS.md) / [`screens.json`](screens.json) — each screen's purpose, overlay base, navigation, and all visible text.
+4. [`navigation.json`](navigation.json) — screen → which screens it goes to (build the nav graph from this).
+5. [`design-tokens.json`](design-tokens.json) — colors, type scale, sizes.
+6. [`kmp-resources/`](kmp-resources/) — ready-made resources. **Use these instead of building anything new** (following the CMP conversion below). Read [`kmp-resources/README.md`](kmp-resources/README.md) and [`kmp-resources/FONTS.md`](kmp-resources/FONTS.md) first. (The SwiftUI part of the README no longer applies.)
+
+Other: [`README.md`](README.md) (package index), [`maap-design-screens.pdf`](maap-design-screens.pdf) (all 52 screens together, 21 pages).
+
+### What is in `kmp-resources/` and where it goes in CMP
+| Source (`kmp-resources/…`) | Destination (`shared/src/commonMain/…`) | Conversion |
+|---|---|---|
+| `shared/.../model/Measurements.kt`, `model/Diagrams.kt`, `util/BanglaDigits.kt` | `kotlin/com/tech_hunt/tailorpass/model/`, `util/` | Copy verbatim. `MeasurementKey`, `Garment`, `GarmentMeasurements`, `LengthPreset`, `NeckDepthPreset`, `Fit`, `Gender`, `SourceBadge`, size chart + `suggestSize()`; `Diagrams.*`; `toBanglaDigits()`, `formatInches()` (২৪½), `inchesToCmText()`, `feetInchesToCm()` |
+| `androidApp/src/main/res/values/strings.xml`, `values-en/strings.xml` (339 keys) | `composeResources/values/strings.xml`, `composeResources/values-en/strings.xml` | Copy verbatim (CMP understands the same XML format and `%1$s` arguments). Verify in the build that the `\"`/`\'` escapes are correct. |
+| `androidApp/src/main/res/drawable/*.xml` (63) | `composeResources/drawable/` | Copy verbatim (CMP can read Android VectorDrawable XML). |
+| 4 Hind Siliguri TTFs ([FONTS.md](kmp-resources/FONTS.md)) | `composeResources/font/hind_siliguri_{regular,medium,semibold,bold}.ttf` | — |
+| `androidApp/.../ui/theme/{Color,Type,Dimens,Theme}.kt` | `kotlin/com/tech_hunt/tailorpass/ui/theme/` | `R.font.x` → `Font(Res.font.x, …)` (composable — build the `FontFamily` inside a `@Composable` function). Remove any Android-only imports. `MaapTheme { }`, `MaapTheme.colors`, `MaapTheme.numbers`, `Dimens`, shapes (blue/green brand) unchanged. |
+| `androidApp/.../ui/diagram/NumberedDiagram.kt` | `kotlin/.../ui/diagram/` | `painterResource(context.drawableId(name))` → `painterResource(drawable(name))`; remove `LocalContext`. |
+| `androidApp/.../util/Strings.kt` | `kotlin/.../ui/util/Strings.kt` (rewritten) | Drop `getIdentifier`. Shared key → resource: using `Res.allStringResources[key]` and `Res.allDrawableResources[name]`, write `fun stringRes(key)`, `fun drawable(name)`, `@Composable fun str(key, vararg args)` (if not found, `error("Missing …")`). |
+| `androidApp/src/main/res/raw/keep.xml` | — | **Not needed** (CMP resources are not shrunk). |
+| `iosApp/Resources/InfoPlist.xcstrings`, `iosApp/Info.plist.snippet.xml` | `iosApp/iosApp/` | Keep — app name, camera usage text, bn/en localization, portrait only. **Drop** the `UIAppFonts` part (fonts come from composeResources). |
+| `iosApp/Resources/Assets.xcassets`, `Localizable.xcstrings`, `iosApp/Theme/*.swift` | — | **Will not be used** (UI is not in SwiftUI). Kept only as reference. |
+| `design-tokens.json` | — | Copy of the tokens (for verification) |
+
+**Key rule:** model/logic code contains only **names** (string keys such as `"m_chest"`, image names such as `"ic_garment_panjabi"`). The UI resolves them from `composeResources` with `str(key)` / `drawable(name)`. **Never put display text in model/logic.** Fixed text uses `stringResource(Res.string.x)` directly.
+
+---
+
+## 3. Design rules (must be followed)
+
+- Body text ≥ 16; everything tappable ≥ 48; **only one** filled primary button per screen; full-width 56-high buttons. Secondary buttons are outlined or links.
+- Tailor's word first, English in brackets: "পুট (Shoulder)". Numbers in Bengali digits (`toBanglaDigits()`), half inch as "২৪½". In English, `useBangla = false`.
+- Color never carries meaning alone — badges include the ● ◐ ▲ symbols and text.
+- Long lists scroll, but the primary action stays fixed at the bottom.
+- Bottom nav only on the tab screens (Home, Size chart, Settings) and on Result; hidden in the camera and step flows.
+- Camera screens are always dark (`camera*` colors). In dark mode primary is `#A9C4F0`, with dark text on the primary button.
+- Offline: no network permission; photos are deleted after measuring.
+- Same Compose UI on both platforms — it must look like the PNGs. Do not leave things in Material's default style; apply the HTML's sizes/colors. Safe area/insets: `Modifier.windowInsetsPadding(WindowInsets.safeDrawing)` / `Scaffold` insets — must look right with the iOS notch and home indicator.
+- No hard-coded strings — all text comes from `composeResources/values/strings.xml` keys.
+- **No Android/iOS-only APIs in `commonMain`** (`android.*`, `R`, `LocalContext`, `platform.UIKit.*`). Use `expect`/`actual` when needed.
+
+### API cheat sheet (all `commonMain`)
+| Design | Compose Multiplatform |
+|---|---|
+| List scrolls, button fixed at the bottom (e.g. 8.4) | `Scaffold(bottomBar = …)` + `LazyColumn` |
+| Bottom nav (3 tabs) | `NavigationBar` (custom style) |
+| Top bar with back | Custom `TopBar` |
+| Text | `stringResource(Res.string.x)` / `str(key)` |
+| Icon | `Icon(painterResource(Res.drawable.ic_x), …, tint = …)` / `drawable(name)` |
+| Color | `MaterialTheme.colorScheme.*`, `MaapTheme.colors.*` |
+| Type | `MaterialTheme.typography.*`, `MaapTheme.numbers.*` |
+| Dark mode | `MaapTheme(darkTheme = …)` |
+| Language switch (1.1, 12.x) | `expect`/`actual`: Android `AppCompatDelegate.setApplicationLocales`; iOS `NSUserDefaults` `AppleLanguages` + UI refresh. In Compose, recompose immediately via `LocalAppLocale` (the "custom locale" pattern from the CMP docs). |
+| Format args | `stringResource(Res.string.x, arg1, …)` (`%1$s`) |
+| Sheet / dialog (`overlay_on`) | `ModalBottomSheet` / `AlertDialog` / custom `Dialog` |
+| Navigation | `org.jetbrains.androidx.navigation:navigation-compose` (multiplatform), type-safe `@Serializable` routes |
+| Back | `NavController` + CMP `BackHandler` (Android back / iOS edge-swipe) |
+| Preview | `@Preview` in `commonMain` (`androidx.compose.ui.tooling.preview` / `org.jetbrains.compose.ui:ui-tooling-preview`) |
+| Camera preview (Step 10) | `expect @Composable fun CameraPreview(…)` → Android `AndroidView` + CameraX; iOS `UIKitView` + AVFoundation |
+| PDF/PNG share (Step 8/10) | PNG: `rememberGraphicsLayer()` → `toImageBitmap()` (common); PDF and share sheet: `expect`/`actual` — Android `PdfDocument` + share `Intent`, iOS `UIGraphicsPDFRenderer` + `UIActivityViewController` |
+
+### Sample data used in the design
+- Profiles: **Rahat / রাহাত** (male, 5′7″, regular, 3 saved), **Farhana / ফারহানা** (female, 5′3″, regular, 2), **Abbu / আব্বু** (male, no measurements).
+- Panjabi (inches): length 42, chest 40, belly 36, hip 41, shoulder 18, sleeve 24½, cuff 10, neck 15½ → size **L**.
+- Salwar kameez: see 8.4 / 9.3 (10 kameez + 4 salwar measurements, size M).
+
+### To be replaced later with real information (Placeholders)
+Contact email (`about_contact_email`), the real size chart (`SampleMenShirtChart`), the normal ranges for the outlier warning (`minInches/maxInches`), sample values for length/neck depth, privacy policy text (matched to the app's real behavior), blue/green brand choice, app icon/logo (if `app_logo` is still the old "মাপ" design).
+
+---
+
+## 4. Current project state (what you need to know)
+
+- Project: `TailorPass` (`settings.gradle.kts`), package **`com.tech_hunt.tailorpass`**, iOS `PRODUCT_NAME=TailorPass`. All Kotlin files in `kmp-resources/` are already in this package (`com/tech_hunt/tailorpass/...`).
+- **The current setup is from the earlier (native UI) plan — it must be reversed in Step 0:**
+  - `shared` has no Compose now (only the `Greeting`/`Platform` template code). → Add back the Compose Multiplatform plugin, compose compiler and resources.
+  - `androidApp/.../App.kt` is a temporary root screen; Compose is added directly to `androidApp`. → `App()` moves to `shared/commonMain/.../App.kt`, and UI code is removed from `androidApp`.
+  - `androidApp/src/main/res/values/strings.xml` has only `app_name = TailorPass` (the Android launcher label comes from here — keep it, and add the same to `values-en` too).
+  - iOS: `iosApp/iosApp/ContentView.swift` is currently a plain SwiftUI `Text(Greeting().greet())`. → In Step 11 it will show `MainViewController()` (do not touch it now).
+- `gradle/libs.versions.toml` already has: `composeMultiplatform = 1.12.1`, `material3`, `compose-components-resources`, `compose-uiToolingPreview`, lifecycle-viewmodel/runtime-compose, plugins `composeMultiplatform`, `composeCompiler`.
+- AGP 9.1.1, Kotlin 2.4.20, compileSdk 37, minSdk 24. `shared` uses the `com.android.kotlin.multiplatform.library` plugin.
+
+---
+
+## 5. Working rules (every step)
+
+1. **One step = one session.** When all screens of the step are done, the build passes, and the PNG comparison list has been given, **stop working** — do not start the next step on your own. The user will review and tell you the next step.
+2. **Design first:** screens are built in Compose in `shared/commonMain` with sample data. State and sample data use the shared models (`Measurements.kt`, etc.). Each screen is a stateless composable (`XxxScreen(state, onAction)`) + `@Preview` (light, and dark where a design exists).
+3. For each screen: first read the HTML (sizes, colors, text), then look at the PNG, then build it. At the end, compare with the PNG and give a **list of differences**.
+4. Build each reusable component in the first step that needs it (`shared/src/commonMain/kotlin/com/tech_hunt/tailorpass/ui/components/`); in later steps reuse it instead of building a new one.
+5. Sheets/dialogs (those with an `Overlay`) are not separate routes — they are overlays on the base screen.
+6. `Dark` variants (2.2, 5.2, 8.2, 9.2) are not separate screens — the same composable under `MaapTheme(darkTheme = true)`; build a dark `@Preview` for them and match it with the PNG.
+7. Navigation from [`navigation.json`](navigation.json) (multiplatform Navigation Compose); navigation between the screens inside a step must work, other destinations may stay placeholders.
+8. At the end of every step `./gradlew :androidApp:assembleDebug` must pass. iOS build/run is not part of these steps (tested separately) — but the rule of keeping platform APIs out of `commonMain` must still be followed, so it runs on iOS later.
+
+**Prompt to give the agent for each step:**
+> "Read for-agent/plan.md. Implement Step <N> — Compose Multiplatform (`shared/commonMain`), verify by running on Android only for now, matching html/ and screens/ exactly. State/models from shared; use the theme, images and string keys from composeResources. No hard-coded strings, no platform APIs in commonMain. After each screen, compare with the PNG and write down the differences. Stop when the step is finished."
+
+---
+
+## 6. Step-by-step plan
+
+Summary:
+
+| Step | Topic | Screens | Count |
+|---|---|---|---|
+| 0 | CMP setup and foundation | — | — |
+| 1 | First launch | 1.1–1.5 | 5 |
+| 2 | Home | 2.1–2.5 | 5 |
+| 3 | Start measuring + photo preparation | 3.1–3.2, 4.1–4.4 | 6 |
+| 4 | Camera + photo check | 5.1–5.4, 6.1–6.3 | 7 |
+| 5 | Tape measurement — A | 7.1–7.5, 7.10 | 6 |
+| 6 | Tape measurement — B | 7.6–7.9 | 4 |
+| 7 | Review and edit measurements | 8.1–8.5 | 5 |
+| 8 | Result + share files | 9.1–9.4, 10.1–10.3 | 7 |
+| 9 | Size chart + Settings | 11.1, 12.1–12.6 | 7 |
+| 10 | Data and logic + platform parts (camera, AI, share) | — | — |
+| 11 | iOS (separately, on a Mac): shell, platform parts, run and verify | all | 52 |
+
+---
+
+### Step 0 — Compose Multiplatform setup and foundation
+
+**Goal:** the common Compose UI runs on Android; prove on a test screen that resources, fonts, theme and strings load.
+
+**Gradle**
+- [ ] `shared/build.gradle.kts` (like the chat example): add plugins `composeMultiplatform` + `composeCompiler`; `androidMain.dependencies { api(activity-compose); api(appcompat); api(core-ktx) }`; `commonMain.dependencies`: `compose.runtime/foundation/material3/ui`, `compose.components.resources`, `compose.uiToolingPreview`, lifecycle viewmodel/runtime-compose, multiplatform navigation-compose, `kotlinx-serialization-json` (for routes, + serialization plugin). Keep the iOS targets and framework (`baseName = "Shared"`, `isStatic = true`) as they are — only Android will be built.
+- [ ] Enable Android resources on `shared`'s android target (`androidResources { enable = true }` — AGP 9 KMP library), otherwise composeResources will not be found on Android.
+- [ ] `compose.resources { publicResClass = false; packageOfResClass = "com.tech_hunt.tailorpass.resources"; generateResClass = always }`.
+- [ ] Replace the file-header comment in `shared` ("No UI, no Compose…") with the new rules.
+- [ ] `androidApp/build.gradle.kts`: plugins `composeMultiplatform` + `composeCompiler`; dependencies `project(":shared")`, `activity-compose`, `ui-tooling` (debug) — the rest of Compose comes through `shared`.
+- [ ] New libraries go in `gradle/libs.versions.toml` (versions compatible with CMP 1.12.1).
+
+**Moving resources and code** (following the table in section 2)
+- [ ] `model/`, `util/` → `shared/src/commonMain/kotlin/com/tech_hunt/tailorpass/`.
+- [ ] strings (bn/en), 63 drawables, 4 Hind Siliguri TTFs → `shared/src/commonMain/composeResources/`.
+- [ ] theme (`Color/Type/Dimens/Theme.kt`), `NumberedDiagram.kt`, new `ui/util/Strings.kt` → `shared/.../ui/`.
+- [ ] Delete `androidApp/.../App.kt` and create `shared/commonMain/.../App.kt` (`MaapTheme { … }`); `MainActivity` shows that.
+- [ ] Delete the template `Greeting`/`Platform`/`GreetingUtil` and their tests (or replace them with new tests).
+
+**Platform config**
+- [ ] Android manifest: no INTERNET permission; portrait only; `android:label="@string/app_name"` (= TailorPass); `app_name` also in `androidApp/res/values-en/strings.xml`.
+
+**Test screen and base components**
+- [ ] `App()` → test screen: Bengali text, one icon, a primary button, `formatInches(24.5f)`, `str("m_chest")` (dynamic key).
+- [ ] Base components (needed in almost every step): `TopBar` (back / title / subtitle / trailing chip/icon), `PrimaryButton` (56 pill), `OutlinedPillButton`, `MaapScaffold` (fixed button at the bottom + scrolling content, with safe area).
+- [ ] Language: `expect fun setAppLanguage(tag: String)` + `LocalAppLocale` structure (UI in Step 1).
+- [ ] `./gradlew :androidApp:assembleDebug` passes; run the app and see the test screen.
+
+**⏹ Stop.**
+
+---
+
+### Step 1 — First launch · 5 screens
+
+| # | Screen | HTML | PNG |
+|---|---|---|---|
+| 1.1 | Language choice `Language` | [html](html/01_1-1_Language.html) | [png](screens/01_1-1_Language.png) |
+| 1.2 | Onboarding — how it works `Onboarding1` | [html](html/02_1-2_Onboarding1.html) | [png](screens/02_1-2_Onboarding1.png) |
+| 1.3 | Onboarding — privacy `Onboarding2` | [html](html/03_1-3_Onboarding2.html) | [png](screens/03_1-3_Onboarding2.png) |
+| 1.4 | Onboarding — share with tailor `Onboarding3` | [html](html/04_1-4_Onboarding3.html) | [png](screens/04_1-4_Onboarding3.png) |
+| 1.5 | Create profile `ProfileCreate` | [html](html/05_1-5_ProfileCreate.html) | [png](screens/05_1-5_ProfileCreate.png) |
+
+**New components:** `OnboardingPage` (illustration + title + bullets + Skip/Next + dot indicator — 1.2–1.4 share the same structure, `HorizontalPager`), `SegmentedToggle` (male/female, feet-inches/cm), `FitCard` (slim/regular/loose), text field style.
+**Note:** height conversion with `feetInchesToCm()`; language choice uses Step 0's `setAppLanguage` + `LocalAppLocale`.
+
+**⏹ Stop.**
+
+---
+
+### Step 2 — Home · 5 screens
+
+| # | Screen | HTML | PNG |
+|---|---|---|---|
+| 2.1 | Home `Main` | [html](html/06_2-1_Main.html) | [png](screens/06_2-1_Main.png) |
+| 2.2 | Home — dark `MainDark` (dark preview) | [html](html/07_2-2_MainDark.html) | [png](screens/07_2-2_MainDark.png) |
+| 2.3 | Home — empty state (Abbu) `HomeEmpty` | [html](html/08_2-3_HomeEmpty.html) | [png](screens/08_2-3_HomeEmpty.png) |
+| 2.4 | Switch profile sheet `ProfileSheet` (overlay on Main) | [html](html/09_2-4_ProfileSheet.html) | [png](screens/09_2-4_ProfileSheet.png) |
+| 2.5 | Saved measurement menu `SavedMenuSheet` (overlay on Main) | [html](html/10_2-5_SavedMenuSheet.html) | [png](screens/10_2-5_SavedMenuSheet.png) |
+
+**New components:** `BottomNav` (3 tabs, pill indicator — Home/Size chart/Settings; Size chart and Settings are placeholders for now), `ProfileChip`/avatar, `GarmentCard` (grid of 6), `SavedRow` (tap, share icon, long-press), `MaapBottomSheet` (`ModalBottomSheet` style), empty state.
+**Note:** 7.9 `HomeIncomplete` will add a card to this same screen in Step 6 — keep the home screen state-driven for that.
+
+**⏹ Stop.**
+
+---
+
+### Step 3 — Start measuring and photo preparation · 6 screens
+
+| # | Screen | HTML | PNG |
+|---|---|---|---|
+| 3.1 | Choose method `Method` | [html](html/11_3-1_Method.html) | [png](screens/11_3-1_Method.png) |
+| 3.2 | Camera permission `CameraPermission` | [html](html/12_3-2_CameraPermission.html) | [png](screens/12_3-2_CameraPermission.png) |
+| 4.1 | Preparation checklist — panjabi `Checklist` | [html](html/13_4-1_Checklist.html) | [png](screens/13_4-1_Checklist.png) |
+| 4.2 | Preparation checklist — salwar kameez `ChecklistFemale` | [html](html/14_4-2_ChecklistFemale.html) | [png](screens/14_4-2_ChecklistFemale.png) |
+| 4.3 | Pose guide — male `PoseGuide` | [html](html/15_4-3_PoseGuide.html) | [png](screens/15_4-3_PoseGuide.png) |
+| 4.4 | Pose guide — female `PoseGuideFemale` | [html](html/16_4-4_PoseGuideFemale.html) | [png](screens/16_4-4_PoseGuideFemale.png) |
+
+**New components:** `MethodCard` (highlighted/normal), `InfoBanner` (tint / orange / green), `ChecklistItem` (checkbox + two lines), tip card.
+**Note:** 4.1/4.2 and 4.3/4.4 are the same composable, only the data differs by gender/garment. If not every checklist item is ticked, "এগিয়ে যান" (Continue) is disabled (interactive state). The real OS camera permission prompt is not done yet — UI only.
+
+**⏹ Stop.**
+
+---
+
+### Step 4 — Camera and photo check · 7 screens
+
+| # | Screen | HTML | PNG |
+|---|---|---|---|
+| 5.1 | Front photo 1/2 — male `Camera` | [html](html/17_5-1_Camera.html) | [png](screens/17_5-1_Camera.png) |
+| 5.2 | Front photo 1/2 — dark `CameraDark` (dark preview) | [html](html/18_5-2_CameraDark.html) | [png](screens/18_5-2_CameraDark.png) |
+| 5.3 | Front photo 1/2 — female `CameraFemale` | [html](html/19_5-3_CameraFemale.html) | [png](screens/19_5-3_CameraFemale.png) |
+| 5.4 | Side photo 2/2 `CameraSide` | [html](html/20_5-4_CameraSide.html) | [png](screens/20_5-4_CameraSide.png) |
+| 6.1 | Photo check — success and processing `PhotoCheckSuccess` | [html](html/21_6-1_PhotoCheckSuccess.html) | [png](screens/21_6-1_PhotoCheckSuccess.png) |
+| 6.2 | Photo check — problem `PhotoCheckProblem` | [html](html/22_6-2_PhotoCheckProblem.html) | [png](screens/22_6-2_PhotoCheckProblem.png) |
+| 6.3 | Measurement could not be extracted `AIFailed` | [html](html/23_6-3_AIFailed.html) | [png](screens/23_6-3_AIFailed.png) |
+
+**New components:** `CameraOverlay` (dashed body outline — front male/female, side), step pill (1/2), voice-guide toggle, timer chip, `StepProgressBar`, processing step list, reason card.
+**Note:** camera screens are always dark (`camera*` colors), no bottom nav. For now a placeholder (dark background) stands in for the camera preview — the real `expect CameraPreview` and the AI come in Step 10, behind `interface BodyMeasurer`. The UI only shows state: guidance banner, step 1/2 → 2/2, processing progress, success, problem (reason), failure. 5.1/5.3/5.4 are the same `CameraScreen` in different states.
+
+**⏹ Stop.**
+
+---
+
+### Step 5 — Tape measurement (A) · 6 screens
+
+| # | Screen | HTML | PNG |
+|---|---|---|---|
+| 7.1 | Preparation `ManualPrep` | [html](html/24_7-1_ManualPrep.html) | [png](screens/24_7-1_ManualPrep.png) |
+| 7.2 | Measurement list `ManualList` | [html](html/25_7-2_ManualList.html) | [png](screens/25_7-2_ManualList.png) |
+| 7.3 | Body measurement — chest `ManualEntry` | [html](html/26_7-3_ManualEntry.html) | [png](screens/26_7-3_ManualEntry.png) |
+| 7.4 | Body measurement — sleeve (helper needed) `ManualSleeve` | [html](html/27_7-4_ManualSleeve.html) | [png](screens/27_7-4_ManualSleeve.png) |
+| 7.5 | Unusual measurement warning `ManualWarnSheet` (overlay on ManualEntry) | [html](html/28_7-5_ManualWarnSheet.html) | [png](screens/28_7-5_ManualWarnSheet.png) |
+| 7.10 | Preference measurement — neck depth (female) `ManualNeckDepth` | [html](html/33_7-10_ManualNeckDepth.html) | [png](screens/33_7-10_ManualNeckDepth.png) |
+
+**New components:** `NumberStepperField` (−/+ 0.5″, large number), `ManualStepRow` (done/now/pending + "সাহায্যকারী লাগবে" (helper needed) badge), collapsible "ভুল এড়াতে" (to avoid mistakes), highlighted diagram, `PresetPictureCard` (3 picture cards — needed in 7.10 and later in 7.6).
+**Note:** 7.3/7.4/7.10 are the same `ManualEntryScreen` — the diagram, instructions, helper banner and preset cards change with the measurement key. Outlier limits come from `MeasurementKey`'s `minInches/maxInches`. Number keyboard: `KeyboardOptions(keyboardType = KeyboardType.Decimal)` — check whether "Done" closes the keyboard on iOS.
+
+**⏹ Stop.**
+
+---
+
+### Step 6 — Tape measurement (B) · 4 screens
+
+| # | Screen | HTML | PNG |
+|---|---|---|---|
+| 7.6 | Preference measurement — length `ManualLength` | [html](html/29_7-6_ManualLength.html) | [png](screens/29_7-6_ManualLength.png) |
+| 7.7 | Summary `ManualSummary` | [html](html/30_7-7_ManualSummary.html) | [png](screens/30_7-7_ManualSummary.png) |
+| 7.8 | Leaving midway `ManualExitDialog` (overlay on ManualEntry) | [html](html/31_7-8_ManualExitDialog.html) | [png](screens/31_7-8_ManualExitDialog.png) |
+| 7.9 | Home — incomplete measurement `HomeIncomplete` | [html](html/32_7-9_HomeIncomplete.html) | [png](screens/32_7-9_HomeIncomplete.png) |
+
+**New components:** `ConfirmDialog`, summary row (edit icon; if missing, an orange row + "এখন মাপুন" (Measure now)), `IncompleteCard` (orange left border, 4/8 progress).
+**Note:** 7.6 uses Step 5's `PresetPictureCard` (`LengthPreset`, values from height). 7.9 is not a new screen — it is the incomplete-card state of Step 2's home. 7.8 uses `BackHandler` to catch back (Android back / iOS swipe).
+
+**⏹ Stop.**
+
+---
+
+### Step 7 — Review and edit measurements · 5 screens
+
+| # | Screen | HTML | PNG |
+|---|---|---|---|
+| 8.1 | Verify measurements — panjabi `Verify` | [html](html/34_8-1_Verify.html) | [png](screens/34_8-1_Verify.png) |
+| 8.2 | Verify measurements — dark `VerifyDark` (dark preview) | [html](html/35_8-2_VerifyDark.html) | [png](screens/35_8-2_VerifyDark.png) |
+| 8.3 | Edit measurement sheet `EditSheet` (overlay on Verify) | [html](html/36_8-3_EditSheet.html) | [png](screens/36_8-3_EditSheet.png) |
+| 8.4 | Verify measurements — salwar kameez `VerifySK` | [html](html/37_8-4_VerifySK.html) | [png](screens/37_8-4_VerifySK.png) |
+| 8.5 | Verify measurements — measured with tape `VerifyManual` | [html](html/38_8-5_VerifyManual.html) | [png](screens/38_8-5_VerifyManual.png) |
+
+**New components:** `MeasurementRow` + `SourceBadge` badge (● high / ◐ medium / ▲ low / ✎ your preference / measured with tape / skipped), section header (kameez 10 / salwar 4), tailor's note field.
+**Note:** all five are the same `VerifyScreen` — only the data and badge sources differ. In 8.4 the list scrolls and "ফলাফল দেখুন" (See result) stays fixed at the bottom (`Scaffold(bottomBar)` + `LazyColumn`). The edit sheet reuses `NumberStepperField` (Step 5).
+
+**⏹ Stop.**
+
+---
+
+### Step 8 — Result and share files · 7 designs
+
+| # | Screen | HTML | PNG |
+|---|---|---|---|
+| 9.1 | Result — panjabi `Result` | [html](html/39_9-1_Result.html) | [png](screens/39_9-1_Result.png) |
+| 9.2 | Result — dark `ResultDark` (dark preview) | [html](html/40_9-2_ResultDark.html) | [png](screens/40_9-2_ResultDark.png) |
+| 9.3 | Result — salwar kameez `ResultSK` | [html](html/41_9-3_ResultSK.html) | [png](screens/41_9-3_ResultSK.png) |
+| 9.4 | Genji size `GenjiResult` | [html](html/42_9-4_GenjiResult.html) | [png](screens/42_9-4_GenjiResult.png) |
+| 10.1 | PDF — panjabi, A4 `TailorPDF` (794×1123) | [html](html/43_10-1_TailorPDF.html) | [png](screens/43_10-1_TailorPDF.png) |
+| 10.2 | PDF — salwar kameez, A4 `TailorPDFSK` (794×1123) | [html](html/44_10-2_TailorPDFSK.html) | [png](screens/44_10-2_TailorPDFSK.png) |
+| 10.3 | Share as image, PNG `SharePNG` (1080×2600) | [html](html/45_10-3_SharePNG.html) | [png](screens/45_10-3_SharePNG.png) |
+
+**New components:** use `NumberedDiagram` (provided), suggested size card (`suggestSize()`), numbered measurement list, inch/cm `SegmentedToggle` (`inchesToCmText()`), kameez/salwar tabs, size comparison (M|L|XL), "সেভ হয়েছে" (Saved) chip.
+**Note:** 9.1/9.2/9.3 are the same `ResultScreen` (with bottom nav). 10.x are not app screens — they are the files to share. Build the file layouts as common Compose composables (`TailorSheetPdfPage`, `TailorSharePng`) + match them with the PNGs via previews; PNG rendering is common (`GraphicsLayer.toImageBitmap()`, 1080 px wide). PDF writing and the share sheet are `expect`/`actual` (Android `PdfDocument` + `Intent`, iOS `UIGraphicsPDFRenderer` + `UIActivityViewController`) — here or in Step 10.
+
+**⏹ Stop.**
+
+---
+
+### Step 9 — Size chart and Settings · 7 screens
+
+| # | Screen | HTML | PNG |
+|---|---|---|---|
+| 11.1 | Size chart `SizeChart` | [html](html/46_11-1_SizeChart.html) | [png](screens/46_11-1_SizeChart.png) |
+| 12.1 | Settings `Settings` | [html](html/47_12-1_Settings.html) | [png](screens/47_12-1_Settings.png) |
+| 12.2 | Backup succeeded `BackupSnackbar` (overlay on Settings) | [html](html/48_12-2_BackupSnackbar.html) | [png](screens/48_12-2_BackupSnackbar.png) |
+| 12.3 | Restore confirmation `RestoreDialog` (overlay on Settings) | [html](html/49_12-3_RestoreDialog.html) | [png](screens/49_12-3_RestoreDialog.png) |
+| 12.4 | Delete all data — confirmation `DeleteDialog` (overlay on Settings) | [html](html/50_12-4_DeleteDialog.html) | [png](screens/50_12-4_DeleteDialog.png) |
+| 12.5 | Privacy policy `PrivacyPolicy` | [html](html/51_12-5_PrivacyPolicy.html) | [png](screens/51_12-5_PrivacyPolicy.png) |
+| 12.6 | About the app `About` | [html](html/52_12-6_About.html) | [png](screens/52_12-6_About.png) |
+
+**New components:** size table (user's row highlighted "আপনার" (Yours)), garment chips, `SettingsRow`/section header, green snackbar, radio option cards (merge/replace, with a warning on replace), type-to-confirm ("মুছুন" (Delete)) red button, numbered policy sections.
+**Note:** Step 2's `BottomNav` placeholder tabs are replaced with the real screens here. Language switching via `setAppLanguage` + `LocalAppLocale`. The About screen shows the app name from `app_name` (TailorPass). `about_contact_email` is a placeholder.
+
+**⏹ Stop. — The design phase ends here (52 designs, the same code on both platforms).**
+
+---
+
+### Step 10 — Data and logic + platform parts
+
+(After the design phase; split across several sessions if needed)
+
+- [ ] **Data (local only — SQLDelight or Room KMP):** `Profile(name, gender, heightCm, fit)`, `MeasurementSet(profileId, garment, date, method AI|TAPE, unit, note, values map, sources map, status COMPLETE|INCOMPLETE)`. Driver/database path via `expect`/`actual`.
+- [ ] Repositories + one `ViewModel` per flow (`commonMain`, multiplatform lifecycle-viewmodel, `StateFlow` → `collectAsStateWithLifecycle()`). Because the UI lives in one place, iOS will not need SKIE/NativeCoroutines.
+- [ ] Settings (language, theme, whether onboarding was seen): DataStore KMP or multiplatform-settings.
+- [ ] Backup/restore = JSON file (kotlinx.serialization); merge vs replace; file pick/save via `expect`/`actual` (Android SAF, iOS `UIDocumentPickerViewController`).
+- [ ] Remove the sample data and connect the screens to real ViewModels.
+- [ ] **Camera + AI measurement:** `interface BodyMeasurer` and `expect @Composable fun CameraPreview(...)` in `commonMain`; Android `actual`: CameraX + on-device model (iOS `actual` in Step 11). Delete photos once measuring is done. OS camera permission.
+- [ ] Share: PDF (A4) and PNG — from Step 8's common layouts, share sheet via `expect`/`actual` (Android `actual` for now).
+- [ ] Note: any `expect` declaration will need an iOS `actual` later — add it to Step 11's list.
+
+**⏹ Stop.**
+
+---
+
+### Step 11 — iOS (separately, requires a Mac)
+
+The UI is already common — no new UI is written here; the iOS shell, iOS `actual` parts, then run and fix.
+
+- [ ] `shared/src/iosMain/.../MainViewController.kt`: `fun MainViewController() = ComposeUIViewController { App() }`; `iosApp/iosApp/ContentView.swift` → `UIViewControllerRepresentable` (like the chat example's `ComposeViewControllerToSwiftUI.swift`) + `.ignoresSafeArea()`.
+- [ ] iOS `actual`s for every `expect`: language switch (`NSUserDefaults` `AppleLanguages`), camera (AVFoundation `UIKitView` + Core ML), share (`UIGraphicsPDFRenderer` + `UIActivityViewController`), file picker, database path.
+- [ ] Xcode 15+ / iOS 16+; check that `./gradlew :shared:embedAndSignAppleFrameworkForXcode` is correct in the `iosApp` build phase; run on the simulator and a real device.
+- [ ] `Info.plist` / `InfoPlist.xcstrings`: `CFBundleDisplayName` = TailorPass, bn/en localization (Development Language Bengali), camera usage, portrait only, `CADisableMinimumFrameDurationOnPhone = true` (`UIAppFonts` not needed).
+- [ ] For each screen (in the same groups as Steps 1 → 9), compare iOS with the PNG and Android and list the differences: safe area/notch, keyboard insets, Bengali font rendering, sheet/dialog behavior, back-swipe, language switching.
+- [ ] Test the iOS `actual` parts on a real device.
+
+---
+
+## 7. File index (`for-agent/`, next to this file)
+
+| File/folder | Contents |
+|---|---|
+| [`README.md`](README.md) | Package index |
+| [`plan.bn.md`](plan.bn.md) | Original Bengali version of this plan (backup) |
+| [`SCREENS.md`](SCREENS.md) | Purpose, navigation and all text of the 52 screens |
+| [`screens.json`](screens.json) | The same information, machine-readable |
+| [`navigation.json`](navigation.json) | Navigation graph |
+| [`design-tokens.json`](design-tokens.json) | Colors (light/dark/alternative brand), type, sizes |
+| [`maap-design-screens.pdf`](maap-design-screens.pdf) | All screens together (A4 landscape, 21 pages) |
+| [`html/`](html/) | Exact HTML/CSS for each screen — `01_1-1_Language` … `52_12-6_About` |
+| [`screens/`](screens/) | PNG (2×) for each screen, same names |
+| [`kmp-resources/README.md`](kmp-resources/README.md) | Description of the resources (the SwiftUI part no longer applies) |
+| [`kmp-resources/FONTS.md`](kmp-resources/FONTS.md) | Downloading and naming the Hind Siliguri fonts |
+| [`kmp-resources/shared/`](kmp-resources/shared/) | Models, diagrams, Bengali digits, gradle snippet |
+| [`kmp-resources/androidApp/`](kmp-resources/androidApp/) | drawables, strings (bn/en), Compose theme, diagram — go to `shared/commonMain` in Step 0 |
+| [`kmp-resources/iosApp/`](kmp-resources/iosApp/) | InfoPlist.xcstrings and the Info.plist snippet will be used; Assets/Localizable/Theme are reference only |

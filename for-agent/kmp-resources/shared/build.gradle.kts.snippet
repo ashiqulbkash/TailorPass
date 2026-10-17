@@ -1,0 +1,15 @@
+// shared/build.gradle.kts — প্রাসঙ্গিক অংশ। shared মডিউলে কোনো Compose/রিসোর্স লাইব্রেরি লাগে না।
+kotlin {
+    androidTarget()
+    listOf(iosX64(), iosArm64(), iosSimulatorArm64()).forEach {
+        it.binaries.framework {
+            baseName = "Shared"      // Swift-এ `import Shared`
+            isStatic = true
+        }
+    }
+    sourceSets {
+        commonMain.dependencies {
+            // model/ আর util/ শুধু Kotlin stdlib ব্যবহার করে
+        }
+    }
+}

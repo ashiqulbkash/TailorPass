@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="bn"><head><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>অনবোর্ডিং — গোপনীয়তা</title>
+<style>x-dc{display:none!important}</style>
+<style data-dc-tpl="3">
+body{margin:0}
+button{font-family:inherit}
+a{color:#1B3A6B}a:hover{color:#122848}
+</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="Onboarding2"><div data-dc-tpl="4" style="width: 360px; height: 800px; box-sizing: border-box; background: rgb(245, 246, 248); font-family: &quot;Hind Siliguri&quot;, sans-serif; color: rgb(25, 28, 32); display: flex; flex-direction: column; padding: 24px 20px; overflow: hidden;"><div data-dc-tpl="5" style="height: 280px; flex: 0 0 auto; border-radius: 24px; background: rgb(230, 236, 245); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="6" aria-hidden="true" width="260" height="230" viewBox="0 0 260 230" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect data-dc-tpl="7" x="50" y="10" width="110" height="210" rx="16" stroke="#1B3A6B" stroke-width="3" fill="#FFFFFF"></rect><path data-dc-tpl="8" d="M92 22 H118" stroke="#1B3A6B" stroke-width="3"></path><path data-dc-tpl="9" d="M105 62 L136 74 V104 C136 126 122 142 105 150 C88 142 74 126 74 104 V74 Z" stroke="#1B3A6B" stroke-width="3" fill="#E6ECF5"></path><rect data-dc-tpl="10" x="93" y="98" width="24" height="20" rx="4" stroke="#1B3A6B" stroke-width="2.6"></rect><path data-dc-tpl="11" d="M98 98 V92 C98 88 101 85 105 85 C109 85 112 88 112 92 V98" stroke="#1B3A6B" stroke-width="2.6"></path><path data-dc-tpl="12" d="M78 176 H132 M78 190 H118" stroke="#B9C0CA" stroke-width="5"></path><path data-dc-tpl="13" d="M190 70 C190 60 198 52 208 52 C216 52 222 57 224 64 C232 64 238 70 238 78 C238 86 232 92 224 92 H196 C188 92 182 86 182 79 C182 74 185 71 190 70 Z" stroke="#8A929E" stroke-width="2.6"></path><path data-dc-tpl="14" d="M184 46 L240 100" stroke="#B8470F" stroke-width="3.2"></path><path data-dc-tpl="15" d="M168 130 H196" stroke="#8A929E" stroke-width="2.6" stroke-dasharray="4 5"></path><path data-dc-tpl="16" d="M200 122 L216 138 M216 122 L200 138" stroke="#B8470F" stroke-width="3"></path></svg></div><h1 data-dc-tpl="17" style="margin: 28px 0px 14px; font-size: 26px; font-weight: 700; line-height: 1.3;">আপনার তথ্য আপনার ফোনেই</h1><ul data-dc-tpl="18" style="margin: 0px; padding: 0px; list-style: none; display: flex; flex-direction: column; gap: 12px;"><li data-dc-tpl="19" style="display: flex; align-items: center; gap: 12px; font-size: 17px; line-height: 1.4;"><span data-dc-tpl="20" style="width: 32px; height: 32px; flex: 0 0 auto; border-radius: 16px; background: rgb(220, 252, 231); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="21" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="22" d="M5 12.5 L10 17.5 L19 7"></path></svg></span>ইন্টারনেট ছাড়াই পুরো অ্যাপ চলে</li><li data-dc-tpl="23" style="display: flex; align-items: center; gap: 12px; font-size: 17px; line-height: 1.4;"><span data-dc-tpl="24" style="width: 32px; height: 32px; flex: 0 0 auto; border-radius: 16px; background: rgb(220, 252, 231); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="25" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="26" d="M5 12.5 L10 17.5 L19 7"></path></svg></span>ছবি ও মাপ কোথাও আপলোড হয় না</li><li data-dc-tpl="27" style="display: flex; align-items: center; gap: 12px; font-size: 17px; line-height: 1.4;"><span data-dc-tpl="28" style="width: 32px; height: 32px; flex: 0 0 auto; border-radius: 16px; background: rgb(220, 252, 231); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="29" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="30" d="M5 12.5 L10 17.5 L19 7"></path></svg></span>আপনি যখন খুশি সব মুছে ফেলতে পারেন</li></ul><div data-dc-tpl="31" style="margin-top: auto; display: flex; flex-direction: column; gap: 18px;"><div data-dc-tpl="32" aria-label="৩টির মধ্যে ২ নম্বর" style="display: flex; justify-content: center; gap: 8px;"><span data-dc-tpl="33" style="width: 8px; height: 8px; border-radius: 4px; background: rgb(185, 192, 202);"></span><span data-dc-tpl="34" style="width: 24px; height: 8px; border-radius: 4px; background: rgb(27, 58, 107);"></span><span data-dc-tpl="35" style="width: 8px; height: 8px; border-radius: 4px; background: rgb(185, 192, 202);"></span></div><div data-dc-tpl="36" style="display: flex; gap: 12px;"><a data-dc-tpl="37" href="ProfileCreate.dc.html" style="height: 56px; padding: 0px 22px; border-radius: 28px; display: flex; align-items: center; justify-content: center; color: rgb(72, 80, 92); text-decoration: none; font-size: 17px; font-weight: 600;">স্কিপ</a><a data-dc-tpl="38" href="Onboarding3.dc.html" style="flex: 1 1 0%; height: 56px; border-radius: 28px; background: rgb(27, 58, 107); color: rgb(255, 255, 255); text-decoration: none; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;">পরের ধাপ<svg data-dc-tpl="39" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="40" d="M5 12 H19 M13 6 L19 12 L13 18"></path></svg></a></div></div></div></div></div>
+
+
+
+</body></html>

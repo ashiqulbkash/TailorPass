@@ -1,0 +1,3123 @@
+{
+ "app": "TailorPass — offline tailoring measurement app",
+ "platform": "Kotlin Multiplatform — shared Kotlin logic, Jetpack Compose (Android) + SwiftUI (iOS)",
+ "frame": "360x800 dp phone",
+ "sections": [
+  {
+   "number": "১",
+   "name": "প্রথমবার খোলা",
+   "name_en": "First launch",
+   "screens": [
+    "Language",
+    "Onboarding1",
+    "Onboarding2",
+    "Onboarding3",
+    "ProfileCreate"
+   ]
+  },
+  {
+   "number": "২",
+   "name": "হোম",
+   "name_en": "Home",
+   "screens": [
+    "Main",
+    "MainDark",
+    "HomeEmpty",
+    "ProfileSheet",
+    "SavedMenuSheet"
+   ]
+  },
+  {
+   "number": "৩",
+   "name": "মাপ নেওয়া শুরু",
+   "name_en": "Start measuring",
+   "screens": [
+    "Method",
+    "CameraPermission"
+   ]
+  },
+  {
+   "number": "৪",
+   "name": "ছবি তোলার প্রস্তুতি",
+   "name_en": "Photo preparation",
+   "screens": [
+    "Checklist",
+    "ChecklistFemale",
+    "PoseGuide",
+    "PoseGuideFemale"
+   ]
+  },
+  {
+   "number": "৫",
+   "name": "ক্যামেরা",
+   "name_en": "Camera",
+   "screens": [
+    "Camera",
+    "CameraDark",
+    "CameraFemale",
+    "CameraSide"
+   ]
+  },
+  {
+   "number": "৬",
+   "name": "ছবি যাচাই ও প্রসেসিং",
+   "name_en": "Photo check & processing",
+   "screens": [
+    "PhotoCheckSuccess",
+    "PhotoCheckProblem",
+    "AIFailed"
+   ]
+  },
+  {
+   "number": "৭",
+   "name": "ফিতা দিয়ে মাপ",
+   "name_en": "Tape measuring",
+   "screens": [
+    "ManualPrep",
+    "ManualList",
+    "ManualEntry",
+    "ManualSleeve",
+    "ManualWarnSheet",
+    "ManualLength",
+    "ManualSummary",
+    "ManualExitDialog",
+    "HomeIncomplete",
+    "ManualNeckDepth"
+   ]
+  },
+  {
+   "number": "৮",
+   "name": "মাপ যাচাই ও এডিট",
+   "name_en": "Review & edit",
+   "screens": [
+    "Verify",
+    "VerifyDark",
+    "EditSheet",
+    "VerifySK",
+    "VerifyManual"
+   ]
+  },
+  {
+   "number": "৯",
+   "name": "ফলাফল",
+   "name_en": "Results",
+   "screens": [
+    "Result",
+    "ResultDark",
+    "ResultSK",
+    "GenjiResult"
+   ]
+  },
+  {
+   "number": "১০",
+   "name": "শেয়ার করার ফাইল",
+   "name_en": "Share files",
+   "screens": [
+    "TailorPDF",
+    "TailorPDFSK",
+    "SharePNG"
+   ]
+  },
+  {
+   "number": "১১",
+   "name": "সাইজ চার্ট",
+   "name_en": "Size chart",
+   "screens": [
+    "SizeChart"
+   ]
+  },
+  {
+   "number": "১২",
+   "name": "সেটিংস",
+   "name_en": "Settings",
+   "screens": [
+    "Settings",
+    "BackupSnackbar",
+    "RestoreDialog",
+    "DeleteDialog",
+    "PrivacyPolicy",
+    "About"
+   ]
+  }
+ ],
+ "screens": [
+  {
+   "seq": 1,
+   "id": "Language",
+   "number": "১.১",
+   "number_en": "1.1",
+   "title": "১.১ ভাষা বাছাই",
+   "section": "১",
+   "section_name": "প্রথমবার খোলা",
+   "section_en": "First launch",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "First screen on install. Pick Bangla/English; privacy promise at bottom.",
+   "png": "screens/01_1-1_Language.png",
+   "html": "html/01_1-1_Language.html",
+   "links": [
+    {
+     "to": "Onboarding1",
+     "label": "বাংলা Bangla"
+    },
+    {
+     "to": "Onboarding1",
+     "label": "English ইংরেজি"
+    }
+   ],
+   "text": [
+    "ভাষা বেছে নিন",
+    "Choose your language",
+    "বাংলা",
+    "Bangla",
+    "English",
+    "ইংরেজি",
+    "আপনার ছবি বা মাপ কোথাও পাঠানো হয় না"
+   ]
+  },
+  {
+   "seq": 2,
+   "id": "Onboarding1",
+   "number": "১.২",
+   "number_en": "1.2",
+   "title": "১.২ অনবোর্ডিং — কীভাবে কাজ করে",
+   "section": "১",
+   "section_name": "প্রথমবার খোলা",
+   "section_en": "First launch",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Onboarding 1/3: how AI measuring works (3 steps). Skip + Next; dot indicator.",
+   "png": "screens/02_1-2_Onboarding1.png",
+   "html": "html/02_1-2_Onboarding1.html",
+   "links": [
+    {
+     "to": "ProfileCreate",
+     "label": "স্কিপ"
+    },
+    {
+     "to": "Onboarding2",
+     "label": "পরের ধাপ"
+    }
+   ],
+   "text": [
+    "বুক ৪০\"",
+    "উচ্চতা",
+    "মাপ-এ স্বাগতম",
+    "কীভাবে কাজ করে",
+    "১",
+    "নিজের উচ্চতা লিখুন",
+    "২",
+    "সামনে ও পাশ থেকে দুটি ছবি তুলুন",
+    "৩",
+    "অ্যাপ নিজেই মাপ বের করে দেবে",
+    "ফিতা থাকলে নিজে মেপেও লিখতে পারবেন।",
+    "স্কিপ",
+    "পরের ধাপ"
+   ]
+  },
+  {
+   "seq": 3,
+   "id": "Onboarding2",
+   "number": "১.৩",
+   "number_en": "1.3",
+   "title": "১.৩ অনবোর্ডিং — গোপনীয়তা",
+   "section": "১",
+   "section_name": "প্রথমবার খোলা",
+   "section_en": "First launch",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Onboarding 2/3: privacy (offline, nothing uploaded, delete anytime).",
+   "png": "screens/03_1-3_Onboarding2.png",
+   "html": "html/03_1-3_Onboarding2.html",
+   "links": [
+    {
+     "to": "ProfileCreate",
+     "label": "স্কিপ"
+    },
+    {
+     "to": "Onboarding3",
+     "label": "পরের ধাপ"
+    }
+   ],
+   "text": [
+    "আপনার তথ্য আপনার ফোনেই",
+    "ইন্টারনেট ছাড়াই পুরো অ্যাপ চলে",
+    "ছবি ও মাপ কোথাও আপলোড হয় না",
+    "আপনি যখন খুশি সব মুছে ফেলতে পারেন",
+    "স্কিপ",
+    "পরের ধাপ"
+   ]
+  },
+  {
+   "seq": 4,
+   "id": "Onboarding3",
+   "number": "১.৪",
+   "number_en": "1.4",
+   "title": "১.৪ অনবোর্ডিং — দর্জিকে শেয়ার",
+   "section": "১",
+   "section_name": "প্রথমবার খোলা",
+   "section_en": "First launch",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Onboarding 3/3: share to tailor as PDF/image; last slide has single \"Get started\".",
+   "png": "screens/04_1-4_Onboarding3.png",
+   "html": "html/04_1-4_Onboarding3.html",
+   "links": [
+    {
+     "to": "ProfileCreate",
+     "label": "শুরু করুন"
+    }
+   ],
+   "text": [
+    "PDF",
+    "দর্জি",
+    "অ্যাপে আছে",
+    "দর্জিকে পাঠান সহজে",
+    "PDF বা ছবি হিসেবে হোয়াটসঅ্যাপ, মেসেঞ্জারে পাঠান",
+    "দর্জির জন্য নোটও সাথে যায়",
+    "পাঠানোর পরেও মাপ অ্যাপে থেকে যায়",
+    "শুরু করুন"
+   ]
+  },
+  {
+   "seq": 5,
+   "id": "ProfileCreate",
+   "number": "১.৫",
+   "number_en": "1.5",
+   "title": "১.৫ প্রোফাইল তৈরি",
+   "section": "১",
+   "section_name": "প্রথমবার খোলা",
+   "section_en": "First launch",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Create profile: name, gender toggle, height ft-in/cm toggle, fit (slim/regular/loose) cards with illustrations.",
+   "png": "screens/05_1-5_ProfileCreate.png",
+   "html": "html/05_1-5_ProfileCreate.html",
+   "links": [
+    {
+     "to": "Onboarding3",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "Main",
+     "label": "প্রোফাইল সেভ করুন"
+    }
+   ],
+   "text": [
+    "প্রোফাইল তৈরি",
+    "যার মাপ নেবেন, তার তথ্য দিন",
+    "নাম",
+    "লিঙ্গ",
+    "ছেলে",
+    "মেয়ে",
+    "উচ্চতা",
+    "ফুট-ইঞ্চি",
+    "সেমি",
+    "ফুট",
+    "ইঞ্চি",
+    "= প্রায় ১৭০ সেমি · জুতা ছাড়া মাপুন",
+    "কেমন ফিট পছন্দ?",
+    "স্লিম",
+    "রেগুলার",
+    "লুজ",
+    "প্রোফাইল সেভ করুন"
+   ]
+  },
+  {
+   "seq": 6,
+   "id": "Main",
+   "number": "২.১",
+   "number_en": "2.1",
+   "title": "২.১ হোম",
+   "section": "২",
+   "section_name": "হোম",
+   "section_en": "Home",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Home (tab). Profile switcher chip opens 2.4; garment grid (6) starts a measurement; saved list (tap=open result, share icon, long-press=2.5). Bottom nav: Home / Size chart / Settings.",
+   "png": "screens/06_2-1_Main.png",
+   "html": "html/06_2-1_Main.html",
+   "links": [
+    {
+     "to": "Result",
+     "label": "পাঞ্জাবি ১৬ অক্টোবর ২০২৬ · সাইজ L"
+    },
+    {
+     "to": "Result",
+     "label": "শার্ট ২৮ সেপ্টেম্বর ২০২৬ · দর্জিকে পাঠানো"
+    },
+    {
+     "to": "Result",
+     "label": "প্যান্ট ১৫ আগস্ট ২০২৬ · কোমর ৩৪\""
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    }
+   ],
+   "text": [
+    "রা",
+    "কার মাপ?",
+    "রাহাত",
+    "নতুন মাপ নিন",
+    "শার্ট",
+    "ছেলেদের",
+    "প্যান্ট",
+    "ছেলেদের",
+    "পাঞ্জাবি",
+    "ছেলেদের",
+    "পায়জামা",
+    "ছেলেদের",
+    "সালওয়ার কামিজ",
+    "মেয়েদের",
+    "গেঞ্জি",
+    "সাইজ সাজেশন",
+    "সংরক্ষিত মাপ",
+    "৩টি",
+    "পাঞ্জাবি",
+    "১৬ অক্টোবর ২০২৬ · সাইজ L",
+    "শার্ট",
+    "২৮ সেপ্টেম্বর ২০২৬ ·",
+    "দর্জিকে পাঠানো",
+    "প্যান্ট",
+    "১৫ আগস্ট ২০২৬ · কোমর ৩৪\"",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস"
+   ]
+  },
+  {
+   "seq": 7,
+   "id": "MainDark",
+   "number": "২.২",
+   "number_en": "2.2",
+   "title": "২.২ হোম — ডার্ক",
+   "section": "২",
+   "section_name": "হোম",
+   "section_en": "Home",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Dark-mode variant of 2.1.",
+   "png": "screens/07_2-2_MainDark.png",
+   "html": "html/07_2-2_MainDark.html",
+   "links": [
+    {
+     "to": "ResultDark",
+     "label": "পাঞ্জাবি ১৬ অক্টোবর ২০২৬ · সাইজ L"
+    },
+    {
+     "to": "ResultDark",
+     "label": "শার্ট ২৮ সেপ্টেম্বর ২০২৬ · দর্জিকে পাঠানো"
+    },
+    {
+     "to": "ResultDark",
+     "label": "প্যান্ট ১৫ আগস্ট ২০২৬ · কোমর ৩৪\""
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    }
+   ],
+   "text": [
+    "রা",
+    "কার মাপ?",
+    "রাহাত",
+    "নতুন মাপ নিন",
+    "শার্ট",
+    "ছেলেদের",
+    "প্যান্ট",
+    "ছেলেদের",
+    "পাঞ্জাবি",
+    "ছেলেদের",
+    "পায়জামা",
+    "ছেলেদের",
+    "সালওয়ার কামিজ",
+    "মেয়েদের",
+    "গেঞ্জি",
+    "সাইজ সাজেশন",
+    "সংরক্ষিত মাপ",
+    "৩টি",
+    "পাঞ্জাবি",
+    "১৬ অক্টোবর ২০২৬ · সাইজ L",
+    "শার্ট",
+    "২৮ সেপ্টেম্বর ২০২৬ ·",
+    "দর্জিকে পাঠানো",
+    "প্যান্ট",
+    "১৫ আগস্ট ২০২৬ · কোমর ৩৪\"",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস"
+   ]
+  },
+  {
+   "seq": 8,
+   "id": "HomeEmpty",
+   "number": "২.৩",
+   "number_en": "2.3",
+   "title": "২.৩ হোম — খালি অবস্থা (আব্বু)",
+   "section": "২",
+   "section_name": "হোম",
+   "section_en": "Home",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Home empty state for a profile with no saved measurements (profile \"আব্বু\").",
+   "png": "screens/08_2-3_HomeEmpty.png",
+   "html": "html/08_2-3_HomeEmpty.html",
+   "links": [
+    {
+     "to": "ProfileSheet",
+     "label": "প্রোফাইল বদলান, এখন আব্বু"
+    },
+    {
+     "to": "Method",
+     "label": "শার্ট ছেলেদের"
+    },
+    {
+     "to": "Method",
+     "label": "প্যান্ট ছেলেদের"
+    },
+    {
+     "to": "Method",
+     "label": "পাঞ্জাবি ছেলেদের"
+    },
+    {
+     "to": "Method",
+     "label": "পায়জামা ছেলেদের"
+    },
+    {
+     "to": "Method",
+     "label": "সালওয়ার কামিজ মেয়েদের"
+    },
+    {
+     "to": "Method",
+     "label": "গেঞ্জি সাইজ সাজেশন"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    }
+   ],
+   "text": [
+    "আ",
+    "কার মাপ?",
+    "আব্বু",
+    "নতুন মাপ নিন",
+    "শার্ট",
+    "ছেলেদের",
+    "প্যান্ট",
+    "ছেলেদের",
+    "পাঞ্জাবি",
+    "ছেলেদের",
+    "পায়জামা",
+    "ছেলেদের",
+    "সালওয়ার কামিজ",
+    "মেয়েদের",
+    "গেঞ্জি",
+    "সাইজ সাজেশন",
+    "সংরক্ষিত মাপ",
+    "এখনো কোনো মাপ নেওয়া হয়নি।",
+    "উপরের কোনো পোশাক বেছে শুরু করুন।",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস"
+   ]
+  },
+  {
+   "seq": 9,
+   "id": "ProfileSheet",
+   "number": "২.৪",
+   "number_en": "2.4",
+   "title": "২.৪ প্রোফাইল বদলানো শিট",
+   "section": "২",
+   "section_name": "হোম",
+   "section_en": "Home",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": "Main",
+   "purpose": "Bottom sheet over Home: choose profile (radio), edit icon per profile, \"+ New profile\".",
+   "png": "screens/09_2-4_ProfileSheet.png",
+   "html": "html/09_2-4_ProfileSheet.html",
+   "links": [
+    {
+     "to": "Result",
+     "label": "পাঞ্জাবি ১৬ অক্টোবর ২০২৬ · সাইজ L"
+    },
+    {
+     "to": "Result",
+     "label": "শার্ট ২৮ সেপ্টেম্বর ২০২৬ · দর্জিকে পাঠানো"
+    },
+    {
+     "to": "Result",
+     "label": "প্যান্ট ১৫ আগস্ট ২০২৬ · কোমর ৩৪\""
+    },
+    {
+     "to": "Main",
+     "label": "হোম"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    },
+    {
+     "to": "ProfileCreate",
+     "label": "নতুন প্রোফাইল"
+    }
+   ],
+   "text": [
+    "রা",
+    "কার মাপ?",
+    "রাহাত",
+    "নতুন মাপ নিন",
+    "শার্ট",
+    "ছেলেদের",
+    "প্যান্ট",
+    "ছেলেদের",
+    "পাঞ্জাবি",
+    "ছেলেদের",
+    "পায়জামা",
+    "ছেলেদের",
+    "সালওয়ার কামিজ",
+    "মেয়েদের",
+    "গেঞ্জি",
+    "সাইজ সাজেশন",
+    "সংরক্ষিত মাপ",
+    "৩টি",
+    "পাঞ্জাবি",
+    "১৬ অক্টোবর ২০২৬ · সাইজ L",
+    "শার্ট",
+    "২৮ সেপ্টেম্বর ২০২৬ ·",
+    "দর্জিকে পাঠানো",
+    "প্যান্ট",
+    "১৫ আগস্ট ২০২৬ · কোমর ৩৪\"",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস",
+    "কার মাপ নেবেন?",
+    "রা",
+    "রাহাত",
+    "ছেলে · ৩টি মাপ",
+    "ফা",
+    "ফারহানা",
+    "মেয়ে · ২টি মাপ",
+    "আ",
+    "আব্বু",
+    "ছেলে · এখনো মাপ নেই",
+    "নতুন প্রোফাইল"
+   ]
+  },
+  {
+   "seq": 10,
+   "id": "SavedMenuSheet",
+   "number": "২.৫",
+   "number_en": "2.5",
+   "title": "২.৫ সংরক্ষিত মাপের মেনু",
+   "section": "২",
+   "section_name": "হোম",
+   "section_en": "Home",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": "Main",
+   "purpose": "Bottom sheet on long-press of a saved item: view/share, edit, measure again, delete (red).",
+   "png": "screens/10_2-5_SavedMenuSheet.png",
+   "html": "html/10_2-5_SavedMenuSheet.html",
+   "links": [
+    {
+     "to": "Result",
+     "label": "পাঞ্জাবি ১৬ অক্টোবর ২০২৬ · সাইজ L"
+    },
+    {
+     "to": "Result",
+     "label": "শার্ট ২৮ সেপ্টেম্বর ২০২৬ · দর্জিকে পাঠানো"
+    },
+    {
+     "to": "Result",
+     "label": "প্যান্ট ১৫ আগস্ট ২০২৬ · কোমর ৩৪\""
+    },
+    {
+     "to": "Main",
+     "label": "হোম"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    },
+    {
+     "to": "Result",
+     "label": "দেখুন ও শেয়ার করুন"
+    },
+    {
+     "to": "Verify",
+     "label": "মাপ এডিট করুন"
+    },
+    {
+     "to": "Method",
+     "label": "আবার মাপ নিন"
+    }
+   ],
+   "text": [
+    "রা",
+    "কার মাপ?",
+    "রাহাত",
+    "নতুন মাপ নিন",
+    "শার্ট",
+    "ছেলেদের",
+    "প্যান্ট",
+    "ছেলেদের",
+    "পাঞ্জাবি",
+    "ছেলেদের",
+    "পায়জামা",
+    "ছেলেদের",
+    "সালওয়ার কামিজ",
+    "মেয়েদের",
+    "গেঞ্জি",
+    "সাইজ সাজেশন",
+    "সংরক্ষিত মাপ",
+    "৩টি",
+    "পাঞ্জাবি",
+    "১৬ অক্টোবর ২০২৬ · সাইজ L",
+    "শার্ট",
+    "২৮ সেপ্টেম্বর ২০২৬ ·",
+    "দর্জিকে পাঠানো",
+    "প্যান্ট",
+    "১৫ আগস্ট ২০২৬ · কোমর ৩৪\"",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস",
+    "পাঞ্জাবি",
+    "রাহাত · ১৬ অক্টোবর ২০২৬ · সাইজ L",
+    "দেখুন ও শেয়ার করুন",
+    "মাপ এডিট করুন",
+    "আবার মাপ নিন",
+    "মুছে ফেলুন"
+   ]
+  },
+  {
+   "seq": 11,
+   "id": "Method",
+   "number": "৩.১",
+   "number_en": "3.1",
+   "title": "৩.১ পদ্ধতি বাছাই",
+   "section": "৩",
+   "section_name": "মাপ নেওয়া শুরু",
+   "section_en": "Start measuring",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Choose method: AI photos (primary, highlighted) or tape. Each card navigates.",
+   "png": "screens/11_3-1_Method.png",
+   "html": "html/11_3-1_Method.html",
+   "links": [
+    {
+     "to": "Main",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "Checklist",
+     "label": "সহজ ছবি দিয়ে মাপ (AI) সামনে ও পাশ থেকে দুটি ছবি তুললেই অ্যাপ মাপ বের করে দেবে। এটি বেছে নিন"
+    },
+    {
+     "to": "ManualEntry",
+     "label": "ফিতা লাগবে ফিতা দিয়ে নিজে মাপুন ছবি দেখে দেখে একটি একটি করে মাপ লিখে দিন। এটি বেছে নিন"
+    }
+   ],
+   "text": [
+    "কীভাবে মাপ নেবেন?",
+    "পাঞ্জাবি · রাহাত",
+    "সহজ",
+    "ছবি দিয়ে মাপ (AI)",
+    "সামনে ও পাশ থেকে দুটি ছবি তুললেই অ্যাপ মাপ বের করে দেবে।",
+    "এটি বেছে নিন",
+    "ফিতা লাগবে",
+    "ফিতা দিয়ে নিজে মাপুন",
+    "ছবি দেখে দেখে একটি একটি করে মাপ লিখে দিন।",
+    "এটি বেছে নিন",
+    "যেভাবেই মাপ নিন, পরে যেকোনো মাপ হাতে ঠিক করা যাবে।"
+   ]
+  },
+  {
+   "seq": 12,
+   "id": "CameraPermission",
+   "number": "৩.২",
+   "number_en": "3.2",
+   "title": "৩.২ ক্যামেরা পারমিশন",
+   "section": "৩",
+   "section_name": "মাপ নেওয়া শুরু",
+   "section_en": "Start measuring",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Pre-permission explainer before the OS camera prompt; secondary link to tape flow.",
+   "png": "screens/12_3-2_CameraPermission.png",
+   "html": "html/12_3-2_CameraPermission.html",
+   "links": [
+    {
+     "to": "Method",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "PoseGuide",
+     "label": "অনুমতি দিন"
+    },
+    {
+     "to": "ManualEntry",
+     "label": "ফিতা দিয়ে মাপুন"
+    }
+   ],
+   "text": [
+    "ক্যামেরা ব্যবহারের অনুমতি",
+    "শুধু মাপ নেওয়ার জন্য। ছবি কোথাও সেভ বা পাঠানো হয় না, মাপ বের হলেই মুছে যায়।",
+    "পরের পর্দায় ফোন অনুমতি চাইলে \"অনুমতি দিন\" চাপুন",
+    "অনুমতি দিন",
+    "ফিতা দিয়ে মাপুন"
+   ]
+  },
+  {
+   "seq": 13,
+   "id": "Checklist",
+   "number": "৪.১",
+   "number_en": "4.1",
+   "title": "৪.১ সতর্কতা চেকলিস্ট — পাঞ্জাবি",
+   "section": "৪",
+   "section_name": "ছবি তোলার প্রস্তুতি",
+   "section_en": "Photo preparation",
+   "size": "360x800",
+   "interactive": true,
+   "overlay_on": null,
+   "purpose": "Pre-photo checklist (panjabi). 5 checkboxes; Continue disabled until all ticked. Garment tip card.",
+   "png": "screens/13_4-1_Checklist.png",
+   "html": "html/13_4-1_Checklist.html",
+   "links": [
+    {
+     "to": "Method",
+     "label": "পেছনে যান"
+    }
+   ],
+   "text": [
+    "ছবি তোলার আগে",
+    "ঠিক থাকলে প্রতিটিতে টিক দিন",
+    "টাইট বা শরীরে লাগানো পোশাক",
+    "ঢিলা জামায় মাপ বড় আসে",
+    "ভালো আলো",
+    "দিনের আলো বা উজ্জ্বল ঘর",
+    "সাধারণ পটভূমি",
+    "খালি দেয়ালের সামনে দাঁড়ান",
+    "ফোন কোমরের উচ্চতায়",
+    "টেবিল বা তাকে সোজা করে রাখুন",
+    "সোজা হয়ে দাঁড়ান",
+    "পা একটু ফাঁক, হাত শরীর থেকে দূরে",
+    "পাঞ্জাবির জন্য",
+    "হাত শরীর থেকে একটু দূরে রাখুন, যাতে হাতা ও আর্মহোল মাপা যায়",
+    "৫টির মধ্যে ৩টি ঠিক আছে",
+    "এগিয়ে যান",
+    "সবগুলোতে টিক দিলে বোতাম চালু হবে"
+   ]
+  },
+  {
+   "seq": 14,
+   "id": "ChecklistFemale",
+   "number": "৪.২",
+   "number_en": "4.2",
+   "title": "৪.২ সতর্কতা চেকলিস্ট — সালওয়ার কামিজ",
+   "section": "৪",
+   "section_name": "ছবি তোলার প্রস্তুতি",
+   "section_en": "Photo preparation",
+   "size": "360x800",
+   "interactive": true,
+   "overlay_on": null,
+   "purpose": "Same checklist for salwar kameez with female-specific item and tip.",
+   "png": "screens/14_4-2_ChecklistFemale.png",
+   "html": "html/14_4-2_ChecklistFemale.html",
+   "links": [
+    {
+     "to": "Method",
+     "label": "পেছনে যান"
+    }
+   ],
+   "text": [
+    "ছবি তোলার আগে",
+    "সালওয়ার কামিজ · ফারহানা",
+    "শরীরে লাগানো পোশাক",
+    "ওড়না ও ঢিলা পোশাক সরিয়ে রাখুন",
+    "ভালো আলো",
+    "দিনের আলো বা উজ্জ্বল ঘর",
+    "সাধারণ পটভূমি",
+    "খালি দেয়ালের সামনে দাঁড়ান",
+    "ফোন কোমরের উচ্চতায়",
+    "টেবিল বা তাকে সোজা করে রাখুন",
+    "সোজা হয়ে দাঁড়ান",
+    "পা একটু ফাঁক, হাত শরীর থেকে দূরে",
+    "সালওয়ার কামিজের জন্য",
+    "চুল বেঁধে বা পিঠের দিকে রাখুন, যাতে কাঁধ ও গলা দেখা যায়",
+    "৫টির মধ্যে ২টি ঠিক আছে",
+    "এগিয়ে যান",
+    "সবগুলোতে টিক দিলে বোতাম চালু হবে"
+   ]
+  },
+  {
+   "seq": 15,
+   "id": "PoseGuide",
+   "number": "৪.৩",
+   "number_en": "4.3",
+   "title": "৪.৩ পোজ গাইড — ছেলে",
+   "section": "৪",
+   "section_name": "ছবি তোলার প্রস্তুতি",
+   "section_en": "Photo preparation",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Pose guide (male): front + side pose diagrams, 2–3 m distance diagram, tips; Open camera.",
+   "png": "screens/15_4-3_PoseGuide.png",
+   "html": "html/15_4-3_PoseGuide.html",
+   "links": [
+    {
+     "to": "Checklist",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "Camera",
+     "label": "ক্যামেরা চালু করুন"
+    }
+   ],
+   "text": [
+    "এভাবে দাঁড়ান",
+    "দুটি ছবি, দুটি পোজ",
+    "১. সামনে থেকে",
+    "ক্যামেরার দিকে মুখ করে",
+    "২. পাশ থেকে",
+    "ডান দিকে ঘুরে দাঁড়ান",
+    "কোমরের উচ্চতা",
+    "২–৩ মিটার",
+    "মানে প্রায় ৭–১০ ফুট, বা ৪–৫ কদম দূরে",
+    "হাত শরীর থেকে একটু দূরে রাখুন",
+    "কখন ঘুরতে হবে, ভয়েস গাইড বলে দেবে",
+    "ক্যামেরা চালু করুন"
+   ]
+  },
+  {
+   "seq": 16,
+   "id": "PoseGuideFemale",
+   "number": "৪.৪",
+   "number_en": "4.4",
+   "title": "৪.৪ পোজ গাইড — মেয়ে",
+   "section": "৪",
+   "section_name": "ছবি তোলার প্রস্তুতি",
+   "section_en": "Photo preparation",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Pose guide (female) variant.",
+   "png": "screens/16_4-4_PoseGuideFemale.png",
+   "html": "html/16_4-4_PoseGuideFemale.html",
+   "links": [
+    {
+     "to": "ChecklistFemale",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "CameraFemale",
+     "label": "ক্যামেরা চালু করুন"
+    }
+   ],
+   "text": [
+    "এভাবে দাঁড়ান",
+    "সালওয়ার কামিজ · ফারহানা",
+    "১. সামনে থেকে",
+    "ক্যামেরার দিকে মুখ করে",
+    "২. পাশ থেকে",
+    "ডান দিকে ঘুরে দাঁড়ান",
+    "কোমরের উচ্চতা",
+    "২–৩ মিটার",
+    "মানে প্রায় ৭–১০ ফুট, বা ৪–৫ কদম দূরে",
+    "হাত শরীর থেকে একটু দূরে রাখুন",
+    "চুল বেঁধে বা পিঠের দিকে রাখুন, যাতে কাঁধ দেখা যায়",
+    "ক্যামেরা চালু করুন"
+   ]
+  },
+  {
+   "seq": 17,
+   "id": "Camera",
+   "number": "৫.১",
+   "number_en": "5.1",
+   "title": "৫.১ সামনের ছবি ১/২ — ছেলে",
+   "section": "৫",
+   "section_name": "ক্যামেরা",
+   "section_en": "Camera",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Full-screen camera: dashed body outline overlay, step pill 1/2, voice-guide toggle, top instruction banner (orange = correction), 10 s timer, start button.",
+   "png": "screens/17_5-1_Camera.png",
+   "html": "html/17_5-1_Camera.html",
+   "links": [
+    {
+     "to": "Main",
+     "label": "বন্ধ করুন"
+    }
+   ],
+   "text": [
+    "সামনের ছবি ১/২",
+    "আরেকটু পেছনে যান",
+    "মাথা থেকে পা পর্যন্ত দাগের ভেতরে আনুন",
+    "১০",
+    "১০ সেকেন্ডের টাইমার",
+    "ফোন দেয়ালে ঠেস দিয়ে রাখুন, তারপর সোজা দাঁড়ান",
+    "ছবি তোলা শুরু করুন"
+   ]
+  },
+  {
+   "seq": 18,
+   "id": "CameraDark",
+   "number": "৫.২",
+   "number_en": "5.2",
+   "title": "৫.২ সামনের ছবি ১/২ — ডার্ক",
+   "section": "৫",
+   "section_name": "ক্যামেরা",
+   "section_en": "Camera",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Dark-mode camera variant.",
+   "png": "screens/18_5-2_CameraDark.png",
+   "html": "html/18_5-2_CameraDark.html",
+   "links": [
+    {
+     "to": "MainDark",
+     "label": "বন্ধ করুন"
+    }
+   ],
+   "text": [
+    "সামনের ছবি ১/২",
+    "আরেকটু পেছনে যান",
+    "মাথা থেকে পা পর্যন্ত দাগের ভেতরে আনুন",
+    "১০",
+    "১০ সেকেন্ডের টাইমার",
+    "ফোন দেয়ালে ঠেস দিয়ে রাখুন, তারপর সোজা দাঁড়ান",
+    "ছবি তোলা শুরু করুন"
+   ]
+  },
+  {
+   "seq": 19,
+   "id": "CameraFemale",
+   "number": "৫.৩",
+   "number_en": "5.3",
+   "title": "৫.৩ সামনের ছবি ১/২ — মেয়ে",
+   "section": "৫",
+   "section_name": "ক্যামেরা",
+   "section_en": "Camera",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Camera with female outline; banner \"move arms out\".",
+   "png": "screens/19_5-3_CameraFemale.png",
+   "html": "html/19_5-3_CameraFemale.html",
+   "links": [
+    {
+     "to": "Main",
+     "label": "বন্ধ করুন"
+    }
+   ],
+   "text": [
+    "সামনের ছবি ১/২",
+    "হাত একটু দূরে রাখুন",
+    "কোমর ও হিপের দুই পাশ যেন দেখা যায়",
+    "১০",
+    "১০ সেকেন্ডের টাইমার",
+    "ফারহানা · উচ্চতা ৫ ফুট ৩ ইঞ্চি",
+    "ছবি তোলা শুরু করুন"
+   ]
+  },
+  {
+   "seq": 20,
+   "id": "CameraSide",
+   "number": "৫.৪",
+   "number_en": "5.4",
+   "title": "৫.৪ পাশের ছবি ২/২",
+   "section": "৫",
+   "section_name": "ক্যামেরা",
+   "section_en": "Camera",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Camera step 2/2: side outline, neutral instruction banner \"turn right\".",
+   "png": "screens/20_5-4_CameraSide.png",
+   "html": "html/20_5-4_CameraSide.html",
+   "links": [
+    {
+     "to": "Main",
+     "label": "বন্ধ করুন"
+    }
+   ],
+   "text": [
+    "পাশের ছবি ২/২",
+    "ডান দিকে ঘুরে দাঁড়ান",
+    "হাত সোজা নিচে, দাগের ভেতরে থাকুন",
+    "১০",
+    "১০ সেকেন্ডের টাইমার",
+    "সামনের ছবি নেওয়া হয়েছে। এবার পাশ থেকে।",
+    "ছবি তোলা শুরু করুন"
+   ]
+  },
+  {
+   "seq": 21,
+   "id": "PhotoCheckSuccess",
+   "number": "৬.১",
+   "number_en": "6.1",
+   "title": "৬.১ ছবি যাচাই — সফল ও প্রসেসিং",
+   "section": "৬",
+   "section_name": "ছবি যাচাই ও প্রসেসিং",
+   "section_en": "Photo check & processing",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Both photos OK (green), processing progress bar + step list; cancel.",
+   "png": "screens/21_6-1_PhotoCheckSuccess.png",
+   "html": "html/21_6-1_PhotoCheckSuccess.html",
+   "links": [
+    {
+     "to": "Camera",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "Method",
+     "label": "বাতিল করুন"
+    }
+   ],
+   "text": [
+    "ছবি যাচাই",
+    "পাঞ্জাবি · রাহাত",
+    "দুটি ছবিই ঠিক আছে",
+    "সামনের ছবি",
+    "পাশের ছবি",
+    "মাপ বের করা হচ্ছে…",
+    "৬৮%",
+    "শরীরের আকার চেনা হয়েছে",
+    "উচ্চতার সাথে মেলানো হয়েছে",
+    "মাপ হিসাব হচ্ছে",
+    "সাইজ সাজেশন",
+    "ইন্টারনেট লাগছে না, সব হিসাব ফোনেই হচ্ছে",
+    "বাতিল করুন"
+   ]
+  },
+  {
+   "seq": 22,
+   "id": "PhotoCheckProblem",
+   "number": "৬.২",
+   "number_en": "6.2",
+   "title": "৬.২ ছবি যাচাই — সমস্যা",
+   "section": "৬",
+   "section_name": "ছবি যাচাই ও প্রসেসিং",
+   "section_en": "Photo check & processing",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Photo rejected: orange reason card, checklist of what passed/failed, Retake.",
+   "png": "screens/22_6-2_PhotoCheckProblem.png",
+   "html": "html/22_6-2_PhotoCheckProblem.html",
+   "links": [
+    {
+     "to": "Camera",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "Camera",
+     "label": "আবার তুলুন"
+    }
+   ],
+   "text": [
+    "ছবি যাচাই",
+    "সামনের ছবি ১/২",
+    "আলো কম",
+    "ছবি অন্ধকার, আলো বাড়ান",
+    "শরীরের কিনারা পরিষ্কার দেখা যাচ্ছে না। ঘরের লাইট জ্বালান বা জানালার দিকে মুখ করে দাঁড়ান।",
+    "পুরো শরীর ফ্রেমের ভেতরে আছে",
+    "সোজা হয়ে দাঁড়ানো ঠিক আছে",
+    "আলো যথেষ্ট নয়",
+    "আবার তুলুন"
+   ]
+  },
+  {
+   "seq": 23,
+   "id": "AIFailed",
+   "number": "৬.৩",
+   "number_en": "6.3",
+   "title": "৬.৩ মাপ বের করা যায়নি",
+   "section": "৬",
+   "section_name": "ছবি যাচাই ও প্রসেসিং",
+   "section_en": "Photo check & processing",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "AI could not measure: reasons list; primary Retake, secondary Measure with tape.",
+   "png": "screens/23_6-3_AIFailed.png",
+   "html": "html/23_6-3_AIFailed.html",
+   "links": [
+    {
+     "to": "Main",
+     "label": "হোমে ফিরুন"
+    },
+    {
+     "to": "Camera",
+     "label": "আবার ছবি তুলুন"
+    },
+    {
+     "to": "ManualEntry",
+     "label": "ফিতা দিয়ে মাপুন"
+    }
+   ],
+   "text": [
+    "পাঞ্জাবি · রাহাত",
+    "মাপ বের করা যায়নি",
+    "চিন্তা করবেন না, আবার ছবি তুললেই সাধারণত ঠিক হয়ে যায়।",
+    "সম্ভাব্য কারণ",
+    "শরীরের কিছু অংশ (মাথা বা পা) ফ্রেমের বাইরে ছিল",
+    "জামা অনেক ঢিলা, শরীরের আকার বোঝা যায়নি",
+    "আলো কম, বা পেছনে অনেক জিনিস ছিল",
+    "আবার ছবি তুলুন",
+    "ফিতা দিয়ে মাপুন"
+   ]
+  },
+  {
+   "seq": 24,
+   "id": "ManualPrep",
+   "number": "৭.১",
+   "number_en": "7.1",
+   "title": "৭.১ প্রস্তুতি",
+   "section": "৭",
+   "section_name": "ফিতা দিয়ে মাপ",
+   "section_en": "Tape measuring",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Tape flow intro: what you need, helper advice, one-finger tightness illustration, unit toggle, Start.",
+   "png": "screens/24_7-1_ManualPrep.png",
+   "html": "html/24_7-1_ManualPrep.html",
+   "links": [
+    {
+     "to": "Method",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "ManualList",
+     "label": "শুরু করুন"
+    }
+   ],
+   "text": [
+    "ফিতা দিয়ে মাপার আগে",
+    "পাঞ্জাবি · রাহাত",
+    "যা লাগবে: মাপার ফিতা (দর্জির নরম ফিতা)",
+    "পারলে কাউকে পাশে রাখুন, পুট ও হাতা নিজে মাপা কঠিন",
+    "পাতলা জামা পরুন, সোজা হয়ে দাঁড়ান",
+    "ফিতা টানটানও না, ঢিলাও না, ভেতরে এক আঙুল ঢুকবে",
+    "মাপের একক",
+    "ইঞ্চি",
+    "সেমি",
+    "শুরু করুন"
+   ]
+  },
+  {
+   "seq": 25,
+   "id": "ManualList",
+   "number": "৭.২",
+   "number_en": "7.2",
+   "title": "৭.২ মাপের তালিকা",
+   "section": "৭",
+   "section_name": "ফিতা দিয়ে মাপ",
+   "section_en": "Tape measuring",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Tape flow overview: body vs preference measurements, done/now/pending states, \"helper needed\" badges; rows jump to that measurement.",
+   "png": "screens/25_7-2_ManualList.png",
+   "html": "html/25_7-2_ManualList.html",
+   "links": [
+    {
+     "to": "ManualPrep",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "ManualEntry",
+     "label": "১ গলা (Neck) ১৫½\""
+    },
+    {
+     "to": "ManualEntry",
+     "label": "২ পুট (Shoulder) সাহায্যকারী লাগবে ১৮\""
+    },
+    {
+     "to": "ManualEntry",
+     "label": "৩ বুক (Chest) এখন"
+    },
+    {
+     "to": "ManualEntry",
+     "label": "৪ পেট (Waist) বাকি"
+    },
+    {
+     "to": "ManualEntry",
+     "label": "৫ হিপ (Hip) বাকি"
+    },
+    {
+     "to": "ManualSleeve",
+     "label": "৬ হাতা (Sleeve) সাহায্যকারী লাগবে বাকি"
+    },
+    {
+     "to": "ManualLength",
+     "label": "৭ হাতার মুখ (Cuff) বাকি"
+    },
+    {
+     "to": "ManualLength",
+     "label": "৮ ঝুল (Length) বাকি"
+    },
+    {
+     "to": "ManualEntry",
+     "label": "চালিয়ে যান (৩/৮)"
+    }
+   ],
+   "text": [
+    "৮টি মাপ নিতে হবে",
+    "প্রায় ৫ মিনিট · পাঞ্জাবি · রাহাত",
+    "শরীরের মাপ",
+    "৬টি",
+    "১",
+    "গলা (Neck)",
+    "১৫½\"",
+    "২",
+    "পুট (Shoulder)",
+    "সাহায্যকারী লাগবে",
+    "১৮\"",
+    "৩",
+    "বুক (Chest)",
+    "এখন",
+    "৪",
+    "পেট (Waist)",
+    "বাকি",
+    "৫",
+    "হিপ (Hip)",
+    "বাকি",
+    "৬",
+    "হাতা (Sleeve)",
+    "সাহায্যকারী লাগবে",
+    "বাকি",
+    "পছন্দের মাপ",
+    "২টি",
+    "৭",
+    "হাতার মুখ (Cuff)",
+    "বাকি",
+    "৮",
+    "ঝুল (Length)",
+    "বাকি",
+    "যেকোনো মাপে চাপ দিলে সেটিতে চলে যাবে",
+    "চালিয়ে যান (৩/৮)"
+   ]
+  },
+  {
+   "seq": 26,
+   "id": "ManualEntry",
+   "number": "৭.৩",
+   "number_en": "7.3",
+   "title": "৭.৩ শরীরের মাপ — বুক",
+   "section": "৭",
+   "section_name": "ফিতা দিয়ে মাপ",
+   "section_en": "Tape measuring",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Tape entry (chest, 3/8): highlighted diagram, how-to, collapsible \"avoid mistakes\" (closed), big number field with −/+ (0.5\"), Later + Next. Back left, list icon right.",
+   "png": "screens/26_7-3_ManualEntry.png",
+   "html": "html/26_7-3_ManualEntry.html",
+   "links": [
+    {
+     "to": "ManualList",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "ManualList",
+     "label": "সব মাপের তালিকা"
+    },
+    {
+     "to": "ManualList",
+     "label": "পরে দেব"
+    },
+    {
+     "to": "ManualSleeve",
+     "label": "পরের মাপ"
+    }
+   ],
+   "text": [
+    "ফিতা দিয়ে মাপ",
+    "পাঞ্জাবি · রাহাত",
+    "৩/৮",
+    "বগলের নিচ দিয়ে",
+    "বুক (Chest)",
+    "বগলের নিচ দিয়ে, বুকের সবচেয়ে চওড়া জায়গায় ফিতা ঘুরিয়ে মাপুন। শ্বাস স্বাভাবিক রাখুন।",
+    "ভুল এড়াতে",
+    "ইঞ্চি",
+    "চাপ দিয়ে লিখুন · −/+ আধা ইঞ্চি",
+    "পরে দেব",
+    "পরের মাপ"
+   ]
+  },
+  {
+   "seq": 27,
+   "id": "ManualSleeve",
+   "number": "৭.৪",
+   "number_en": "7.4",
+   "title": "৭.৪ শরীরের মাপ — হাতা (সাহায্যকারী লাগবে)",
+   "section": "৭",
+   "section_name": "ফিতা দিয়ে মাপ",
+   "section_en": "Tape measuring",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Tape entry (sleeve, 6/8): helper banner, sleeve path diagram, \"avoid mistakes\" expanded with 2 tips.",
+   "png": "screens/27_7-4_ManualSleeve.png",
+   "html": "html/27_7-4_ManualSleeve.html",
+   "links": [
+    {
+     "to": "ManualEntry",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "ManualList",
+     "label": "সব মাপের তালিকা"
+    },
+    {
+     "to": "ManualList",
+     "label": "পরে দেব"
+    },
+    {
+     "to": "ManualLength",
+     "label": "পরের মাপ"
+    }
+   ],
+   "text": [
+    "ফিতা দিয়ে মাপ",
+    "পাঞ্জাবি · রাহাত",
+    "৬/৮",
+    "এটি কাউকে দিয়ে মাপালে সঠিক হবে",
+    "কাঁধ",
+    "কনুই",
+    "কব্জি",
+    "হাতা (Sleeve)",
+    "কাঁধের হাড় থেকে কনুই হয়ে কব্জি পর্যন্ত মাপুন।",
+    "ভুল এড়াতে",
+    "হাত পুরো সোজা রাখবেন না, একটু ভাঁজ করুন",
+    "কাঁধের হাড়ের কিনারা থেকে মাপ শুরু করুন",
+    "ইঞ্চি",
+    "চাপ দিয়ে লিখুন · −/+ আধা ইঞ্চি",
+    "পরে দেব",
+    "পরের মাপ"
+   ]
+  },
+  {
+   "seq": 28,
+   "id": "ManualWarnSheet",
+   "number": "৭.৫",
+   "number_en": "7.5",
+   "title": "৭.৫ অস্বাভাবিক মাপের সতর্কতা",
+   "section": "৭",
+   "section_name": "ফিতা দিয়ে মাপ",
+   "section_en": "Tape measuring",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": "ManualEntry",
+   "purpose": "Outlier warning bottom sheet over 7.3 (value 14\" outside 30–50\"): Measure again / Yes it is correct.",
+   "png": "screens/28_7-5_ManualWarnSheet.png",
+   "html": "html/28_7-5_ManualWarnSheet.html",
+   "links": [
+    {
+     "to": "ManualList",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "ManualList",
+     "label": "সব মাপের তালিকা"
+    },
+    {
+     "to": "ManualList",
+     "label": "পরে দেব"
+    },
+    {
+     "to": "ManualSleeve",
+     "label": "পরের মাপ"
+    },
+    {
+     "to": "ManualEntry",
+     "label": "আবার মাপব"
+    }
+   ],
+   "text": [
+    "ফিতা দিয়ে মাপ",
+    "পাঞ্জাবি · রাহাত",
+    "৩/৮",
+    "বগলের নিচ দিয়ে",
+    "বুক (Chest)",
+    "বগলের নিচ দিয়ে, বুকের সবচেয়ে চওড়া জায়গায় ফিতা ঘুরিয়ে মাপুন। শ্বাস স্বাভাবিক রাখুন।",
+    "ভুল এড়াতে",
+    "ইঞ্চি",
+    "চাপ দিয়ে লিখুন · −/+ আধা ইঞ্চি",
+    "পরে দেব",
+    "পরের মাপ",
+    "মাপটা ঠিক আছে তো?",
+    "বুকের মাপ সাধারণত ৩০\"–৫০\" হয়।",
+    "আপনি লিখেছেন ১৪\"",
+    "আবার মাপব",
+    "হ্যাঁ, ঠিক আছে"
+   ]
+  },
+  {
+   "seq": 29,
+   "id": "ManualLength",
+   "number": "৭.৬",
+   "number_en": "7.6",
+   "title": "৭.৬ পছন্দের মাপ — ঝুল",
+   "section": "৭",
+   "section_name": "ফিতা দিয়ে মাপ",
+   "section_en": "Tape measuring",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Preference: length 8/8 — three picture cards (above knee/at knee/below knee) with values from height, editable number, tip, Finish.",
+   "png": "screens/29_7-6_ManualLength.png",
+   "html": "html/29_7-6_ManualLength.html",
+   "links": [
+    {
+     "to": "ManualSleeve",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "ManualList",
+     "label": "সব মাপের তালিকা"
+    },
+    {
+     "to": "ManualSummary",
+     "label": "শেষ করুন"
+    }
+   ],
+   "text": [
+    "ফিতা দিয়ে মাপ",
+    "পাঞ্জাবি · রাহাত",
+    "✎ পছন্দের মাপ",
+    "ঝুল (Length) · ৮/৮",
+    "পাঞ্জাবি কতটা লম্বা চান? কাঁধ থেকে নিচে মাপা হয়।",
+    "হাঁটুর ওপরে",
+    "৩৮\"",
+    "হাঁটু পর্যন্ত",
+    "৪২\"",
+    "হাঁটুর নিচে",
+    "৪৫\"",
+    "হাঁটু · আপনার উচ্চতা (৫ ফুট ৭ ইঞ্চি) অনুযায়ী হিসাব",
+    "ইঞ্চি",
+    "পছন্দের পুরনো পাঞ্জাবি থাকলে সেটার ঝুল মেপে লিখুন",
+    "শেষ করুন"
+   ]
+  },
+  {
+   "seq": 30,
+   "id": "ManualSummary",
+   "number": "৭.৭",
+   "number_en": "7.7",
+   "title": "৭.৭ সারসংক্ষেপ",
+   "section": "৭",
+   "section_name": "ফিতা দিয়ে মাপ",
+   "section_en": "Tape measuring",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Summary of all 8 values with edit; missing hip row in orange with \"Measure now\"; banner; primary Review, link Skip.",
+   "png": "screens/30_7-7_ManualSummary.png",
+   "html": "html/30_7-7_ManualSummary.html",
+   "links": [
+    {
+     "to": "ManualLength",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "ManualList",
+     "label": "গলা (Neck) ১৫½\""
+    },
+    {
+     "to": "ManualList",
+     "label": "পুট (Shoulder) ১৮\""
+    },
+    {
+     "to": "ManualEntry",
+     "label": "বুক (Chest) ৪০\""
+    },
+    {
+     "to": "ManualList",
+     "label": "পেট (Waist) ৩৬\""
+    },
+    {
+     "to": "ManualEntry",
+     "label": "এখন মাপুন"
+    },
+    {
+     "to": "ManualSleeve",
+     "label": "হাতা (Sleeve) ২৪½\""
+    },
+    {
+     "to": "ManualList",
+     "label": "হাতার মুখ (Cuff) ১০\""
+    },
+    {
+     "to": "ManualLength",
+     "label": "ঝুল (Length) ৪২\""
+    },
+    {
+     "to": "VerifyManual",
+     "label": "যাচাই করে ফলাফল দেখুন"
+    },
+    {
+     "to": "VerifyManual",
+     "label": "বাদ রেখেই এগিয়ে যান"
+    }
+   ],
+   "text": [
+    "সব মাপ একনজরে",
+    "পাঞ্জাবি · রাহাত · ইঞ্চি",
+    "১টি মাপ বাদ আছে। বাদ রাখলে দর্জিকে মেপে নিতে বলা হবে।",
+    "গলা (Neck)",
+    "১৫½\"",
+    "পুট (Shoulder)",
+    "১৮\"",
+    "বুক (Chest)",
+    "৪০\"",
+    "পেট (Waist)",
+    "৩৬\"",
+    "হিপ (Hip)",
+    "বাদ আছে",
+    "এখন মাপুন",
+    "হাতা (Sleeve)",
+    "২৪½\"",
+    "হাতার মুখ (Cuff)",
+    "১০\"",
+    "ঝুল (Length)",
+    "৪২\"",
+    "যাচাই করে ফলাফল দেখুন",
+    "বাদ রেখেই এগিয়ে যান"
+   ]
+  },
+  {
+   "seq": 31,
+   "id": "ManualExitDialog",
+   "number": "৭.৮",
+   "number_en": "7.8",
+   "title": "৭.৮ মাঝপথে বের হওয়া",
+   "section": "৭",
+   "section_name": "ফিতা দিয়ে মাপ",
+   "section_en": "Tape measuring",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": "ManualEntry",
+   "purpose": "Dialog over 7.3 when leaving mid-flow: progress is saved; Keep going / Later.",
+   "png": "screens/31_7-8_ManualExitDialog.png",
+   "html": "html/31_7-8_ManualExitDialog.html",
+   "links": [
+    {
+     "to": "ManualList",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "ManualList",
+     "label": "সব মাপের তালিকা"
+    },
+    {
+     "to": "ManualList",
+     "label": "পরে দেব"
+    },
+    {
+     "to": "ManualSleeve",
+     "label": "পরের মাপ"
+    },
+    {
+     "to": "HomeIncomplete",
+     "label": "পরে করব"
+    },
+    {
+     "to": "ManualEntry",
+     "label": "চালিয়ে যান"
+    }
+   ],
+   "text": [
+    "ফিতা দিয়ে মাপ",
+    "পাঞ্জাবি · রাহাত",
+    "৩/৮",
+    "বগলের নিচ দিয়ে",
+    "বুক (Chest)",
+    "বগলের নিচ দিয়ে, বুকের সবচেয়ে চওড়া জায়গায় ফিতা ঘুরিয়ে মাপুন। শ্বাস স্বাভাবিক রাখুন।",
+    "ভুল এড়াতে",
+    "ইঞ্চি",
+    "চাপ দিয়ে লিখুন · −/+ আধা ইঞ্চি",
+    "পরে দেব",
+    "পরের মাপ",
+    "মাপ নেওয়া থামাবেন?",
+    "যে ৪টি মাপ নিয়েছেন তা সেভ থাকবে। পরে হোম থেকে বাকিটা চালিয়ে যেতে পারবেন।",
+    "পরে করব",
+    "চালিয়ে যান"
+   ]
+  },
+  {
+   "seq": 32,
+   "id": "HomeIncomplete",
+   "number": "৭.৯",
+   "number_en": "7.9",
+   "title": "৭.৯ হোম — অসমাপ্ত মাপ",
+   "section": "৭",
+   "section_name": "ফিতা দিয়ে মাপ",
+   "section_en": "Tape measuring",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Home with an incomplete measurement card at top (orange left border, 4/8 progress, Continue).",
+   "png": "screens/32_7-9_HomeIncomplete.png",
+   "html": "html/32_7-9_HomeIncomplete.html",
+   "links": [
+    {
+     "to": "ProfileSheet",
+     "label": "প্রোফাইল বদলান, এখন রাহাত"
+    },
+    {
+     "to": "Method",
+     "label": "শার্ট ছেলেদের"
+    },
+    {
+     "to": "Method",
+     "label": "প্যান্ট ছেলেদের"
+    },
+    {
+     "to": "Method",
+     "label": "পাঞ্জাবি ছেলেদের"
+    },
+    {
+     "to": "Method",
+     "label": "পায়জামা ছেলেদের"
+    },
+    {
+     "to": "Method",
+     "label": "সালওয়ার কামিজ মেয়েদের"
+    },
+    {
+     "to": "Method",
+     "label": "গেঞ্জি সাইজ সাজেশন"
+    },
+    {
+     "to": "ManualList",
+     "label": "চালিয়ে যান"
+    },
+    {
+     "to": "Result",
+     "label": "পাঞ্জাবি ১৬ অক্টোবর ২০২৬ · সাইজ L"
+    },
+    {
+     "to": "Result",
+     "label": "শার্ট ২৮ সেপ্টেম্বর ২০২৬ · দর্জিকে পাঠানো"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    }
+   ],
+   "text": [
+    "রা",
+    "কার মাপ?",
+    "রাহাত",
+    "নতুন মাপ নিন",
+    "শার্ট",
+    "ছেলেদের",
+    "প্যান্ট",
+    "ছেলেদের",
+    "পাঞ্জাবি",
+    "ছেলেদের",
+    "পায়জামা",
+    "ছেলেদের",
+    "সালওয়ার কামিজ",
+    "মেয়েদের",
+    "গেঞ্জি",
+    "সাইজ সাজেশন",
+    "সংরক্ষিত মাপ",
+    "৪টি",
+    "পাঞ্জাবি · অসমাপ্ত",
+    "৪/৮ মাপ নেওয়া হয়েছে",
+    "চালিয়ে যান",
+    "পাঞ্জাবি",
+    "১৬ অক্টোবর ২০২৬ · সাইজ L",
+    "শার্ট",
+    "২৮ সেপ্টেম্বর ২০২৬ · দর্জিকে পাঠানো",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস"
+   ]
+  },
+  {
+   "seq": 33,
+   "id": "ManualNeckDepth",
+   "number": "৭.১০",
+   "number_en": "7.10",
+   "title": "৭.১০ পছন্দের মাপ — গলার গভীরতা (মেয়ে)",
+   "section": "৭",
+   "section_name": "ফিতা দিয়ে মাপ",
+   "section_en": "Tape measuring",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Preference (female): front neck depth with 3 picture cards (5/7/9\"), editable number.",
+   "png": "screens/33_7-10_ManualNeckDepth.png",
+   "html": "html/33_7-10_ManualNeckDepth.html",
+   "links": [
+    {
+     "to": "ManualList",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "ManualList",
+     "label": "সব মাপের তালিকা"
+    },
+    {
+     "to": "ManualList",
+     "label": "পরে দেব"
+    },
+    {
+     "to": "ManualList",
+     "label": "পরের মাপ"
+    }
+   ],
+   "text": [
+    "ফিতা দিয়ে মাপ",
+    "সালওয়ার কামিজ · ফারহানা",
+    "৮/১৪",
+    "✎ পছন্দের মাপ",
+    "গলার গভীরতা — সামনে",
+    "কাঁধ ও গলার জোড় থেকে সোজা নিচে কতটা গভীর চান?",
+    "কম",
+    "৫\"",
+    "মাঝারি",
+    "৭\"",
+    "বেশি",
+    "৯\"",
+    "ইঞ্চি",
+    "চাপ দিয়ে লিখুন · −/+ আধা ইঞ্চি",
+    "পরে দেব",
+    "পরের মাপ"
+   ]
+  },
+  {
+   "seq": 34,
+   "id": "Verify",
+   "number": "৮.১",
+   "number_en": "8.1",
+   "title": "৮.১ মাপ যাচাই — পাঞ্জাবি",
+   "section": "৮",
+   "section_name": "মাপ যাচাই ও এডিট",
+   "section_en": "Review & edit",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Review AI measurements (panjabi, 8 rows) with accuracy badges; tap row to edit (8.3); tailor note; See result.",
+   "png": "screens/34_8-1_Verify.png",
+   "html": "html/34_8-1_Verify.html",
+   "links": [
+    {
+     "to": "Camera",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "Result",
+     "label": "ফলাফল দেখুন"
+    }
+   ],
+   "text": [
+    "মাপ যাচাই করুন",
+    "পাঞ্জাবি · রাহাত",
+    "কোনো মাপ ভুল মনে হলে সেটিতে ট্যাপ করে ঠিক করুন",
+    "ঝুল (Length)",
+    "● নির্ভুলতা উচ্চ",
+    "৪২\"",
+    "বুক (Chest)",
+    "● নির্ভুলতা উচ্চ",
+    "৪০\"",
+    "পেট (Waist)",
+    "◐ নির্ভুলতা মাঝারি",
+    "৩৬\"",
+    "হিপ (Hip)",
+    "◐ নির্ভুলতা মাঝারি",
+    "৪১\"",
+    "পুট (Shoulder)",
+    "● নির্ভুলতা উচ্চ",
+    "১৮\"",
+    "হাতা (Sleeve)",
+    "◐ নির্ভুলতা মাঝারি",
+    "২৪½\"",
+    "হাতার মুখ (Cuff)",
+    "◐ নির্ভুলতা মাঝারি",
+    "১০\"",
+    "গলা (Neck)",
+    "▲ নিম্ন · ফিতা দিয়ে মেপে নিন",
+    "১৫½\"",
+    "দর্জির জন্য নোট (ঐচ্ছিক)",
+    "ফলাফল দেখুন"
+   ]
+  },
+  {
+   "seq": 35,
+   "id": "VerifyDark",
+   "number": "৮.২",
+   "number_en": "8.2",
+   "title": "৮.২ মাপ যাচাই — পাঞ্জাবি — ডার্ক",
+   "section": "৮",
+   "section_name": "মাপ যাচাই ও এডিট",
+   "section_en": "Review & edit",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Dark-mode variant of 8.1.",
+   "png": "screens/35_8-2_VerifyDark.png",
+   "html": "html/35_8-2_VerifyDark.html",
+   "links": [
+    {
+     "to": "CameraDark",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "ResultDark",
+     "label": "ফলাফল দেখুন"
+    }
+   ],
+   "text": [
+    "মাপ যাচাই করুন",
+    "পাঞ্জাবি · রাহাত",
+    "কোনো মাপ ভুল মনে হলে সেটিতে ট্যাপ করে ঠিক করুন",
+    "ঝুল (Length)",
+    "● নির্ভুলতা উচ্চ",
+    "৪২\"",
+    "বুক (Chest)",
+    "● নির্ভুলতা উচ্চ",
+    "৪০\"",
+    "পেট (Waist)",
+    "◐ নির্ভুলতা মাঝারি",
+    "৩৬\"",
+    "হিপ (Hip)",
+    "◐ নির্ভুলতা মাঝারি",
+    "৪১\"",
+    "পুট (Shoulder)",
+    "● নির্ভুলতা উচ্চ",
+    "১৮\"",
+    "হাতা (Sleeve)",
+    "◐ নির্ভুলতা মাঝারি",
+    "২৪½\"",
+    "হাতার মুখ (Cuff)",
+    "◐ নির্ভুলতা মাঝারি",
+    "১০\"",
+    "গলা (Neck)",
+    "▲ নিম্ন · ফিতা দিয়ে মেপে নিন",
+    "১৫½\"",
+    "দর্জির জন্য নোট (ঐচ্ছিক)",
+    "ফলাফল দেখুন"
+   ]
+  },
+  {
+   "seq": 36,
+   "id": "EditSheet",
+   "number": "৮.৩",
+   "number_en": "8.3",
+   "title": "৮.৩ মাপ এডিট শিট",
+   "section": "৮",
+   "section_name": "মাপ যাচাই ও এডিট",
+   "section_en": "Review & edit",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": "Verify",
+   "purpose": "Edit bottom sheet over 8.1: small diagram, how-to, −/+ number field, AI original value shown, Save.",
+   "png": "screens/36_8-3_EditSheet.png",
+   "html": "html/36_8-3_EditSheet.html",
+   "links": [
+    {
+     "to": "Camera",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "Result",
+     "label": "ফলাফল দেখুন"
+    },
+    {
+     "to": "Verify",
+     "label": "সংরক্ষণ করুন"
+    }
+   ],
+   "text": [
+    "মাপ যাচাই করুন",
+    "পাঞ্জাবি · রাহাত",
+    "কোনো মাপ ভুল মনে হলে সেটিতে ট্যাপ করে ঠিক করুন",
+    "ঝুল (Length)",
+    "● নির্ভুলতা উচ্চ",
+    "৪২\"",
+    "বুক (Chest)",
+    "● নির্ভুলতা উচ্চ",
+    "৪০\"",
+    "পেট (Waist)",
+    "◐ নির্ভুলতা মাঝারি",
+    "৩৬\"",
+    "হিপ (Hip)",
+    "◐ নির্ভুলতা মাঝারি",
+    "৪১\"",
+    "পুট (Shoulder)",
+    "● নির্ভুলতা উচ্চ",
+    "১৮\"",
+    "হাতা (Sleeve)",
+    "◐ নির্ভুলতা মাঝারি",
+    "২৪½\"",
+    "হাতার মুখ (Cuff)",
+    "◐ নির্ভুলতা মাঝারি",
+    "১০\"",
+    "গলা (Neck)",
+    "▲ নিম্ন · ফিতা দিয়ে মেপে নিন",
+    "১৫½\"",
+    "দর্জির জন্য নোট (ঐচ্ছিক)",
+    "ফলাফল দেখুন",
+    "পেট (Waist)",
+    "নাভির একটু ওপরে, পেটের চারপাশে ফিতা ঘুরিয়ে মাপুন।",
+    "ইঞ্চি",
+    "AI: ৩৬\"",
+    "·",
+    "আপনি বদলেছেন",
+    "সংরক্ষণ করুন"
+   ]
+  },
+  {
+   "seq": 37,
+   "id": "VerifySK",
+   "number": "৮.৪",
+   "number_en": "8.4",
+   "title": "৮.৪ মাপ যাচাই — সালওয়ার কামিজ",
+   "section": "৮",
+   "section_name": "মাপ যাচাই ও এডিট",
+   "section_en": "Review & edit",
+   "size": "360x800",
+   "interactive": true,
+   "overlay_on": null,
+   "purpose": "Review for salwar kameez: Kameez (10) + Salwar (4) sections; list scrolls, \"See result\" button fixed at bottom.",
+   "png": "screens/37_8-4_VerifySK.png",
+   "html": "html/37_8-4_VerifySK.html",
+   "links": [
+    {
+     "to": "CameraFemale",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "ResultSK",
+     "label": "ফলাফল দেখুন"
+    }
+   ],
+   "text": [
+    "মাপ যাচাই করুন",
+    "সালওয়ার কামিজ · ফারহানা · ১৪টি মাপ",
+    "ভুল মনে হলে মাপে ট্যাপ করে ঠিক করুন",
+    "\"আপনার পছন্দ\" লেখা মাপ AI বের করে না, পছন্দমতো বসিয়ে নিন",
+    "কামিজ",
+    "১০টি মাপ",
+    "বুক (Bust)",
+    "● নির্ভুলতা উচ্চ",
+    "৩৬\"",
+    "কোমর (Waist)",
+    "◐ নির্ভুলতা মাঝারি",
+    "৩০\"",
+    "হিপ (Hip)",
+    "◐ নির্ভুলতা মাঝারি",
+    "৩৮\"",
+    "পুট (Shoulder)",
+    "● নির্ভুলতা উচ্চ",
+    "১৪\"",
+    "আর্মহোল (Armhole)",
+    "▲ নিম্ন · ফিতা দিয়ে মেপে নিন",
+    "১৬\"",
+    "হাতা (Sleeve)",
+    "● নির্ভুলতা উচ্চ",
+    "১৮\"",
+    "হাতার মুখ (Cuff)",
+    "✎ আপনার পছন্দ",
+    "৯\"",
+    "গলার গভীরতা — সামনে",
+    "✎ আপনার পছন্দ",
+    "৭\"",
+    "গলার গভীরতা — পেছনে",
+    "✎ আপনার পছন্দ",
+    "৫\"",
+    "ঝুল (Length)",
+    "✎ আপনার পছন্দ",
+    "৪০\"",
+    "সালওয়ার",
+    "৪টি মাপ",
+    "কোমর (Waist)",
+    "◐ নির্ভুলতা মাঝারি",
+    "৩০\"",
+    "হিপ (Hip)",
+    "◐ নির্ভুলতা মাঝারি",
+    "৩৮\"",
+    "মোট লম্বা (Length)",
+    "● নির্ভুলতা উচ্চ",
+    "৩৮\"",
+    "মোহরি (Bottom)",
+    "✎ আপনার পছন্দ",
+    "১২\"",
+    "দর্জির জন্য নোট (ঐচ্ছিক)",
+    "ফলাফল দেখুন"
+   ]
+  },
+  {
+   "seq": 38,
+   "id": "VerifyManual",
+   "number": "৮.৫",
+   "number_en": "8.5",
+   "title": "৮.৫ মাপ যাচাই — ফিতায় মাপা",
+   "section": "৮",
+   "section_name": "মাপ যাচাই ও এডিট",
+   "section_en": "Review & edit",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Review after tape flow: grey \"Tape measured\" badges, preference badges, missing hip shows \"—\" and orange badge.",
+   "png": "screens/38_8-5_VerifyManual.png",
+   "html": "html/38_8-5_VerifyManual.html",
+   "links": [
+    {
+     "to": "ManualSummary",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "Result",
+     "label": "ফলাফল দেখুন"
+    }
+   ],
+   "text": [
+    "মাপ যাচাই করুন",
+    "পাঞ্জাবি · রাহাত · ফিতায় মাপা",
+    "কোনো মাপ ভুল মনে হলে সেটিতে ট্যাপ করে ঠিক করুন",
+    "ঝুল (Length)",
+    "✎ আপনার পছন্দ",
+    "৪২\"",
+    "বুক (Chest)",
+    "ফিতায় মাপা",
+    "৪০\"",
+    "পেট (Waist)",
+    "ফিতায় মাপা",
+    "৩৬\"",
+    "হিপ (Hip)",
+    "বাদ আছে · দর্জি মেপে নেবেন",
+    "—",
+    "পুট (Shoulder)",
+    "ফিতায় মাপা",
+    "১৮\"",
+    "হাতা (Sleeve)",
+    "ফিতায় মাপা",
+    "২৪½\"",
+    "হাতার মুখ (Cuff)",
+    "✎ আপনার পছন্দ",
+    "১০\"",
+    "গলা (Neck)",
+    "ফিতায় মাপা",
+    "১৫½\"",
+    "দর্জির জন্য নোট (ঐচ্ছিক)",
+    "ফলাফল দেখুন"
+   ]
+  },
+  {
+   "seq": 39,
+   "id": "Result",
+   "number": "৯.১",
+   "number_en": "9.1",
+   "title": "৯.১ ফলাফল — পাঞ্জাবি",
+   "section": "৯",
+   "section_name": "ফলাফল",
+   "section_en": "Results",
+   "size": "360x800",
+   "interactive": true,
+   "overlay_on": null,
+   "purpose": "Result (panjabi): saved chip, numbered diagram + suggested size L, numbered list, inch/cm toggle, Share PDF (primary), Share image.",
+   "png": "screens/39_9-1_Result.png",
+   "html": "html/39_9-1_Result.html",
+   "links": [
+    {
+     "to": "Verify",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "Main",
+     "label": "হোম"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    }
+   ],
+   "text": [
+    "পাঞ্জাবির মাপ",
+    "রাহাত · ১৬ অক্টোবর ২০২৬",
+    "সেভ হয়েছে · ফোনেই সংরক্ষিত",
+    "১",
+    "২",
+    "৩",
+    "৪",
+    "৫",
+    "৬",
+    "৭",
+    "৮",
+    "সাজেস্ট করা সাইজ",
+    "L",
+    "রেডিমেড পাঞ্জাবি কিনতে",
+    "রেগুলার ফিট অনুযায়ী",
+    "মাপের তালিকা",
+    "ইঞ্চি",
+    "সেমি",
+    "১",
+    "ঝুল (Length)",
+    "৪২\"",
+    "২",
+    "বুক (Chest)",
+    "৪০\"",
+    "৩",
+    "পেট (Waist)",
+    "৩৬\"",
+    "৪",
+    "হিপ (Hip)",
+    "৪১\"",
+    "৫",
+    "পুট (Shoulder)",
+    "১৮\"",
+    "৬",
+    "হাতা (Sleeve)",
+    "২৪½\"",
+    "৭",
+    "হাতার মুখ (Cuff)",
+    "১০\"",
+    "৮",
+    "গলা (Neck)",
+    "১৫½\"",
+    "PDF শেয়ার",
+    "ছবি হিসেবে শেয়ার",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস"
+   ]
+  },
+  {
+   "seq": 40,
+   "id": "ResultDark",
+   "number": "৯.২",
+   "number_en": "9.2",
+   "title": "৯.২ ফলাফল — পাঞ্জাবি — ডার্ক",
+   "section": "৯",
+   "section_name": "ফলাফল",
+   "section_en": "Results",
+   "size": "360x800",
+   "interactive": true,
+   "overlay_on": null,
+   "purpose": "Dark-mode variant of 9.1.",
+   "png": "screens/40_9-2_ResultDark.png",
+   "html": "html/40_9-2_ResultDark.html",
+   "links": [
+    {
+     "to": "VerifyDark",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "MainDark",
+     "label": "হোম"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    }
+   ],
+   "text": [
+    "পাঞ্জাবির মাপ",
+    "রাহাত · ১৬ অক্টোবর ২০২৬",
+    "সেভ হয়েছে · ফোনেই সংরক্ষিত",
+    "১",
+    "২",
+    "৩",
+    "৪",
+    "৫",
+    "৬",
+    "৭",
+    "৮",
+    "সাজেস্ট করা সাইজ",
+    "L",
+    "রেডিমেড পাঞ্জাবি কিনতে",
+    "রেগুলার ফিট অনুযায়ী",
+    "মাপের তালিকা",
+    "ইঞ্চি",
+    "সেমি",
+    "১",
+    "ঝুল (Length)",
+    "৪২\"",
+    "২",
+    "বুক (Chest)",
+    "৪০\"",
+    "৩",
+    "পেট (Waist)",
+    "৩৬\"",
+    "৪",
+    "হিপ (Hip)",
+    "৪১\"",
+    "৫",
+    "পুট (Shoulder)",
+    "১৮\"",
+    "৬",
+    "হাতা (Sleeve)",
+    "২৪½\"",
+    "৭",
+    "হাতার মুখ (Cuff)",
+    "১০\"",
+    "৮",
+    "গলা (Neck)",
+    "১৫½\"",
+    "PDF শেয়ার",
+    "ছবি হিসেবে শেয়ার",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস"
+   ]
+  },
+  {
+   "seq": 41,
+   "id": "ResultSK",
+   "number": "৯.৩",
+   "number_en": "9.3",
+   "title": "৯.৩ ফলাফল — সালওয়ার কামিজ",
+   "section": "৯",
+   "section_name": "ফলাফল",
+   "section_en": "Results",
+   "size": "360x800",
+   "interactive": true,
+   "overlay_on": null,
+   "purpose": "Result for salwar kameez with Kameez/Salwar tabs switching diagram and list.",
+   "png": "screens/41_9-3_ResultSK.png",
+   "html": "html/41_9-3_ResultSK.html",
+   "links": [
+    {
+     "to": "VerifySK",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "Main",
+     "label": "হোম"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    }
+   ],
+   "text": [
+    "সালওয়ার কামিজের মাপ",
+    "ফারহানা · ১৬ অক্টোবর ·",
+    "সেভ হয়েছে",
+    "কামিজ · ১০",
+    "সালওয়ার · ৪",
+    "১",
+    "২",
+    "৩",
+    "৪",
+    "৫",
+    "৬",
+    "৭",
+    "৮",
+    "৯",
+    "১০",
+    "সাজেস্ট করা সাইজ",
+    "M",
+    "রেডিমেড কামিজ কিনতে",
+    "রেগুলার ফিট অনুযায়ী",
+    "১",
+    "বুক (Bust)",
+    "৩৬\"",
+    "২",
+    "কোমর (Waist)",
+    "৩০\"",
+    "৩",
+    "হিপ (Hip)",
+    "৩৮\"",
+    "৪",
+    "পুট (Shoulder)",
+    "১৪\"",
+    "৫",
+    "আর্মহোল (Armhole)",
+    "১৬\"",
+    "৬",
+    "হাতা (Sleeve)",
+    "১৮\"",
+    "৭",
+    "হাতার মুখ (Cuff)",
+    "৯\"",
+    "৮",
+    "গলার গভীরতা — সামনে",
+    "৭\"",
+    "৯",
+    "গলার গভীরতা — পেছনে",
+    "৫\"",
+    "১০",
+    "ঝুল (Length)",
+    "৪০\"",
+    "PDF শেয়ার",
+    "ছবি হিসেবে শেয়ার",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস"
+   ]
+  },
+  {
+   "seq": 42,
+   "id": "GenjiResult",
+   "number": "৯.৪",
+   "number_en": "9.4",
+   "title": "৯.৪ গেঞ্জির সাইজ",
+   "section": "৯",
+   "section_name": "ফলাফল",
+   "section_en": "Results",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "T-shirt: size-only result — big L, basis text, M|L|XL comparison, brand note, Share + Size chart.",
+   "png": "screens/42_9-4_GenjiResult.png",
+   "html": "html/42_9-4_GenjiResult.html",
+   "links": [
+    {
+     "to": "Main",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট দেখুন"
+    },
+    {
+     "to": "Main",
+     "label": "হোম"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    }
+   ],
+   "text": [
+    "গেঞ্জির সাইজ",
+    "রাহাত · ১৬ অক্টোবর ·",
+    "সেভ হয়েছে",
+    "আপনার সাইজ",
+    "L",
+    "বুক ৪০\", পুট ১৮\", ঝুল ২৮\" অনুযায়ী",
+    "রেগুলার ফিট",
+    "পাশের সাইজের সাথে তুলনা",
+    "M",
+    "বুক ৩৮–৪০",
+    "L",
+    "বুক ৪০–৪২",
+    "XL",
+    "বুক ৪২–৪৪",
+    "টাইট পছন্দ হলে M, ঢিলা পছন্দ হলে XL দেখতে পারেন",
+    "ব্র্যান্ডভেদে সাইজ আলাদা হতে পারে",
+    "শেয়ার",
+    "সাইজ চার্ট দেখুন",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস"
+   ]
+  },
+  {
+   "seq": 43,
+   "id": "TailorPDF",
+   "number": "১০.১",
+   "number_en": "10.1",
+   "title": "১০.১ PDF — পাঞ্জাবি, A4",
+   "section": "১০",
+   "section_name": "শেয়ার করার ফাইল",
+   "section_en": "Share files",
+   "size": "794x1123",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "A4 PDF sent to tailor (panjabi). White, print-friendly.",
+   "png": "screens/43_10-1_TailorPDF.png",
+   "html": "html/43_10-1_TailorPDF.html",
+   "links": [],
+   "text": [
+    "মাপ",
+    "মাপের কার্ড",
+    "নাম",
+    "রাহাত",
+    "পোশাক",
+    "পাঞ্জাবি",
+    "তারিখ",
+    "১৬ অক্টোবর ২০২৬",
+    "ইউনিট",
+    "ইঞ্চি",
+    "ফিট পছন্দ",
+    "রেগুলার",
+    "উচ্চতা",
+    "৫ ফুট ৭ ইঞ্চি",
+    "১",
+    "২",
+    "৩",
+    "৪",
+    "৫",
+    "৬",
+    "৭",
+    "৮",
+    "নং",
+    "মাপ",
+    "মান (ইঞ্চি)",
+    "১",
+    "ঝুল",
+    "Length",
+    "৪২\"",
+    "২",
+    "বুক",
+    "Chest",
+    "৪০\"",
+    "৩",
+    "পেট",
+    "Waist",
+    "৩৬\"",
+    "৪",
+    "হিপ",
+    "Hip",
+    "৪১\"",
+    "৫",
+    "পুট",
+    "Shoulder",
+    "১৮\"",
+    "৬",
+    "হাতা",
+    "Sleeve",
+    "২৪½\"",
+    "৭",
+    "হাতার মুখ",
+    "Cuff",
+    "১০\"",
+    "৮",
+    "গলা",
+    "Neck",
+    "* ফিতায় মিলিয়ে নিন",
+    "১৫½\"",
+    "দর্জির জন্য নোট",
+    "হাতা একটু ঢিলা রাখবেন। বন্ধ গলা, বোতাম কাপড়ের রঙে।",
+    "সাজেস্ট করা সাইজ",
+    "L",
+    "রেডিমেড কেনার জন্য · রেগুলার ফিট",
+    "অ্যাপ দিয়ে নেওয়া আনুমানিক মাপ। সেলাইয়ের আগে প্রয়োজনে ফিতা দিয়ে মিলিয়ে নিন।",
+    "পৃষ্ঠা ১/১"
+   ]
+  },
+  {
+   "seq": 44,
+   "id": "TailorPDFSK",
+   "number": "১০.২",
+   "number_en": "10.2",
+   "title": "১০.২ PDF — সালওয়ার কামিজ, A4",
+   "section": "১০",
+   "section_name": "শেয়ার করার ফাইল",
+   "section_en": "Share files",
+   "size": "794x1123",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "A4 PDF for salwar kameez with two diagrams and two-part table; * marks preference values.",
+   "png": "screens/44_10-2_TailorPDFSK.png",
+   "html": "html/44_10-2_TailorPDFSK.html",
+   "links": [],
+   "text": [
+    "মাপ",
+    "মাপের কার্ড",
+    "নাম",
+    "ফারহানা",
+    "পোশাক",
+    "সালওয়ার কামিজ",
+    "তারিখ",
+    "১৬ অক্টোবর ২০২৬",
+    "ইউনিট",
+    "ইঞ্চি",
+    "ফিট পছন্দ",
+    "রেগুলার",
+    "উচ্চতা",
+    "৫ ফুট ৩ ইঞ্চি",
+    "কামিজ",
+    "১",
+    "২",
+    "৩",
+    "৪",
+    "৫",
+    "৬",
+    "৭",
+    "৮",
+    "৯",
+    "১০",
+    "সালওয়ার",
+    "১",
+    "২",
+    "৩",
+    "৪",
+    "নং",
+    "মাপ",
+    "মান (ইঞ্চি)",
+    "কামিজ",
+    "১",
+    "বুক",
+    "Bust",
+    "৩৬\"",
+    "২",
+    "কোমর",
+    "Waist",
+    "৩০\"",
+    "৩",
+    "হিপ",
+    "Hip",
+    "৩৮\"",
+    "৪",
+    "পুট",
+    "Shoulder",
+    "১৪\"",
+    "৫",
+    "আর্মহোল",
+    "Armhole",
+    "১৬\"",
+    "৬",
+    "হাতা",
+    "Sleeve",
+    "১৮\"",
+    "৭",
+    "হাতার মুখ *",
+    "Cuff",
+    "৯\"",
+    "৮",
+    "গলার গভীরতা, সামনে *",
+    "Front neck",
+    "৭\"",
+    "৯",
+    "গলার গভীরতা, পেছনে *",
+    "Back neck",
+    "৫\"",
+    "১০",
+    "ঝুল *",
+    "Length",
+    "৪০\"",
+    "সালওয়ার",
+    "১",
+    "কোমর",
+    "Waist",
+    "৩০\"",
+    "২",
+    "হিপ",
+    "Hip",
+    "৩৮\"",
+    "৩",
+    "মোট লম্বা",
+    "Length",
+    "৩৮\"",
+    "৪",
+    "মোহরি *",
+    "Bottom",
+    "১২\"",
+    "দর্জির জন্য নোট",
+    "কামিজে সাইড কাটা ৮ ইঞ্চি রাখবেন। সালওয়ারে পকেট দেবেন।",
+    "সাজেস্ট করা সাইজ",
+    "M",
+    "রেডিমেড কেনার জন্য · রেগুলার ফিট",
+    "অ্যাপ দিয়ে নেওয়া আনুমানিক মাপ। * চিহ্নিত মাপ ব্যবহারকারীর পছন্দ, AI-এর নয়। আর্মহোল ফিতায় মিলিয়ে নিন।",
+    "পৃষ্ঠা ১/১"
+   ]
+  },
+  {
+   "seq": 45,
+   "id": "SharePNG",
+   "number": "১০.৩",
+   "number_en": "10.3",
+   "title": "১০.৩ ছবি হিসেবে শেয়ার, PNG",
+   "section": "১০",
+   "section_name": "শেয়ার করার ফাইল",
+   "section_en": "Share files",
+   "size": "1080x2600",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Tall 1080-px PNG for sharing on messaging apps; large type for phone reading.",
+   "png": "screens/45_10-3_SharePNG.png",
+   "html": "html/45_10-3_SharePNG.html",
+   "links": [],
+   "text": [
+    "মাপ",
+    "রাহাত",
+    "পাঞ্জাবি · ১৬ অক্টোবর ২০২৬",
+    "সাইজ L",
+    "রেগুলার ফিট",
+    "ইঞ্চি",
+    "১",
+    "২",
+    "৩",
+    "৪",
+    "৫",
+    "৬",
+    "৭",
+    "৮",
+    "১",
+    "ঝুল",
+    "Length",
+    "৪২\"",
+    "২",
+    "বুক",
+    "Chest",
+    "৪০\"",
+    "৩",
+    "পেট",
+    "Waist",
+    "৩৬\"",
+    "৪",
+    "হিপ",
+    "Hip",
+    "৪১\"",
+    "৫",
+    "পুট",
+    "Shoulder",
+    "১৮\"",
+    "৬",
+    "হাতা",
+    "Sleeve",
+    "২৪½\"",
+    "৭",
+    "হাতার মুখ",
+    "Cuff",
+    "১০\"",
+    "৮",
+    "গলা",
+    "Neck",
+    "১৫½\"",
+    "দর্জির জন্য নোট",
+    "হাতা একটু ঢিলা রাখবেন। বন্ধ গলা, বোতাম কাপড়ের রঙে।",
+    "অ্যাপ দিয়ে নেওয়া আনুমানিক মাপ · গলার মাপ ফিতায় মিলিয়ে নিন"
+   ]
+  },
+  {
+   "seq": 46,
+   "id": "SizeChart",
+   "number": "১১.১",
+   "number_en": "11.1",
+   "title": "১১.১ সাইজ চার্ট",
+   "section": "১১",
+   "section_name": "সাইজ চার্ট",
+   "section_en": "Size chart",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Size chart tab: gender toggle, garment chips, XS–XXXL table, user row highlighted, brand disclaimer.",
+   "png": "screens/46_11-1_SizeChart.png",
+   "html": "html/46_11-1_SizeChart.html",
+   "links": [
+    {
+     "to": "Main",
+     "label": "হোম"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    }
+   ],
+   "text": [
+    "সাইজ চার্ট",
+    "ছেলে",
+    "মেয়ে",
+    "শার্ট",
+    "পাঞ্জাবি",
+    "গেঞ্জি",
+    "প্যান্ট",
+    "সাইজ",
+    "বুক",
+    "কোমর",
+    "হিপ",
+    "XS",
+    "৩৪–৩৬",
+    "২৮–৩০",
+    "৩৪–৩৬",
+    "S",
+    "৩৬–৩৮",
+    "৩০–৩২",
+    "৩৬–৩৮",
+    "M",
+    "৩৮–৪০",
+    "৩২–৩৪",
+    "৩৮–৪০",
+    "L",
+    "আপনার",
+    "৪০–৪২",
+    "৩৪–৩৬",
+    "৪০–৪২",
+    "XL",
+    "৪২–৪৪",
+    "৩৬–৩৮",
+    "৪২–৪৪",
+    "XXL",
+    "৪৪–৪৬",
+    "৩৮–৪০",
+    "৪৪–৪৬",
+    "XXXL",
+    "৪৬–৪৮",
+    "৪০–৪২",
+    "৪৬–৪৮",
+    "সব মাপ ইঞ্চিতে · রাহাতের বুক ৪০\" অনুযায়ী",
+    "আনুমানিক মাপ, ব্র্যান্ডভেদে আলাদা হতে পারে",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস"
+   ]
+  },
+  {
+   "seq": 47,
+   "id": "Settings",
+   "number": "১২.১",
+   "number_en": "12.1",
+   "title": "১২.১ সেটিংস",
+   "section": "১২",
+   "section_name": "সেটিংস",
+   "section_en": "Settings",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Settings tab: language, unit, backup, restore, privacy, about, delete all (red).",
+   "png": "screens/47_12-1_Settings.png",
+   "html": "html/47_12-1_Settings.html",
+   "links": [
+    {
+     "to": "Main",
+     "label": "হোম"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    }
+   ],
+   "text": [
+    "সেটিংস",
+    "সাধারণ",
+    "ভাষা",
+    "বাংলা",
+    "মাপের একক",
+    "ইঞ্চি",
+    "ডেটা",
+    "ব্যাকআপ নিন",
+    "শেষ ব্যাকআপ: ১০ অক্টোবর ২০২৬",
+    "রিস্টোর করুন",
+    "ব্যাকআপ ফাইল থেকে মাপ ফিরিয়ে আনুন",
+    "অন্যান্য",
+    "গোপনীয়তা নীতি",
+    "অ্যাপ সম্পর্কে",
+    "সংস্করণ ১.০",
+    "সব ডেটা মুছুন",
+    "সব প্রোফাইল ও মাপ চিরতরে মুছে যাবে",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস"
+   ]
+  },
+  {
+   "seq": 48,
+   "id": "BackupSnackbar",
+   "number": "১২.২",
+   "number_en": "12.2",
+   "title": "১২.২ ব্যাকআপ সফল",
+   "section": "১২",
+   "section_name": "সেটিংস",
+   "section_en": "Settings",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": "Settings",
+   "purpose": "Green snackbar over Settings after backup.",
+   "png": "screens/48_12-2_BackupSnackbar.png",
+   "html": "html/48_12-2_BackupSnackbar.html",
+   "links": [
+    {
+     "to": "Main",
+     "label": "হোম"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    }
+   ],
+   "text": [
+    "সেটিংস",
+    "সাধারণ",
+    "ভাষা",
+    "বাংলা",
+    "মাপের একক",
+    "ইঞ্চি",
+    "ডেটা",
+    "ব্যাকআপ নিন",
+    "শেষ ব্যাকআপ: ১০ অক্টোবর ২০২৬",
+    "রিস্টোর করুন",
+    "ব্যাকআপ ফাইল থেকে মাপ ফিরিয়ে আনুন",
+    "অন্যান্য",
+    "গোপনীয়তা নীতি",
+    "অ্যাপ সম্পর্কে",
+    "সংস্করণ ১.০",
+    "সব ডেটা মুছুন",
+    "সব প্রোফাইল ও মাপ চিরতরে মুছে যাবে",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস",
+    "ব্যাকআপ সেভ হয়েছে · Downloads ফোল্ডারে"
+   ]
+  },
+  {
+   "seq": 49,
+   "id": "RestoreDialog",
+   "number": "১২.৩",
+   "number_en": "12.3",
+   "title": "১২.৩ রিস্টোর নিশ্চিতকরণ",
+   "section": "১২",
+   "section_name": "সেটিংস",
+   "section_en": "Settings",
+   "size": "360x800",
+   "interactive": true,
+   "overlay_on": "Settings",
+   "purpose": "Restore dialog: file contents, merge vs replace radio (replace shows warning), Cancel / Restore.",
+   "png": "screens/49_12-3_RestoreDialog.png",
+   "html": "html/49_12-3_RestoreDialog.html",
+   "links": [
+    {
+     "to": "Main",
+     "label": "হোম"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    },
+    {
+     "to": "Settings",
+     "label": "বাতিল"
+    }
+   ],
+   "text": [
+    "সেটিংস",
+    "সাধারণ",
+    "ভাষা",
+    "বাংলা",
+    "মাপের একক",
+    "ইঞ্চি",
+    "ডেটা",
+    "ব্যাকআপ নিন",
+    "শেষ ব্যাকআপ: ১০ অক্টোবর ২০২৬",
+    "রিস্টোর করুন",
+    "ব্যাকআপ ফাইল থেকে মাপ ফিরিয়ে আনুন",
+    "অন্যান্য",
+    "গোপনীয়তা নীতি",
+    "অ্যাপ সম্পর্কে",
+    "সংস্করণ ১.০",
+    "সব ডেটা মুছুন",
+    "সব প্রোফাইল ও মাপ চিরতরে মুছে যাবে",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস",
+    "ব্যাকআপ রিস্টোর করবেন?",
+    "এই ফাইলে ৩টি প্রোফাইল ও ৫টি মাপ আছে",
+    "map-backup-2026-10-10.json",
+    "আগের ডেটার সাথে যোগ করুন",
+    "ফোনের মাপগুলোও থেকে যাবে",
+    "আগের ডেটা বদলে দিন",
+    "শুধু ফাইলের ডেটা থাকবে",
+    "বাতিল",
+    "রিস্টোর করুন"
+   ]
+  },
+  {
+   "seq": 50,
+   "id": "DeleteDialog",
+   "number": "১২.৪",
+   "number_en": "12.4",
+   "title": "১২.৪ সব ডেটা মুছুন — নিশ্চিতকরণ",
+   "section": "১২",
+   "section_name": "সেটিংস",
+   "section_en": "Settings",
+   "size": "360x800",
+   "interactive": true,
+   "overlay_on": "Settings",
+   "purpose": "Delete-all confirmation: red warning, counts, type \"মুছুন\" to enable red Delete-all button.",
+   "png": "screens/50_12-4_DeleteDialog.png",
+   "html": "html/50_12-4_DeleteDialog.html",
+   "links": [
+    {
+     "to": "Main",
+     "label": "হোম"
+    },
+    {
+     "to": "SizeChart",
+     "label": "সাইজ চার্ট"
+    },
+    {
+     "to": "Settings",
+     "label": "সেটিংস"
+    },
+    {
+     "to": "Settings",
+     "label": "বাতিল"
+    }
+   ],
+   "text": [
+    "সেটিংস",
+    "সাধারণ",
+    "ভাষা",
+    "বাংলা",
+    "মাপের একক",
+    "ইঞ্চি",
+    "ডেটা",
+    "ব্যাকআপ নিন",
+    "শেষ ব্যাকআপ: ১০ অক্টোবর ২০২৬",
+    "রিস্টোর করুন",
+    "ব্যাকআপ ফাইল থেকে মাপ ফিরিয়ে আনুন",
+    "অন্যান্য",
+    "গোপনীয়তা নীতি",
+    "অ্যাপ সম্পর্কে",
+    "সংস্করণ ১.০",
+    "সব ডেটা মুছুন",
+    "সব প্রোফাইল ও মাপ চিরতরে মুছে যাবে",
+    "হোম",
+    "সাইজ চার্ট",
+    "সেটিংস",
+    "সব ডেটা মুছবেন?",
+    "৩টি প্রোফাইল ও ৫টি মাপ চিরতরে মুছে যাবে। এটি আর ফেরানো যাবে না।",
+    "নিশ্চিত করতে নিচে \"মুছুন\" লিখুন",
+    "বাতিল",
+    "সব মুছুন"
+   ]
+  },
+  {
+   "seq": 51,
+   "id": "PrivacyPolicy",
+   "number": "১২.৫",
+   "number_en": "12.5",
+   "title": "১২.৫ গোপনীয়তা নীতি",
+   "section": "১২",
+   "section_name": "সেটিংস",
+   "section_en": "Settings",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "Privacy policy page: green summary + 5 numbered sections.",
+   "png": "screens/51_12-5_PrivacyPolicy.png",
+   "html": "html/51_12-5_PrivacyPolicy.html",
+   "links": [
+    {
+     "to": "Settings",
+     "label": "পেছনে যান"
+    }
+   ],
+   "text": [
+    "গোপনীয়তা নীতি",
+    "হালনাগাদ: ১৬ অক্টোবর ২০২৬",
+    "সংক্ষেপে: আপনার সব তথ্য শুধু আপনার ফোনেই থাকে।",
+    "১",
+    "কী তথ্য রাখা হয়",
+    "প্রোফাইলের নাম, লিঙ্গ, উচ্চতা, ফিট পছন্দ, মাপ আর দর্জির নোট।",
+    "২",
+    "কোথায় থাকে",
+    "শুধু আপনার ফোনে। কোনো সার্ভারে বা অন্য কারও কাছে যায় না।",
+    "৩",
+    "ছবির কী হয়",
+    "মাপ বের হলেই ছবি মুছে যায়। কোথাও সেভ বা পাঠানো হয় না।",
+    "৪",
+    "ইন্টারনেট লাগে না",
+    "অ্যাপ ইন্টারনেট ব্যবহার করে না। শেয়ার করলে শুধু আপনার বেছে নেওয়া অ্যাপে যায়।",
+    "৫",
+    "কীভাবে মুছবেন",
+    "সেটিংস › \"সব ডেটা মুছুন\" চাপুন। অ্যাপ আনইনস্টল করলেও সব মুছে যায়।"
+   ]
+  },
+  {
+   "seq": 52,
+   "id": "About",
+   "number": "১২.৬",
+   "number_en": "12.6",
+   "title": "১২.৬ অ্যাপ সম্পর্কে",
+   "section": "১২",
+   "section_name": "সেটিংস",
+   "section_en": "Settings",
+   "size": "360x800",
+   "interactive": false,
+   "overlay_on": null,
+   "purpose": "About page: logo, name, version, tagline, offline badge, contact email, privacy link.",
+   "png": "screens/52_12-6_About.png",
+   "html": "html/52_12-6_About.html",
+   "links": [
+    {
+     "to": "Settings",
+     "label": "পেছনে যান"
+    },
+    {
+     "to": "mailto:[যোগাযোগের-ইমেইল]",
+     "label": "যোগাযোগ [যোগাযোগের ইমেইল]"
+    },
+    {
+     "to": "PrivacyPolicy",
+     "label": "গোপনীয়তা নীতি"
+    }
+   ],
+   "text": [
+    "অ্যাপ সম্পর্কে",
+    "মাপ",
+    "সংস্করণ ১.০",
+    "ছবি বা ফিতা দিয়ে পোশাকের মাপ নিন, দর্জিকে পাঠান।",
+    "অফলাইন · কোনো ডেটা সংগ্রহ নেই",
+    "যোগাযোগ",
+    "[যোগাযোগের ইমেইল]",
+    "গোপনীয়তা নীতি",
+    "বাংলাদেশের মানুষের জন্য তৈরি"
+   ]
+  }
+ ]
+}
