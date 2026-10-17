@@ -38,6 +38,8 @@
     <string name="language_subtitle">ভাষা বেছে নিন</string>
     <string name="language_bangla">বাংলা</string>
     <string name="language_english">English</string>
+    <string name="language_bangla_hint">Bangla</string>
+    <string name="language_english_hint">ইংরেজি</string>
     <string name="privacy_promise">Your photos and measurements are never sent anywhere</string>
     <string name="onb_welcome">Welcome to TailorPass</string>
     <string name="onb1_title">How it works</string>
@@ -55,6 +57,8 @@
     <string name="onb3_point3">Measurements stay in the app after sharing</string>
     <string name="onb_tailor">Tailor</string>
     <string name="onb_in_app">In the app</string>
+    <string name="onb_pdf">PDF</string>
+    <string name="onb_page_of">Page %1$s of %2$s</string>
     <string name="profile_create_title">Create profile</string>
     <string name="profile_create_subtitle">Details of the person being measured</string>
     <string name="profile_name">Name</string>
@@ -62,6 +66,7 @@
     <string name="gender_male">Male</string>
     <string name="gender_female">Female</string>
     <string name="profile_height">Height</string>
+    <string name="profile_height_unit">Height unit</string>
     <string name="profile_height_hint">= about %1$s cm · measure without shoes</string>
     <string name="profile_fit">Preferred fit</string>
     <string name="fit_slim">Slim</string>

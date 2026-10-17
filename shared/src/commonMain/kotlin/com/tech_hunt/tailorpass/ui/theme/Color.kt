@@ -143,6 +143,8 @@ data class MaapExtendedColors(
     // Disabled buttons
     val disabledContainer: Color,
     val onDisabled: Color,
+    // Onboarding page dots (not the current page)
+    val dotInactive: Color,
 )
 
 val MaapLightExtended = MaapExtendedColors(
@@ -169,6 +171,7 @@ val MaapLightExtended = MaapExtendedColors(
     cameraBanner = Color(0xFFB8470F),
     disabledContainer = Color(0xFFDDE1E6),
     onDisabled = Color(0xFF6B7280),
+    dotInactive = Color(0xFFB9C0CA),
 )
 
 val MaapDarkExtended = MaapExtendedColors(
@@ -195,4 +198,5 @@ val MaapDarkExtended = MaapExtendedColors(
     cameraBanner = Color(0xFF4A2A12),
     disabledContainer = Color(0xFF2C3037),
     onDisabled = Color(0xFF8A919B),
+    dotInactive = Color(0xFF5B6370),
 )

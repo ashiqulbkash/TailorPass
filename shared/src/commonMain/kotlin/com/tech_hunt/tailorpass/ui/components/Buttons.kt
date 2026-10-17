@@ -26,6 +26,7 @@ import com.tech_hunt.tailorpass.ui.theme.PillShape
 /**
  * Primary button — only one per screen. 56dp pill, primary color, 18 bold.
  * Grey when disabled (#DDE1E6 / #6B7280). Pass Modifier.fillMaxWidth() for full width.
+ * trailingIcon: 22dp icon after the text (onboarding "Next →").
  */
 @Composable
 fun PrimaryButton(
@@ -34,6 +35,7 @@ fun PrimaryButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     icon: Painter? = null,
+    trailingIcon: Painter? = null,
 ) {
     Button(
         onClick = onClick,
@@ -48,7 +50,7 @@ fun PrimaryButton(
         ),
         contentPadding = PaddingValues(horizontal = Dimens.space16),
     ) {
-        ButtonContent(text, icon, MaterialTheme.typography.labelLarge.fontSize)
+        ButtonContent(text, icon, MaterialTheme.typography.labelLarge.fontSize, trailingIcon)
     }
 }
 
@@ -78,7 +80,7 @@ fun OutlinedPillButton(
 }
 
 @Composable
-private fun ButtonContent(text: String, icon: Painter?, fontSize: TextUnit) {
+private fun ButtonContent(text: String, icon: Painter?, fontSize: TextUnit, trailingIcon: Painter? = null) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Dimens.space8),
@@ -87,5 +89,8 @@ private fun ButtonContent(text: String, icon: Painter?, fontSize: TextUnit) {
             Icon(icon, contentDescription = null, modifier = Modifier.size(Dimens.iconSize))
         }
         Text(text = text, style = MaterialTheme.typography.labelLarge, fontSize = fontSize, maxLines = 1)
+        if (trailingIcon != null) {
+            Icon(trailingIcon, contentDescription = null, modifier = Modifier.size(22.dp))
+        }
     }
 }

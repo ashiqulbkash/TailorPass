@@ -8,9 +8,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.intl.Locale
-import com.tech_hunt.tailorpass.ui.screens.foundation.FoundationAction
-import com.tech_hunt.tailorpass.ui.screens.foundation.FoundationScreen
-import com.tech_hunt.tailorpass.ui.screens.foundation.FoundationState
+import androidx.navigation.compose.rememberNavController
+import com.tech_hunt.tailorpass.ui.nav.AppNavHost
 import com.tech_hunt.tailorpass.ui.theme.MaapTheme
 import com.tech_hunt.tailorpass.ui.util.LocalAppLocale
 import com.tech_hunt.tailorpass.ui.util.appLanguageOf
@@ -20,18 +19,18 @@ import com.tech_hunt.tailorpass.ui.util.setAppLanguage
 @Composable
 fun App() {
     var language by remember { mutableStateOf(appLanguageOf(Locale.current.toLanguageTag())) }
+    // Outside key(language), so the back stack survives a language change.
+    val navController = rememberNavController()
     CompositionLocalProvider(LocalAppLocale provides language) {
         key(language) {
             MaapTheme {
-                FoundationScreen(FoundationState(language)) { action ->
-                    when (action) {
-                        is FoundationAction.ChangeLanguage -> {
-                            setAppLanguage(action.tag)
-                            language = action.tag
-                        }
-                        FoundationAction.Start -> Unit
-                    }
-                }
+                AppNavHost(
+                    navController = navController,
+                    onLanguageChosen = { tag ->
+                        setAppLanguage(tag)
+                        language = tag
+                    },
+                )
             }
         }
     }

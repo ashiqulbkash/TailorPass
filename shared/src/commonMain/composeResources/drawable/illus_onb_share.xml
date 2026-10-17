@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Onboarding 1.4 (share with the tailor). Labels (PDF, tailor, in the app) are drawn as Text on top in OnboardingScreen. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="280dp" android:height="220dp"
+    android:viewportWidth="280" android:viewportHeight="220">
+  <path android:pathData="M24,30 H92 L116,54 V170 H24 Z" android:fillColor="#FFFFFFFF" android:strokeColor="#FF1B3A6B" android:strokeWidth="3" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M92,30 V54 H116" android:fillColor="#00000000" android:strokeColor="#FF1B3A6B" android:strokeWidth="3" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M41,62 H71 A5,5 0 0 1 76,67 V79 A5,5 0 0 1 71,84 H41 A5,5 0 0 1 36,79 V67 A5,5 0 0 1 41,62 Z" android:fillColor="#FF1B3A6B"/>
+  <path android:pathData="M38,100 H100 M38,116 H100 M38,132 H86 M38,148 H94" android:fillColor="#00000000" android:strokeColor="#FFB9C0CA" android:strokeWidth="5" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M132,100 H176 M168,92 L176,100 L168,108" android:fillColor="#00000000" android:strokeColor="#FF1B3A6B" android:strokeWidth="3" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M182,100 a40,40 0 1,0 80,0 a40,40 0 1,0 -80,0 Z" android:fillColor="#FFFFFFFF" android:strokeColor="#FF1B3A6B" android:strokeWidth="3" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M200,116 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0 Z" android:fillColor="#00000000" android:strokeColor="#FF1B3A6B" android:strokeWidth="3" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M228,116 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0 Z" android:fillColor="#00000000" android:strokeColor="#FF1B3A6B" android:strokeWidth="3" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M213,109 L238,78 M231,109 L206,78" android:fillColor="#00000000" android:strokeColor="#FF1B3A6B" android:strokeWidth="3" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M38,182 H102 A14,14 0 0 1 116,196 V196 A14,14 0 0 1 102,210 H38 A14,14 0 0 1 24,196 V196 A14,14 0 0 1 38,182 Z" android:fillColor="#FFDCFCE7"/>
+  <path android:pathData="M36,196 L41,201 L50,191" android:fillColor="#00000000" android:strokeColor="#FF166534" android:strokeWidth="2.6" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+</vector>

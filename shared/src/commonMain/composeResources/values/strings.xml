@@ -42,6 +42,8 @@
     <string name="language_subtitle">Choose your language</string>
     <string name="language_bangla">বাংলা</string>
     <string name="language_english">English</string>
+    <string name="language_bangla_hint">Bangla</string>
+    <string name="language_english_hint">ইংরেজি</string>
     <string name="privacy_promise">আপনার ছবি বা মাপ কোথাও পাঠানো হয় না</string>
     <string name="onb_welcome">TailorPass-এ স্বাগতম</string>
     <string name="onb1_title">কীভাবে কাজ করে</string>
@@ -59,6 +61,8 @@
     <string name="onb3_point3">পাঠানোর পরেও মাপ অ্যাপে থেকে যায়</string>
     <string name="onb_tailor">দর্জি</string>
     <string name="onb_in_app">অ্যাপে আছে</string>
+    <string name="onb_pdf">PDF</string>
+    <string name="onb_page_of">%2$sটির মধ্যে %1$s নম্বর</string>
     <string name="profile_create_title">প্রোফাইল তৈরি</string>
     <string name="profile_create_subtitle">যার মাপ নেবেন, তার তথ্য দিন</string>
     <string name="profile_name">নাম</string>
@@ -66,6 +70,7 @@
     <string name="gender_male">ছেলে</string>
     <string name="gender_female">মেয়ে</string>
     <string name="profile_height">উচ্চতা</string>
+    <string name="profile_height_unit">উচ্চতার একক</string>
     <string name="profile_height_hint">= প্রায় %1$s সেমি · জুতা ছাড়া মাপুন</string>
     <string name="profile_fit">কেমন ফিট পছন্দ?</string>
     <string name="fit_slim">স্লিম</string>

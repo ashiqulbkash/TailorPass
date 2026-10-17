@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Onboarding 1.2 (how it works). Labels (chest value, height) are drawn as Text on top in OnboardingScreen. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="250dp" android:height="240dp"
+    android:viewportWidth="250" android:viewportHeight="240">
+  <path android:pathData="M76,14 H154 A16,16 0 0 1 170,30 V210 A16,16 0 0 1 154,226 H76 A16,16 0 0 1 60,210 V30 A16,16 0 0 1 76,14 Z" android:fillColor="#FFFFFFFF" android:strokeColor="#FF1B3A6B" android:strokeWidth="3" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M102,26 H128" android:fillColor="#00000000" android:strokeColor="#FF1B3A6B" android:strokeWidth="3" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <group android:translateX="85" android:translateY="44" android:scaleX="0.31" android:scaleY="0.31">
+    <path android:pathData="M74,40 a26,32 0 1,0 52,0 a26,32 0 1,0 -52,0 Z M88,74 L88,88 C72,92 54,96 44,108 C36,140 30,200 24,290 L38,294 C46,240 52,190 60,150 L62,250 C60,330 64,420 66,500 L92,500 L98,300 L102,300 L108,500 L134,500 C136,420 140,330 138,250 L140,150 C148,190 154,240 162,294 L176,290 C170,200 164,140 156,108 C146,96 128,92 112,88 L112,74" android:fillColor="#00000000" android:strokeColor="#FF9AA2AE" android:strokeWidth="7" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  </group>
+  <path android:pathData="M100,92 H132 M104,89 L100,92 L104,95 M128,89 L132,92 L128,95" android:fillColor="#00000000" android:strokeColor="#FF1B3A6B" android:strokeWidth="2.4" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M102,118 H130 M106,115 L102,118 L106,121 M126,115 L130,118 L126,121" android:fillColor="#00000000" android:strokeColor="#FF1B3A6B" android:strokeWidth="2.4" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M180,70 H226 A12,12 0 0 1 238,82 V98 A12,12 0 0 1 226,110 H180 A12,12 0 0 1 168,98 V82 A12,12 0 0 1 180,70 Z" android:fillColor="#FFFFFFFF" android:strokeColor="#FF1B3A6B" android:strokeWidth="2" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M168.00,90.00 L164.01,90.23 M160.01,90.47 L156.02,90.70 M152.03,90.94 L148.03,91.17 M144.04,91.41 L140.05,91.64 M136.06,91.88 L134.00,92.00" android:fillColor="#00000000" android:strokeColor="#FF1B3A6B" android:strokeWidth="2" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+  <path android:pathData="M30,40 V200 M26,46 L30,40 L34,46 M26,194 L30,200 L34,194" android:fillColor="#00000000" android:strokeColor="#FF1B3A6B" android:strokeWidth="2.4" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+</vector>
