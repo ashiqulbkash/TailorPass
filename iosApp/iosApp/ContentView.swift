@@ -1,9 +1,10 @@
 import SwiftUI
 import Shared
 
-// Temporary root screen; replaced by native SwiftUI screens (see for-agent/plan.md, Step 11).
+// Placeholder. Step 11 (for-agent/plan.md) replaces this with a UIViewControllerRepresentable
+// that shows MainViewControllerKt.MainViewController() (the common Compose App()).
 struct ContentView: View {
     var body: some View {
-        Text(Greeting().greet())
+        Color.clear
     }
 }

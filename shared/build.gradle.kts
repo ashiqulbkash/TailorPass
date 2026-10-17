@@ -3,9 +3,13 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinSerialization)
 }
 
-// shared = models, logic, data, state only. No UI, no Compose, no Res — UI lives in androidApp (Compose) and iosApp (SwiftUI).
+// shared = the whole app: Compose Multiplatform UI, models, logic, data and composeResources (commonMain).
+// androidMain/iosMain hold platform `actual`s only. androidApp and iosApp are thin shells that show App().
 kotlin {
     listOf(
         iosArm64(),
@@ -16,14 +20,17 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     android {
        namespace = "com.tech_hunt.tailorpass.shared"
        compileSdk = libs.versions.android.compileSdk.get().toInt()
        minSdk = libs.versions.android.minSdk.get().toInt()
-    
+
        compilerOptions {
            jvmTarget = JvmTarget.JVM_11
+       }
+       androidResources {
+           enable = true
        }
        withHostTest {
            isIncludeAndroidResources = true
@@ -34,10 +41,33 @@ kotlin {
            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
        }
     }
-    
+
     sourceSets {
+        androidMain.dependencies {
+            api(libs.androidx.activity.compose)
+            api(libs.androidx.appcompat)
+            api(libs.androidx.core.ktx)
+        }
+        commonMain.dependencies {
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.ui)
+            implementation(libs.compose.components.resources)
+            implementation(libs.compose.uiToolingPreview)
+            implementation(libs.androidx.lifecycle.viewmodelCompose)
+            implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.navigation.compose)
+            implementation(libs.kotlinx.serialization.json)
+        }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
     }
+}
+
+compose.resources {
+    publicResClass = false
+    packageOfResClass = "com.tech_hunt.tailorpass.resources"
+    generateResClass = always
 }
