@@ -138,7 +138,7 @@ Steps 1–9 only use Panjabi/Salwar kameez/Genji sample data (that is all the de
 1. **One step = one session.** When all screens of the step are done, the build passes, and the PNG comparison list has been given, **stop working** — do not start the next step on your own. The user will review and tell you the next step.
 2. **Design first:** screens are built in Compose in `shared/commonMain` with sample data. State and sample data use the shared models (`Measurements.kt`, etc.). Each screen is a stateless composable (`XxxScreen(state, onAction)`) + `@Preview` (light, and dark where a design exists).
 3. For each screen: first read the HTML (sizes, colors, text), then look at the PNG, then build it. At the end, compare with the PNG and give a **list of differences**.
-4. Build each reusable component in the first step that needs it (`shared/src/commonMain/kotlin/com/tech_hunt/tailorpass/ui/components/`); in later steps reuse it instead of building a new one.
+4. Build each reusable component in the first step that needs it (`shared/src/commonMain/kotlin/com/tech_hunt/tailorpass/ui/components/`); in later steps reuse it instead of building a new one. **Before building any new UI piece, run the reuse checker** — `python3 for-agent/tools/ui_reuse_check.py --screen <id>` (or with the piece's CSS declarations): if the same piece is on another screen (or twice on this one), make it a component now and use it in this step. Pieces the checker finds nowhere else stay private to their screen.
 5. Sheets/dialogs (those with an `Overlay`) are not separate routes — they are overlays on the base screen.
 6. `Dark` variants (2.2, 5.2, 8.2, 9.2) are not separate screens — the same composable under `MaapTheme(darkTheme = true)`; build a dark `@Preview` for them and match it with the PNG.
 7. Navigation from [`navigation.json`](navigation.json) (multiplatform Navigation Compose); navigation between the screens inside a step must work, other destinations may stay placeholders. `navigation.json` (and the "Navigates to" lines in `SCREENS.md`) only contain the HTML links, so these links — taken from each screen's purpose and buttons — must be added too:
@@ -238,6 +238,7 @@ Summary:
 | 1.5 | Create profile `ProfileCreate` | [html](html/05_1-5_ProfileCreate.html) | [png](screens/05_1-5_ProfileCreate.png) |
 
 **New components:** `OnboardingPage` (illustration + title + bullets + Skip/Next + dot indicator — 1.2–1.4 share the same structure, `HorizontalPager`), `SegmentedToggle` (male/female, feet-inches/cm), `FitCard` (slim/regular/loose), text field style.
+**Built in Step 1 for reuse (checker results):** `MaapCard` (16 radius, 1dp #D5DAE1 card — 34 screens), `Modifier.selectableCard` (2dp primary + tint when selected — 1.5, 2.4, 7.6, 7.10, 12.3), `CheckBadge` (22dp — 1.5, 12.3), `IconTile` (icon/number on a colored circle or rounded square — 1.1, 1.2–1.4, 6.3, 12.2, garment tiles), `TextPillButton` (Skip), `SelectCard`, `UnitNumberField`/`MaapTextField`/`LabeledField`, `PageDots`, `MaapScaffold(bottomBarPadding)`, and `localDigits()`/`useBanglaDigits()` in `ui/util/AppLanguage.kt`.
 **Note:** height conversion with `feetInchesToCm()`; language choice uses Step 0's `setAppLanguage` + `LocalAppLocale`.
 
 **⏹ Stop.**

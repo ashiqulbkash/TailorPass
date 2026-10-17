@@ -1,32 +1,23 @@
 package com.tech_hunt.tailorpass.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.tech_hunt.tailorpass.model.Fit
 import com.tech_hunt.tailorpass.resources.Res
-import com.tech_hunt.tailorpass.resources.ic_check
 import com.tech_hunt.tailorpass.resources.ic_fit_shirt
 import com.tech_hunt.tailorpass.ui.theme.Dimens
 import com.tech_hunt.tailorpass.ui.theme.MaapTheme
@@ -44,19 +35,11 @@ fun FitCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val shape = MaterialTheme.shapes.medium
     val color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
     Box(
         modifier = modifier
             .height(108.dp)
-            .clip(shape)
-            .background(if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface)
-            .border(
-                if (selected) BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
-                else BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-                shape,
-            )
-            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick),
+            .selectableCard(selected, onClick, unselectedBorder = MaterialTheme.colorScheme.outlineVariant),
     ) {
         Column(
             modifier = Modifier.align(Alignment.Center),
@@ -82,21 +65,7 @@ fun FitCard(
             )
         }
         if (selected) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(top = Dimens.space6, end = Dimens.space6)
-                    .size(22.dp)
-                    .background(MaterialTheme.colorScheme.primary, CircleShape),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.ic_check),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier.size(14.dp),
-                )
-            }
+            CheckBadge(Modifier.align(Alignment.TopEnd).padding(top = Dimens.space6, end = Dimens.space6))
         }
     }
 }

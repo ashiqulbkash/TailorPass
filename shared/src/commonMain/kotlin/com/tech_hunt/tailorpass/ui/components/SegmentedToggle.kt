@@ -1,6 +1,5 @@
 package com.tech_hunt.tailorpass.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -20,8 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,7 +46,7 @@ fun SegmentedToggle(
             .clip(PillShape)
             .border(1.dp, MaterialTheme.colorScheme.outline, PillShape)
             .selectableGroup()
-            .then(if (contentDescription != null) Modifier.semantics { this.contentDescription = contentDescription } else Modifier),
+            .optionalContentDescription(contentDescription),
     ) {
         options.forEachIndexed { index, label ->
             val selected = index == selectedIndex
@@ -86,18 +83,10 @@ fun SelectCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val shape = MaterialTheme.shapes.medium
     Row(
         modifier = modifier
             .height(Dimens.buttonHeight)
-            .clip(shape)
-            .background(if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface)
-            .border(
-                if (selected) BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
-                else BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-                shape,
-            )
-            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick),
+            .selectableCard(selected, onClick),
         horizontalArrangement = Arrangement.spacedBy(Dimens.space8, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {

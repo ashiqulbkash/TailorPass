@@ -24,8 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -77,7 +75,7 @@ fun MaapTextField(
         onValueChange = onValueChange,
         modifier = modifier
             .fillMaxWidth()
-            .then(if (contentDescription != null) Modifier.semantics { this.contentDescription = contentDescription } else Modifier),
+            .optionalContentDescription(contentDescription),
         singleLine = true,
         textStyle = MaterialTheme.typography.bodyMedium.copy(fontSize = 18.sp, color = MaterialTheme.colorScheme.onSurface),
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
@@ -114,9 +112,7 @@ fun UnitNumberField(
     BasicTextField(
         value = TextFieldValue(value, selection = TextRange(value.length)),
         onValueChange = { if (it.text != value) onValueChange(it.text) },
-        modifier = modifier.then(
-            if (contentDescription != null) Modifier.semantics { this.contentDescription = contentDescription } else Modifier,
-        ),
+        modifier = modifier.optionalContentDescription(contentDescription),
         singleLine = true,
         textStyle = MaterialTheme.typography.bodyMedium.copy(
             fontSize = 30.sp,

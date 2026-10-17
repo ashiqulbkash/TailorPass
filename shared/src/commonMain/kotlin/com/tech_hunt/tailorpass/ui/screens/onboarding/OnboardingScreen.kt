@@ -3,28 +3,20 @@ package com.tech_hunt.tailorpass.ui.screens.onboarding
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -72,16 +64,17 @@ import com.tech_hunt.tailorpass.resources.onb_welcome
 import com.tech_hunt.tailorpass.resources.profile_height
 import com.tech_hunt.tailorpass.resources.size_col_chest
 import com.tech_hunt.tailorpass.resources.value_inch
+import com.tech_hunt.tailorpass.ui.components.MaapScaffold
 import com.tech_hunt.tailorpass.ui.components.OnboardingBullet
 import com.tech_hunt.tailorpass.ui.components.OnboardingPage
 import com.tech_hunt.tailorpass.ui.components.PageDots
 import com.tech_hunt.tailorpass.ui.components.PrimaryButton
+import com.tech_hunt.tailorpass.ui.components.TextPillButton
 import com.tech_hunt.tailorpass.ui.theme.Dimens
 import com.tech_hunt.tailorpass.ui.theme.MaapTheme
-import com.tech_hunt.tailorpass.ui.util.LANGUAGE_BN
-import com.tech_hunt.tailorpass.ui.util.LocalAppLocale
+import com.tech_hunt.tailorpass.ui.util.localDigits
+import com.tech_hunt.tailorpass.ui.util.useBanglaDigits
 import com.tech_hunt.tailorpass.util.formatInches
-import com.tech_hunt.tailorpass.util.toBanglaDigits
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
@@ -105,14 +98,45 @@ private const val PAGE_COUNT = 3
 fun OnboardingScreen(state: OnboardingState, onAction: (OnboardingAction) -> Unit) {
     val pager = rememberPagerState(initialPage = state.initialPage) { PAGE_COUNT }
     val scope = rememberCoroutineScope()
-    val useBangla = LocalAppLocale.current == LANGUAGE_BN
-    val digits: (Int) -> String = { if (useBangla) it.toString().toBanglaDigits() else it.toString() }
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .windowInsetsPadding(WindowInsets.safeDrawing)
-            .padding(horizontal = Dimens.space20, vertical = Dimens.space24),
+    MaapScaffold(
+        scrollable = false,
+        contentPadding = PaddingValues(start = Dimens.space20, end = Dimens.space20, top = Dimens.space24),
+        bottomBarPadding = PaddingValues(start = Dimens.space20, end = Dimens.space20, bottom = Dimens.space24),
+        bottomBar = {
+            Spacer(Modifier.height(Dimens.space16))
+            PageDots(
+                count = PAGE_COUNT,
+                current = pager.currentPage,
+                contentDescription = stringResource(
+                    Res.string.onb_page_of,
+                    localDigits((pager.currentPage + 1).toString()),
+                    localDigits(PAGE_COUNT.toString()),
+                ),
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(Modifier.height(18.dp))
+            if (pager.currentPage < PAGE_COUNT - 1) {
+                Row(horizontalArrangement = Arrangement.spacedBy(Dimens.space12)) {
+                    TextPillButton(
+                        text = stringResource(Res.string.action_skip),
+                        onClick = { onAction(OnboardingAction.Skip) },
+                    )
+                    PrimaryButton(
+                        text = stringResource(Res.string.action_next),
+                        onClick = { scope.launch { pager.animateScrollToPage(pager.currentPage + 1) } },
+                        modifier = Modifier.weight(1f),
+                        trailingIcon = painterResource(Res.drawable.ic_arrow_forward),
+                    )
+                }
+            } else {
+                PrimaryButton(
+                    text = stringResource(Res.string.action_start),
+                    onClick = { onAction(OnboardingAction.Start) },
+                    modifier = Modifier.fillMaxWidth(),
+                    trailingIcon = painterResource(Res.drawable.ic_arrow_forward),
+                )
+            }
+        },
     ) {
         HorizontalPager(
             state = pager,
@@ -121,54 +145,17 @@ fun OnboardingScreen(state: OnboardingState, onAction: (OnboardingAction) -> Uni
             verticalAlignment = Alignment.Top,
         ) { page ->
             when (page) {
-                0 -> HowItWorksPage(digits)
+                0 -> HowItWorksPage()
                 1 -> PrivacyPage()
                 else -> SharePage()
             }
-        }
-        Spacer(Modifier.height(Dimens.space16))
-        PageDots(
-            count = PAGE_COUNT,
-            current = pager.currentPage,
-            contentDescription = stringResource(Res.string.onb_page_of, digits(pager.currentPage + 1), digits(PAGE_COUNT)),
-            modifier = Modifier.fillMaxWidth(),
-        )
-        Spacer(Modifier.height(18.dp))
-        if (pager.currentPage < PAGE_COUNT - 1) {
-            Row(horizontalArrangement = Arrangement.spacedBy(Dimens.space12)) {
-                TextButton(
-                    onClick = { onAction(OnboardingAction.Skip) },
-                    modifier = Modifier.height(Dimens.buttonHeight),
-                    contentPadding = PaddingValues(horizontal = 22.dp),
-                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
-                ) {
-                    Text(
-                        text = stringResource(Res.string.action_skip),
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                }
-                PrimaryButton(
-                    text = stringResource(Res.string.action_next),
-                    onClick = { scope.launch { pager.animateScrollToPage(pager.currentPage + 1) } },
-                    modifier = Modifier.weight(1f),
-                    trailingIcon = painterResource(Res.drawable.ic_arrow_forward),
-                )
-            }
-        } else {
-            PrimaryButton(
-                text = stringResource(Res.string.action_start),
-                onClick = { onAction(OnboardingAction.Start) },
-                modifier = Modifier.fillMaxWidth(),
-                trailingIcon = painterResource(Res.drawable.ic_arrow_forward),
-            )
         }
     }
 }
 
 @Composable
-private fun HowItWorksPage(digits: (Int) -> String) {
-    val useBangla = LocalAppLocale.current == LANGUAGE_BN
+private fun HowItWorksPage() {
+    val useBangla = useBanglaDigits()
     OnboardingPage(
         title = stringResource(Res.string.onb1_title),
         eyebrow = stringResource(Res.string.onb_welcome),
@@ -192,7 +179,7 @@ private fun HowItWorksPage(digits: (Int) -> String) {
         listOf(Res.string.onb1_step1, Res.string.onb1_step2, Res.string.onb1_step3).forEachIndexed { i, step ->
             OnboardingBullet(stringResource(step), markerColor = MaterialTheme.colorScheme.primary) {
                 Text(
-                    text = digits(i + 1),
+                    text = localDigits((i + 1).toString()),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onPrimary,

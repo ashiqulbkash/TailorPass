@@ -12,10 +12,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -76,6 +78,24 @@ fun OutlinedPillButton(
         contentPadding = PaddingValues(horizontal = Dimens.space16),
     ) {
         ButtonContent(text, icon, 17.sp)
+    }
+}
+
+/** Text-only button (onboarding "Skip"): 56dp high, 22dp side padding, 17 semibold grey text. */
+@Composable
+fun TextPillButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    TextButton(
+        onClick = onClick,
+        modifier = modifier.height(Dimens.buttonHeight),
+        shape = PillShape,
+        contentPadding = PaddingValues(horizontal = 22.dp),
+        colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
+    ) {
+        Text(text = text, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold, maxLines = 1)
     }
 }
 

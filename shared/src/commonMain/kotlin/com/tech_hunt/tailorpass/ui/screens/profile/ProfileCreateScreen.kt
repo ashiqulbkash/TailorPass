@@ -44,17 +44,13 @@ import com.tech_hunt.tailorpass.ui.components.TopBar
 import com.tech_hunt.tailorpass.ui.components.UnitNumberField
 import com.tech_hunt.tailorpass.ui.theme.Dimens
 import com.tech_hunt.tailorpass.ui.theme.MaapTheme
-import com.tech_hunt.tailorpass.ui.util.LANGUAGE_BN
-import com.tech_hunt.tailorpass.ui.util.LocalAppLocale
+import com.tech_hunt.tailorpass.ui.util.localDigits
 import com.tech_hunt.tailorpass.ui.util.str
-import com.tech_hunt.tailorpass.util.toBanglaDigits
 import org.jetbrains.compose.resources.stringResource
 
 /** 1.5 Create profile: name, gender, height (feet-inch or cm), fit preference. */
 @Composable
 fun ProfileCreateScreen(state: ProfileCreateState, onAction: (ProfileCreateAction) -> Unit) {
-    val useBangla = LocalAppLocale.current == LANGUAGE_BN
-    val shown: (String) -> String = { if (useBangla) it.toBanglaDigits() else it }
     val numberKeyboard = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next)
     MaapScaffold(
         topBar = {
@@ -109,7 +105,7 @@ fun ProfileCreateScreen(state: ProfileCreateState, onAction: (ProfileCreateActio
                 when (state.heightUnit) {
                     HeightUnit.FeetInch -> Row(horizontalArrangement = Arrangement.spacedBy(Dimens.space10)) {
                         UnitNumberField(
-                            value = shown(state.feet),
+                            value = localDigits(state.feet),
                             onValueChange = { onAction(ProfileCreateAction.FeetChanged(it)) },
                             unit = stringResource(Res.string.unit_feet),
                             contentDescription = stringResource(Res.string.unit_feet),
@@ -117,7 +113,7 @@ fun ProfileCreateScreen(state: ProfileCreateState, onAction: (ProfileCreateActio
                             modifier = Modifier.weight(1f),
                         )
                         UnitNumberField(
-                            value = shown(state.inches),
+                            value = localDigits(state.inches),
                             onValueChange = { onAction(ProfileCreateAction.InchesChanged(it)) },
                             unit = stringResource(Res.string.unit_inch),
                             contentDescription = stringResource(Res.string.unit_inch),
@@ -126,7 +122,7 @@ fun ProfileCreateScreen(state: ProfileCreateState, onAction: (ProfileCreateActio
                         )
                     }
                     HeightUnit.Cm -> UnitNumberField(
-                        value = shown(state.cm),
+                        value = localDigits(state.cm),
                         onValueChange = { onAction(ProfileCreateAction.CmChanged(it)) },
                         unit = stringResource(Res.string.unit_cm),
                         contentDescription = stringResource(Res.string.unit_cm),
@@ -137,7 +133,7 @@ fun ProfileCreateScreen(state: ProfileCreateState, onAction: (ProfileCreateActio
                 val cm = state.heightCm
                 if (state.heightUnit == HeightUnit.FeetInch && cm != null) {
                     Text(
-                        text = stringResource(Res.string.profile_height_hint, shown(cm.toString())),
+                        text = stringResource(Res.string.profile_height_hint, localDigits(cm.toString())),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

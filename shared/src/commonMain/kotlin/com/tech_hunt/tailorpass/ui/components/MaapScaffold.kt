@@ -22,7 +22,7 @@ import com.tech_hunt.tailorpass.ui.theme.Dimens
 /**
  * Screen frame: topBar at the top, scrolling content in the middle, fixed button(s) at the bottom (bottomBar).
  * Safe areas (notch, home indicator, keyboard) are handled with WindowInsets.safeDrawing.
- * Pass scrollable = false when the content is a LazyColumn.
+ * Pass scrollable = false when the content is a LazyColumn or a pager, or uses Modifier.weight.
  */
 @Composable
 fun MaapScaffold(
@@ -33,6 +33,9 @@ fun MaapScaffold(
     background: Color = MaterialTheme.colorScheme.background,
     contentPadding: PaddingValues = PaddingValues(
         start = Dimens.screenPadding, end = Dimens.screenPadding, top = Dimens.space12, bottom = Dimens.space16,
+    ),
+    bottomBarPadding: PaddingValues = PaddingValues(
+        start = Dimens.screenPadding, end = Dimens.screenPadding, bottom = Dimens.space24,
     ),
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -56,7 +59,7 @@ fun MaapScaffold(
             Column(
                 Modifier
                     .fillMaxWidth()
-                    .padding(start = Dimens.screenPadding, end = Dimens.screenPadding, bottom = Dimens.space24),
+                    .padding(bottomBarPadding),
                 content = bottomBar,
             )
         }

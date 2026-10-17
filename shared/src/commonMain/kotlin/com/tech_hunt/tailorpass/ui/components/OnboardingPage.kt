@@ -10,11 +10,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -88,11 +85,7 @@ fun OnboardingBullet(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Dimens.space12),
     ) {
-        Box(
-            modifier = Modifier.size(32.dp).background(markerColor, CircleShape),
-            contentAlignment = Alignment.Center,
-            content = marker,
-        )
+        IconTile(background = markerColor, content = marker)
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge,
