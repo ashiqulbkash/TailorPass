@@ -1,7 +1,9 @@
 package com.tech_hunt.tailorpass.ui.nav
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -13,7 +15,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.tech_hunt.tailorpass.model.Garment
 import com.tech_hunt.tailorpass.resources.Res
-import com.tech_hunt.tailorpass.resources.cam_front_step
 import com.tech_hunt.tailorpass.resources.genji_title
 import com.tech_hunt.tailorpass.resources.manual_prep_title
 import com.tech_hunt.tailorpass.resources.result_title
@@ -24,6 +25,18 @@ import com.tech_hunt.tailorpass.ui.components.BottomNav
 import com.tech_hunt.tailorpass.ui.components.BottomTab
 import com.tech_hunt.tailorpass.ui.components.MaapScaffold
 import com.tech_hunt.tailorpass.ui.components.TopBar
+import com.tech_hunt.tailorpass.ui.screens.capture.AiFailedAction
+import com.tech_hunt.tailorpass.ui.screens.capture.AiFailedScreen
+import com.tech_hunt.tailorpass.ui.screens.capture.CameraAction
+import com.tech_hunt.tailorpass.ui.screens.capture.CameraScreen
+import com.tech_hunt.tailorpass.ui.screens.capture.CameraShot
+import com.tech_hunt.tailorpass.ui.screens.capture.CameraState
+import com.tech_hunt.tailorpass.ui.screens.capture.PhotoCheckProblemScreen
+import com.tech_hunt.tailorpass.ui.screens.capture.PhotoCheckSuccessScreen
+import com.tech_hunt.tailorpass.ui.screens.capture.PhotoProblemAction
+import com.tech_hunt.tailorpass.ui.screens.capture.PhotoProblemState
+import com.tech_hunt.tailorpass.ui.screens.capture.ProcessingAction
+import com.tech_hunt.tailorpass.ui.screens.capture.ProcessingState
 import com.tech_hunt.tailorpass.ui.screens.home.HomeAction
 import com.tech_hunt.tailorpass.ui.screens.home.ProfileSummary
 import com.tech_hunt.tailorpass.ui.screens.home.HomeScreen
@@ -50,6 +63,7 @@ import com.tech_hunt.tailorpass.ui.screens.profile.ProfileCreateScreen
 import com.tech_hunt.tailorpass.ui.screens.profile.ProfileCreateState
 import com.tech_hunt.tailorpass.ui.screens.profile.reduce
 import com.tech_hunt.tailorpass.ui.util.str
+import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -67,6 +81,11 @@ fun AppNavHost(
     var homeState by remember { mutableStateOf(HomeState.Sample) }
     // Design phase: the real OS camera permission comes in Step 10.7; until then "Allow" on 3.2 counts as granted.
     var cameraAllowed by remember { mutableStateOf(false) }
+    // Voice guide on/off for the whole camera flow (stored in settings from Step 10).
+    var voiceOn by remember { mutableStateOf(true) }
+    // Design-phase demo of the photo outcomes until the AI arrives (Step 10.8): the 1st photo pair is rejected (6.2),
+    // the 2nd cannot be measured (6.3), later ones go on to Verify.
+    var photoAttempt by remember { mutableIntStateOf(0) }
     val onTabSelect: (BottomTab) -> Unit = { navController.navigateToTab(it) }
 
     NavHost(navController = navController, startDestination = LanguageRoute, modifier = modifier) {
@@ -177,8 +196,76 @@ fun AppNavHost(
                 }
             }
         }
-        composable<CameraRoute> {
-            PlaceholderScreen(stringResource(Res.string.cam_front_step)) { navController.popBackStack() }
+        composable<CameraRoute> { entry ->
+            val route = entry.toRoute<CameraRoute>()
+            val garment = route.garment
+            val shot = CameraShot.valueOf(route.shot)
+            val state = CameraState.initial(measureTarget(garment, homeState.currentProfile), shot).copy(voiceOn = voiceOn)
+            CameraScreen(state) { action ->
+                when (action) {
+                    CameraAction.Close -> navController.popBackStack(MainRoute, inclusive = false)
+                    is CameraAction.SetVoice -> voiceOn = action.on
+                    // Design phase: "start" stands for the timer + capture of Step 10.7.
+                    CameraAction.Start -> when (shot) {
+                        CameraShot.Front -> navController.navigate(CameraRoute(garment, CameraShot.Side.name))
+                        CameraShot.Side -> {
+                            photoAttempt += 1
+                            navController.navigate(
+                                if (photoAttempt == 1) PhotoProblemRoute(garment, CameraShot.Front.name) else PhotoCheckRoute(garment),
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        composable<PhotoProblemRoute> { entry ->
+            val route = entry.toRoute<PhotoProblemRoute>()
+            val failedShot = CameraShot.valueOf(route.failedShot)
+            val state = PhotoProblemState.Sample.copy(
+                target = measureTarget(route.garment, homeState.currentProfile),
+                failedShot = failedShot,
+            )
+            PhotoCheckProblemScreen(state) { action ->
+                when (action) {
+                    PhotoProblemAction.Back -> navController.popBackStack()
+                    PhotoProblemAction.Retake ->
+                        navController.popBackStack(CameraRoute(route.garment, failedShot.name), inclusive = false)
+                }
+            }
+        }
+        composable<PhotoCheckRoute> { entry ->
+            val garment = entry.toRoute<PhotoCheckRoute>().garment
+            var progress by rememberSaveable { mutableIntStateOf(0) }
+            // Design phase: simulated progress; the real on-device measuring (BodyMeasurer) comes in Step 10.8.
+            // When done, the camera screens leave the back stack (photos are gone by then).
+            LaunchedEffect(Unit) {
+                while (progress < 100) {
+                    delay(40)
+                    progress += 1
+                }
+                navController.navigate(if (photoAttempt == 2) AiFailedRoute(garment) else VerifyNewRoute(garment)) {
+                    popUpTo(MethodRoute(garment))
+                }
+            }
+            PhotoCheckSuccessScreen(ProcessingState(measureTarget(garment, homeState.currentProfile), progress)) { action ->
+                when (action) {
+                    ProcessingAction.Back -> navController.popBackStack()
+                    ProcessingAction.Cancel -> navController.popBackStack(MethodRoute(garment), inclusive = false)
+                }
+            }
+        }
+        composable<AiFailedRoute> { entry ->
+            val garment = entry.toRoute<AiFailedRoute>().garment
+            AiFailedScreen(measureTarget(garment, homeState.currentProfile)) { action ->
+                when (action) {
+                    AiFailedAction.Close -> navController.popBackStack(MainRoute, inclusive = false)
+                    AiFailedAction.Retry -> navController.navigate(CameraRoute(garment)) { popUpTo(MethodRoute(garment)) }
+                    AiFailedAction.UseTape -> navController.navigate(ManualPrepRoute(garment)) { popUpTo(MethodRoute(garment)) }
+                }
+            }
+        }
+        composable<VerifyNewRoute> {
+            PlaceholderScreen(stringResource(Res.string.verify_title)) { navController.popBackStack() }
         }
         composable<ManualPrepRoute> {
             PlaceholderScreen(stringResource(Res.string.manual_prep_title)) { navController.popBackStack() }

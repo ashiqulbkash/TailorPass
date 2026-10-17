@@ -190,6 +190,8 @@
     <string name="cam_turn_right_sub">হাত সোজা নিচে, দাগের ভেতরে থাকুন</string>
     <string name="cam_timer">১০ সেকেন্ডের টাইমার</string>
     <string name="cam_timer_hint">ফোন দেয়ালে ঠেস দিয়ে রাখুন, তারপর সোজা দাঁড়ান</string>
+    <string name="cam_side_timer_hint">সামনের ছবি নেওয়া হয়েছে। এবার পাশ থেকে।</string>
+    <string name="cam_voice_off">ভয়েস গাইড বন্ধ আছে</string>
     <string name="cam_start">ছবি তোলা শুরু করুন</string>
 
     <!-- 6. Photo check and processing -->
@@ -209,7 +211,10 @@
     <string name="processing_step_calc">মাপ হিসাব হচ্ছে</string>
     <string name="processing_step_size">সাইজ সাজেশন</string>
     <string name="processing_offline">ইন্টারনেট লাগছে না, সব হিসাব ফোনেই হচ্ছে</string>
+    <string name="processing_percent">%1$s%</string>
+    <string name="processing_cancel">বাতিল করুন</string>
     <string name="ai_failed_title">মাপ বের করা যায়নি</string>
+    <string name="ai_failed_close">হোমে ফিরুন</string>
     <string name="ai_failed_body">চিন্তা করবেন না, আবার ছবি তুললেই সাধারণত ঠিক হয়ে যায়।</string>
     <string name="ai_failed_reasons">সম্ভাব্য কারণ</string>
     <string name="ai_failed_reason_frame">শরীরের কিছু অংশ (মাথা বা পা) ফ্রেমের বাইরে ছিল</string>

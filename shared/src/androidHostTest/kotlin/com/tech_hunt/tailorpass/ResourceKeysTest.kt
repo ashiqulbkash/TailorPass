@@ -9,6 +9,13 @@ import com.tech_hunt.tailorpass.model.LengthPreset
 import com.tech_hunt.tailorpass.model.MeasurementKey
 import com.tech_hunt.tailorpass.model.NeckDepthPreset
 import com.tech_hunt.tailorpass.model.SourceBadge
+import com.tech_hunt.tailorpass.ui.screens.capture.AiFailedReasons
+import com.tech_hunt.tailorpass.ui.screens.capture.CameraGuidance
+import com.tech_hunt.tailorpass.ui.screens.capture.CameraShot
+import com.tech_hunt.tailorpass.ui.screens.capture.CameraState
+import com.tech_hunt.tailorpass.ui.screens.capture.PhotoProblem
+import com.tech_hunt.tailorpass.ui.screens.capture.PhotoProblemState
+import com.tech_hunt.tailorpass.ui.screens.capture.ProcessingStep
 import com.tech_hunt.tailorpass.ui.screens.home.HomeState
 import com.tech_hunt.tailorpass.ui.screens.home.SavedDetail
 import com.tech_hunt.tailorpass.ui.screens.prep.PrepGuide
@@ -83,6 +90,26 @@ class ResourceKeysTest {
         val drawables = File(resDir, "drawable").listFiles()!!.map { it.nameWithoutExtension }.toSet()
         val used = prepItems.map { it.iconName } + prepTips.map { it.iconName } + poseTips.map { it.iconName } +
             listOf(false, true).map { PrepGuide.poses(it) }.flatMap { listOf(it.front, it.side, it.distance) }
+        assertEquals(emptyList(), used.filterNot { it in drawables }, "drawables missing")
+    }
+
+    @Test
+    fun captureStringKeysExist() {
+        val keys = stringKeys("values")
+        val used = CameraShot.entries.map { it.stepKey } +
+            CameraGuidance.entries.flatMap { listOf(it.titleKey, it.subtitleKey) } +
+            listOf(CameraState.Sample, CameraState.SampleSide).map { it.timerHintKey } +
+            ProcessingStep.entries.map { it.labelKey } +
+            PhotoProblem.entries.flatMap { listOf(it.tagKey, it.titleKey, it.bodyKey) } +
+            PhotoProblemState.Sample.checks.map { it.labelKey } +
+            AiFailedReasons.all.map { it.textKey }
+        assertEquals(emptyList(), used.filterNot { it in keys }, "keys missing in strings.xml")
+    }
+
+    @Test
+    fun captureDrawableNamesExist() {
+        val drawables = File(resDir, "drawable").listFiles()!!.map { it.nameWithoutExtension }.toSet()
+        val used = CameraGuidance.entries.map { it.iconName } + AiFailedReasons.all.map { it.iconName }
         assertEquals(emptyList(), used.filterNot { it in drawables }, "drawables missing")
     }
 

@@ -32,6 +32,7 @@ import com.tech_hunt.tailorpass.ui.theme.PillShape
  * Primary button — only one per screen. 56dp pill, primary color, 18 bold.
  * Grey when disabled (#DDE1E6 / #6B7280). Pass Modifier.fillMaxWidth() for full width.
  * trailingIcon: 22dp icon after the text (onboarding "Next →").
+ * containerColor/contentColor: only for the camera panel (5.x), whose button is white on dark.
  */
 @Composable
 fun PrimaryButton(
@@ -41,6 +42,9 @@ fun PrimaryButton(
     enabled: Boolean = true,
     icon: Painter? = null,
     trailingIcon: Painter? = null,
+    iconSize: Dp = Dimens.iconSize,
+    containerColor: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimary,
 ) {
     Button(
         onClick = onClick,
@@ -48,14 +52,14 @@ fun PrimaryButton(
         enabled = enabled,
         shape = PillShape,
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = containerColor,
+            contentColor = contentColor,
             disabledContainerColor = MaapTheme.colors.disabledContainer,
             disabledContentColor = MaapTheme.colors.onDisabled,
         ),
         contentPadding = PaddingValues(horizontal = Dimens.space16),
     ) {
-        ButtonContent(text, icon, MaterialTheme.typography.labelLarge.fontSize, trailingIcon)
+        ButtonContent(text, icon, MaterialTheme.typography.labelLarge.fontSize, trailingIcon, iconSize)
     }
 }
 
@@ -83,6 +87,31 @@ fun OutlinedPillButton(
         contentPadding = PaddingValues(horizontal = Dimens.space16),
     ) {
         ButtonContent(text, icon, fontSize, iconSize = iconSize)
+    }
+}
+
+/**
+ * Neutral secondary button: 52dp pill, 1.5dp grey border, surface background, 17 semibold dark text
+ * ("বাতিল করুন" 6.1; later the cancel/"later" buttons of 7.5, 7.8, 12.3, 12.4).
+ */
+@Composable
+fun NeutralPillButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    OutlinedButton(
+        onClick = onClick,
+        modifier = modifier.height(Dimens.dialogButtonHeight),
+        shape = PillShape,
+        border = BorderStroke(1.5.dp, MaterialTheme.colorScheme.outline),
+        colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaapTheme.colors.textEmphasis,
+        ),
+        contentPadding = PaddingValues(horizontal = Dimens.space16),
+    ) {
+        Text(text = text, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold, maxLines = 1)
     }
 }
 

@@ -1,5 +1,6 @@
 package com.tech_hunt.tailorpass.ui.nav
 
+import com.tech_hunt.tailorpass.ui.screens.capture.CameraShot
 import kotlinx.serialization.Serializable
 
 /** Type-safe routes (navigation.json names). Overlays (sheets/dialogs) are not routes. */
@@ -30,8 +31,20 @@ import kotlinx.serialization.Serializable
 /** Pose guide (4.3 / 4.4 by gender/garment). */
 @Serializable data class PoseGuideRoute(val garment: String)
 
-/** Front camera (Step 4 placeholder). */
-@Serializable data class CameraRoute(val garment: String)
+/** Camera (5.1–5.4). [shot] = CameraShot.name. */
+@Serializable data class CameraRoute(val garment: String, val shot: String = CameraShot.Front.name)
+
+/** Both photos accepted, measuring in progress (6.1). */
+@Serializable data class PhotoCheckRoute(val garment: String)
+
+/** A photo was rejected (6.2). [failedShot] = CameraShot.name of the photo to retake. */
+@Serializable data class PhotoProblemRoute(val garment: String, val failedShot: String)
+
+/** The AI could not measure (6.3). */
+@Serializable data class AiFailedRoute(val garment: String)
+
+/** Verify a new measurement (Step 7 placeholder). */
+@Serializable data class VerifyNewRoute(val garment: String)
 
 /** Tape-measure preparation (Step 5 placeholder). */
 @Serializable data class ManualPrepRoute(val garment: String)

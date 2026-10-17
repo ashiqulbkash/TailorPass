@@ -182,6 +182,8 @@
     <string name="cam_turn_right_sub">Arms straight down, stay inside the outline</string>
     <string name="cam_timer">10-second timer</string>
     <string name="cam_timer_hint">Lean the phone against a wall, then stand straight</string>
+    <string name="cam_side_timer_hint">Front photo done. Now from the side.</string>
+    <string name="cam_voice_off">Voice guide is off</string>
     <string name="cam_start">Start taking photo</string>
 
     <string name="photo_check_title">Photo check</string>
@@ -200,7 +202,10 @@
     <string name="processing_step_calc">Calculating measurements</string>
     <string name="processing_step_size">Size suggestion</string>
     <string name="processing_offline">No internet needed, everything runs on your phone</string>
+    <string name="processing_percent">%1$s%</string>
+    <string name="processing_cancel">Cancel</string>
     <string name="ai_failed_title">Could not get measurements</string>
+    <string name="ai_failed_close">Back to home</string>
     <string name="ai_failed_body">Don't worry, retaking the photos usually fixes it.</string>
     <string name="ai_failed_reasons">Possible reasons</string>
     <string name="ai_failed_reason_frame">Part of the body (head or feet) was outside the frame</string>

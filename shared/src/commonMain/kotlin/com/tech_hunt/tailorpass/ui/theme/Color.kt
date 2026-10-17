@@ -153,6 +153,29 @@ data class MaapExtendedColors(
     val dashedBorder: Color,
     // Border of an unticked checkbox (checklist 4.1/4.2)
     val checkboxBorder: Color,
+    // Camera screens (5.x): light = 5.1/5.3/5.4, dark = 5.2. Transparent borders are drawn only in dark.
+    val onCamera: Color,
+    val onCameraSecondary: Color,
+    val cameraAccent: Color,           // Body outline, active step dot, timer ring
+    val cameraDotInactive: Color,
+    val cameraControlBorder: Color,    // Close button and step pill
+    val cameraToggle: Color,           // Voice guide button (on)
+    val cameraButton: Color,
+    val onCameraButton: Color,
+    val cameraBannerBorder: Color,
+    val cameraBannerIcon: Color,
+    val onCameraBanner: Color,
+    val onCameraBannerSecondary: Color,
+    val cameraPanelBorder: Color,
+    // Photo check (6.x)
+    val photoPlaceholder: Color,       // Thumbnail background (6.1)
+    val progressTrack: Color,
+    val problem: Color,                // Rejected photo border and tag (6.2)
+    val darkPhoto: Color,              // Too-dark photo (6.2): background, body, body edge
+    val darkPhotoBody: Color,
+    val darkPhotoEdge: Color,
+    val onWarningContainerBody: Color, // Body text in the orange alert card (6.2)
+    val warningCircle: Color,          // Large warning circle (6.3)
 )
 
 val MaapLightExtended = MaapExtendedColors(
@@ -184,6 +207,27 @@ val MaapLightExtended = MaapExtendedColors(
     textEmphasis = Color(0xFF33373D),
     dashedBorder = Color(0xFFB9C0CA),
     checkboxBorder = Color(0xFF6B7380),
+    onCamera = Color.White,
+    onCameraSecondary = Color(0xFFC9CED6),
+    cameraAccent = Color.White,
+    cameraDotInactive = Color(0xFF6B727C),
+    cameraControlBorder = Color.Transparent,
+    cameraToggle = Color.White,
+    cameraButton = Color.White,
+    onCameraButton = Color(0xFF1B3A6B),
+    cameraBannerBorder = Color.Transparent,
+    cameraBannerIcon = Color.White,
+    onCameraBanner = Color.White,
+    onCameraBannerSecondary = Color.White,
+    cameraPanelBorder = Color.Transparent,
+    photoPlaceholder = Color(0xFFDADDE2),
+    progressTrack = Color(0xFFE1E4E9),
+    problem = Color(0xFFC2410C),
+    darkPhoto = Color(0xFF17191C),
+    darkPhotoBody = Color(0xFF262A2F),
+    darkPhotoEdge = Color(0xFF30353B),
+    onWarningContainerBody = Color(0xFF3D2414),
+    warningCircle = Color(0xFFFFEDD5),
 )
 
 val MaapDarkExtended = MaapExtendedColors(
@@ -215,4 +259,25 @@ val MaapDarkExtended = MaapExtendedColors(
     textEmphasis = Color(0xFFCDD1D7),
     dashedBorder = Color(0xFF5B6370),
     checkboxBorder = Color(0xFF8A919B),
+    onCamera = Color(0xFFE4E6EA),
+    onCameraSecondary = Color(0xFFA9AFB8),
+    cameraAccent = Color(0xFFA9C4F0),
+    cameraDotInactive = Color(0xFF5B6370),
+    cameraControlBorder = Color(0xFF353A42),
+    cameraToggle = Color(0xFF263B5E),
+    cameraButton = Color(0xFFA9C4F0),
+    onCameraButton = Color(0xFF0E2747),
+    cameraBannerBorder = Color(0xFFA85A22),
+    cameraBannerIcon = Color(0xFFFFB77A),
+    onCameraBanner = Color(0xFFFFD9B8),
+    onCameraBannerSecondary = Color(0xFFF3CDAE),
+    cameraPanelBorder = Color(0xFF2C3037),
+    photoPlaceholder = Color(0xFF2C3037),
+    progressTrack = Color(0xFF2C3037),
+    problem = Color(0xFFFF8A5B),
+    darkPhoto = Color(0xFF17191C),
+    darkPhotoBody = Color(0xFF262A2F),
+    darkPhotoEdge = Color(0xFF30353B),
+    onWarningContainerBody = Color(0xFFFFD9B8),
+    warningCircle = Color(0xFF4A2A12),
 )
