@@ -246,6 +246,10 @@
     <string name="manual_decrease">আধা ইঞ্চি কমান</string>
     <string name="manual_increase">আধা ইঞ্চি বাড়ান</string>
     <string name="manual_helper_banner">এটি কাউকে দিয়ে মাপালে সঠিক হবে</string>
+    <string name="manual_prep_need_bold">যা লাগবে:</string>
+    <string name="manual_prep_finger_bold">এক আঙুল</string>
+    <string name="manual_step_desc">%2$sটির মধ্যে %1$s নম্বর মাপ</string>
+    <string name="manual_value_desc">%1$s, ইঞ্চিতে</string>
     <string name="howto_chest">বগলের নিচ দিয়ে, বুকের সবচেয়ে চওড়া জায়গায় ফিতা ঘুরিয়ে মাপুন। শ্বাস স্বাভাবিক রাখুন।</string>
     <string name="howto_waist">নাভির একটু ওপরে, পেটের চারপাশে ফিতা ঘুরিয়ে মাপুন।</string>
     <string name="howto_sleeve">কাঁধের হাড় থেকে কনুই হয়ে কব্জি পর্যন্ত মাপুন।</string>

@@ -54,15 +54,18 @@ fun IconTile(
     }
 }
 
-/** Selected mark in a card corner: 22dp primary circle with a 14dp white check (fit card 1.5, restore options 12.3). */
+/**
+ * Selected mark in a card corner: 22dp primary circle with a 14dp white check (fit card 1.5, restore options 12.3);
+ * 20dp with a 12dp check on the preset picture cards (7.6, 7.10).
+ */
 @Composable
-fun CheckBadge(modifier: Modifier = Modifier) {
+fun CheckBadge(modifier: Modifier = Modifier, size: Dp = 22.dp, iconSize: Dp = 14.dp) {
     IconTile(
         icon = painterResource(Res.drawable.ic_check),
         tint = MaterialTheme.colorScheme.onPrimary,
         background = MaterialTheme.colorScheme.primary,
         modifier = modifier,
-        size = 22.dp,
-        iconSize = 14.dp,
+        size = size,
+        iconSize = iconSize,
     )
 }

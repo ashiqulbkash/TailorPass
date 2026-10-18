@@ -236,6 +236,10 @@
     <string name="manual_decrease">Decrease by half inch</string>
     <string name="manual_increase">Increase by half inch</string>
     <string name="manual_helper_banner">This is more accurate if someone measures for you</string>
+    <string name="manual_prep_need_bold">You need:</string>
+    <string name="manual_prep_finger_bold">one finger</string>
+    <string name="manual_step_desc">Measurement %1$s of %2$s</string>
+    <string name="manual_value_desc">%1$s, in inches</string>
     <string name="howto_chest">Wrap the tape under the armpits, around the widest part of the chest. Breathe normally.</string>
     <string name="howto_waist">Wrap the tape around the belly, just above the navel.</string>
     <string name="howto_sleeve">Measure from the shoulder bone, over the elbow, to the wrist.</string>

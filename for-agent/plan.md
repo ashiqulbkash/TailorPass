@@ -326,6 +326,12 @@ Summary:
 | 7.8 | Leaving midway `ManualExitDialog` (overlay on ManualEntry) | [html](html/31_7-8_ManualExitDialog.html) | [png](screens/31_7-8_ManualExitDialog.png) |
 | 7.9 | Home — incomplete measurement `HomeIncomplete` | [html](html/32_7-9_HomeIncomplete.html) | [png](screens/32_7-9_HomeIncomplete.png) |
 
+**Carried over from Step 5 (user decisions, 2026-10-18):**
+- [ ] **Do in Step 6:** English `manual_next` "Next measurement" → "Next" (the long label clips the arrow in the 1.5-wide button on 7.3–7.10).
+- [ ] **Later (not Step 6):** cm entry in the tape flow. The 7.1 inch/cm toggle is stored in `ManualState.unit`, but the entry screens (7.3–7.10) show and step in inches only (hint/stepper strings say "আধা ইঞ্চি", `outlier_body` uses `"`). Decide whether entry follows the chosen unit (needs cm strings and a cm step) or the unit only affects display (Result/Summary).
+- [ ] **Later:** tape how-to text, diagrams and "ভুল এড়াতে" tips for chest (7.3 shows the panel; no chest tips exist yet) and for neck, shoulder, hip, bust, armhole and the salwar measurements. Only chest/belly/sleeve/neck depth have resources now (`ManualPlan.guide`).
+- [ ] **Later:** replace Hind Siliguri with Roboto (user decision) and delete the Hind Siliguri TTFs. Reason: the bundled Hind Siliguri regular/medium/semibold draw the Bengali digit "১" without its upper stroke (bold is fine). ⚠ Before doing it, verify: Roboto has no Bengali glyphs of its own (Android falls back to the system Bengali font), but the PDF/PNG must use a bundled font and render conjuncts — a Bengali companion font (e.g. Noto Sans Bengali) may be needed alongside Roboto. Also update `CLAUDE.md` §4, `ResourceKeysTest.fontsAreBundled` and the §2 font row here.
+
 **New components:** `ConfirmDialog`, summary row (edit icon; if missing, an orange row + "এখন মাপুন" (Measure now)), `IncompleteCard` (orange left border, 4/8 progress).
 **Note:** 7.6 uses Step 5's `PresetPictureCard` (`LengthPreset`, values from height). 7.9 is not a new screen — it is the incomplete-card state of Step 2's home. 7.8 uses `BackHandler` to catch back (Android back / iOS swipe).
 

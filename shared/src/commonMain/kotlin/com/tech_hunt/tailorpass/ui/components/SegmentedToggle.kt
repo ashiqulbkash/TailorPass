@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.Icon
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tech_hunt.tailorpass.resources.Res
@@ -31,6 +33,7 @@ import org.jetbrains.compose.resources.painterResource
 /**
  * Pill toggle (feet-inch / cm, later inch / cm on Result): 44dp high, 1dp outline border.
  * Selected segment: primary background, 15 bold white; others: surface, 15 medium.
+ * segmentWidth: fixed width of every segment (72dp on 7.1); null sizes each segment to its text.
  */
 @Composable
 fun SegmentedToggle(
@@ -39,6 +42,7 @@ fun SegmentedToggle(
     onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
+    segmentWidth: Dp? = null,
 ) {
     Row(
         modifier = modifier
@@ -53,9 +57,13 @@ fun SegmentedToggle(
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
+                    .then(if (segmentWidth != null) Modifier.width(segmentWidth) else Modifier)
                     .background(if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
                     .selectable(selected = selected, role = Role.RadioButton, onClick = { onSelect(index) })
-                    .padding(horizontal = if (selected) Dimens.space14 else Dimens.space16),
+                    .then(
+                        if (segmentWidth != null) Modifier
+                        else Modifier.padding(horizontal = if (selected) Dimens.space14 else Dimens.space16),
+                    ),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(

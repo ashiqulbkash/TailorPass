@@ -32,6 +32,7 @@ import org.jetbrains.compose.resources.stringResource
 /**
  * Top bar (HTML `<header>`): 48dp back button · title (21, bold) + subtitle (14) · trailing chip/icon.
  * Height is 60–68 in the design, mostly 64 (Dimens.appBarHeight). onBack = null hides the back button.
+ * endPadding: 6 when the bar ends with a 48dp icon button (tape entry 7.3–7.10).
  */
 @Composable
 fun TopBar(
@@ -40,13 +41,14 @@ fun TopBar(
     subtitle: String? = null,
     onBack: (() -> Unit)? = null,
     height: Dp = Dimens.appBarHeight,
+    endPadding: Dp = Dimens.space12,
     trailing: @Composable RowScope.() -> Unit = {},
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .height(height)
-            .padding(start = Dimens.space4, end = Dimens.space12, top = Dimens.space8),
+            .padding(start = Dimens.space4, end = endPadding, top = Dimens.space8),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Dimens.space4),
     ) {

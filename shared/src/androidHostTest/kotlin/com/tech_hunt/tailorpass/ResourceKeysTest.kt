@@ -18,6 +18,8 @@ import com.tech_hunt.tailorpass.ui.screens.capture.PhotoProblemState
 import com.tech_hunt.tailorpass.ui.screens.capture.ProcessingStep
 import com.tech_hunt.tailorpass.ui.screens.home.HomeState
 import com.tech_hunt.tailorpass.ui.screens.home.SavedDetail
+import com.tech_hunt.tailorpass.ui.screens.manual.ManualPlan
+import com.tech_hunt.tailorpass.ui.diagram.TapeDiagram
 import com.tech_hunt.tailorpass.ui.screens.prep.PrepGuide
 import java.io.File
 import kotlin.test.Test
@@ -111,6 +113,16 @@ class ResourceKeysTest {
         val drawables = File(resDir, "drawable").listFiles()!!.map { it.nameWithoutExtension }.toSet()
         val used = CameraGuidance.entries.map { it.iconName } + AiFailedReasons.all.map { it.iconName }
         assertEquals(emptyList(), used.filterNot { it in drawables }, "drawables missing")
+    }
+
+    @Test
+    fun manualStringKeysExist() {
+        val keys = stringKeys("values")
+        val guides = MeasurementKey.entries.map { ManualPlan.guide(it) }
+        val used = guides.mapNotNull { it.howtoKey } + guides.flatMap { it.tipKeys } +
+            TapeDiagram.entries.flatMap { d -> d.labels.map { it.key } } +
+            Garment.entries.flatMap { ManualPlan.sections(it) }.mapNotNull { it.titleKey }
+        assertEquals(emptyList(), used.filterNot { it in keys }, "keys missing in strings.xml")
     }
 
     @Test

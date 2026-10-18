@@ -51,6 +51,27 @@ fun MaapProgressBar(
     }
 }
 
+/**
+ * Step bar of the tape flow (7.3–7.8): [count] equal 6dp segments, 4dp apart; the first [filled] are primary,
+ * the rest light grey. Decorative (the "3/8" chip next to the title carries the same information).
+ */
+@Composable
+fun StepSegments(count: Int, filled: Int, modifier: Modifier = Modifier) {
+    Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.space4)) {
+        repeat(count) { index ->
+            Box(
+                Modifier
+                    .weight(1f)
+                    .height(Dimens.stepBarHeight)
+                    .background(
+                        if (index < filled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant,
+                        PillShape,
+                    ),
+            )
+        }
+    }
+}
+
 /** State of one line in a status list. */
 enum class LineStatus { Done, Current, Pending, Failed }
 

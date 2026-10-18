@@ -16,10 +16,10 @@ import androidx.navigation.toRoute
 import com.tech_hunt.tailorpass.model.Garment
 import com.tech_hunt.tailorpass.resources.Res
 import com.tech_hunt.tailorpass.resources.genji_title
-import com.tech_hunt.tailorpass.resources.manual_prep_title
 import com.tech_hunt.tailorpass.resources.result_title
 import com.tech_hunt.tailorpass.resources.settings_title
 import com.tech_hunt.tailorpass.resources.size_chart_title
+import com.tech_hunt.tailorpass.resources.summary_title
 import com.tech_hunt.tailorpass.resources.verify_title
 import com.tech_hunt.tailorpass.ui.components.BottomNav
 import com.tech_hunt.tailorpass.ui.components.BottomTab
@@ -42,6 +42,16 @@ import com.tech_hunt.tailorpass.ui.screens.home.ProfileSummary
 import com.tech_hunt.tailorpass.ui.screens.home.HomeScreen
 import com.tech_hunt.tailorpass.ui.screens.home.HomeState
 import com.tech_hunt.tailorpass.ui.screens.home.reduce
+import com.tech_hunt.tailorpass.ui.screens.manual.ManualEntryAction
+import com.tech_hunt.tailorpass.ui.screens.manual.ManualEntryScreen
+import com.tech_hunt.tailorpass.ui.screens.manual.ManualListAction
+import com.tech_hunt.tailorpass.ui.screens.manual.ManualListScreen
+import com.tech_hunt.tailorpass.ui.screens.manual.ManualPrepAction
+import com.tech_hunt.tailorpass.ui.screens.manual.ManualPrepScreen
+import com.tech_hunt.tailorpass.ui.screens.manual.ManualState
+import com.tech_hunt.tailorpass.ui.screens.manual.MeasureUnit
+import com.tech_hunt.tailorpass.ui.screens.manual.goTo
+import com.tech_hunt.tailorpass.ui.screens.manual.reduce
 import com.tech_hunt.tailorpass.ui.screens.onboarding.LanguageAction
 import com.tech_hunt.tailorpass.ui.screens.onboarding.LanguageScreen
 import com.tech_hunt.tailorpass.ui.screens.onboarding.OnboardingAction
@@ -86,6 +96,8 @@ fun AppNavHost(
     // Design-phase demo of the photo outcomes until the AI arrives (Step 10.8): the 1st photo pair is rejected (6.2),
     // the 2nd cannot be measured (6.3), later ones go on to Verify.
     var photoAttempt by remember { mutableIntStateOf(0) }
+    // Design phase: the tape session is shared by its list and entry screens; a ViewModel replaces it in Step 10.
+    var manualState by remember { mutableStateOf<ManualState?>(null) }
     val onTabSelect: (BottomTab) -> Unit = { navController.navigateToTab(it) }
 
     NavHost(navController = navController, startDestination = LanguageRoute, modifier = modifier) {
@@ -267,8 +279,54 @@ fun AppNavHost(
         composable<VerifyNewRoute> {
             PlaceholderScreen(stringResource(Res.string.verify_title)) { navController.popBackStack() }
         }
-        composable<ManualPrepRoute> {
-            PlaceholderScreen(stringResource(Res.string.manual_prep_title)) { navController.popBackStack() }
+        composable<ManualPrepRoute> { entry ->
+            val garment = entry.toRoute<ManualPrepRoute>().garment
+            var unit by rememberSaveable { mutableStateOf(MeasureUnit.Inch) }
+            ManualPrepScreen(ManualState(measureTarget(garment, homeState.currentProfile), unit)) { action ->
+                when (action) {
+                    ManualPrepAction.Back -> navController.popBackStack()
+                    is ManualPrepAction.SetUnit -> unit = action.unit
+                    // A new tape session starts here; resuming an unfinished one comes with Step 6 (7.9).
+                    ManualPrepAction.Start -> {
+                        manualState = ManualState(measureTarget(garment, homeState.currentProfile), unit)
+                        navController.navigate(ManualListRoute(garment))
+                    }
+                }
+            }
+        }
+        composable<ManualListRoute> { entry ->
+            val garment = entry.toRoute<ManualListRoute>().garment
+            val state = manualState ?: ManualState(measureTarget(garment, homeState.currentProfile))
+            ManualListScreen(state) { action ->
+                when (action) {
+                    ManualListAction.Back -> navController.popBackStack()
+                    is ManualListAction.Open -> {
+                        manualState = state.goTo(action.index)
+                        navController.navigate(ManualEntryRoute(garment))
+                    }
+                    // Back to the current measurement as it was left (a value typed but not yet saved stays).
+                    ManualListAction.Continue -> navController.navigate(ManualEntryRoute(garment))
+                }
+            }
+        }
+        composable<ManualEntryRoute> { entry ->
+            val garment = entry.toRoute<ManualEntryRoute>().garment
+            val state = manualState ?: ManualState(measureTarget(garment, homeState.currentProfile))
+            ManualEntryScreen(state) { action ->
+                val next = state.reduce(action)
+                manualState = next
+                when (action) {
+                    // The list is the entry's parent on the stack (7.3 back / list icon / "later" → ManualList).
+                    ManualEntryAction.Back, ManualEntryAction.OpenList, ManualEntryAction.Later ->
+                        navController.popBackStack(ManualListRoute(garment), inclusive = false)
+                    ManualEntryAction.Next, ManualEntryAction.ConfirmValue ->
+                        if (next.finished) navController.navigate(ManualSummaryRoute(garment))
+                    else -> Unit
+                }
+            }
+        }
+        composable<ManualSummaryRoute> {
+            PlaceholderScreen(stringResource(Res.string.summary_title)) { navController.popBackStack() }
         }
         composable<GenjiResultRoute> {
             PlaceholderScreen(stringResource(Res.string.genji_title)) { navController.popBackStack() }

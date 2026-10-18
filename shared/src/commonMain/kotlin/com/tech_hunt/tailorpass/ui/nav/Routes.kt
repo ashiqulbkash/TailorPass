@@ -46,8 +46,17 @@ import kotlinx.serialization.Serializable
 /** Verify a new measurement (Step 7 placeholder). */
 @Serializable data class VerifyNewRoute(val garment: String)
 
-/** Tape-measure preparation (Step 5 placeholder). */
+/** Tape-measure preparation (7.1). */
 @Serializable data class ManualPrepRoute(val garment: String)
+
+/** Tape measurement list (7.2). */
+@Serializable data class ManualListRoute(val garment: String)
+
+/** One tape measurement (7.3 / 7.4 / 7.10; 7.5 is a sheet on it). The current step lives in the flow state. */
+@Serializable data class ManualEntryRoute(val garment: String)
+
+/** Tape summary (Step 6 placeholder). */
+@Serializable data class ManualSummaryRoute(val garment: String)
 
 /** Genji size suggestion (Step 8 placeholder). */
 @Serializable data object GenjiResultRoute

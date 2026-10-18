@@ -22,6 +22,7 @@ import com.tech_hunt.tailorpass.ui.theme.Dimens
  * Icon + text banner: 14dp corners, 10 / 14 padding, optional 1dp border.
  * Tint (garment tip 4.1/4.2), white with border (permission hint 3.2); later orange (7.7), green (12.5), camera (5.x).
  * centerIcon = false puts the icon at the top (2dp down, next to the first text line).
+ * verticalPadding: 8 on the helper banner (7.4) and the verify banners (8.x).
  */
 @Composable
 fun InfoBanner(
@@ -33,6 +34,7 @@ fun InfoBanner(
     iconSize: Dp = Dimens.iconSize,
     gap: Dp = Dimens.space10,
     centerIcon: Boolean = true,
+    verticalPadding: Dp = Dimens.space10,
     content: @Composable RowScope.() -> Unit,
 ) {
     val shape = MaterialTheme.shapes.medium
@@ -40,7 +42,7 @@ fun InfoBanner(
         modifier = modifier
             .background(background, shape)
             .then(if (border != null) Modifier.border(1.dp, border, shape) else Modifier)
-            .padding(horizontal = Dimens.space14, vertical = Dimens.space10),
+            .padding(horizontal = Dimens.space14, vertical = verticalPadding),
         verticalAlignment = if (centerIcon) Alignment.CenterVertically else Alignment.Top,
         horizontalArrangement = Arrangement.spacedBy(gap),
     ) {
