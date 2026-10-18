@@ -16,13 +16,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.tech_hunt.tailorpass.ui.theme.Dimens
 
 /**
  * Small rounded label (10dp corners): "✎ পছন্দের মাপ" (7.6, 7.10: 13 bold, primary on primary container),
- * "সাহায্যকারী লাগবে" (7.2: 12 semibold with a 14dp icon, neutral badge colors), "এখন" (7.2: white on primary).
+ * "সাহায্যকারী লাগবে" (7.2: 12 semibold with a 14dp icon, neutral badge colors), "এখন" (7.2: white on primary),
+ * "আপনার" (11.1: 12 bold white on primary, 8dp corners).
  */
 @Composable
 fun TextBadge(
@@ -34,10 +36,11 @@ fun TextBadge(
     fontSize: TextUnit = MaterialTheme.typography.labelSmall.fontSize,
     fontWeight: FontWeight = FontWeight.Bold,
     padding: PaddingValues = PaddingValues(horizontal = Dimens.space10, vertical = 1.dp),
+    cornerRadius: Dp = 10.dp,
 ) {
     Row(
         modifier = modifier
-            .background(background, RoundedCornerShape(10.dp))
+            .background(background, RoundedCornerShape(cornerRadius))
             .padding(padding),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Dimens.space4),

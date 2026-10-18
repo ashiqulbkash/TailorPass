@@ -33,7 +33,8 @@ import com.tech_hunt.tailorpass.ui.theme.PillShape
  * Grey when disabled (#DDE1E6 / #6B7280). Pass Modifier.fillMaxWidth() for full width.
  * trailingIcon: 22dp icon after the text (onboarding "Next →").
  * height/fontSize: 52 / 17 in dialogs (7.8), 44 / 16 on the incomplete card (7.9).
- * containerColor/contentColor: only for the camera panel (5.x), whose button is white on dark.
+ * containerColor/contentColor: only for the camera panel (5.x), whose button is white on dark, and the red
+ * "সব মুছুন" (delete all) button (12.4).
  */
 @Composable
 fun PrimaryButton(

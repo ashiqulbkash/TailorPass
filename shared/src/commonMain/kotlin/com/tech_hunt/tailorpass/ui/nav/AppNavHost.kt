@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,13 +17,10 @@ import androidx.navigation.toRoute
 import com.tech_hunt.tailorpass.model.Fit
 import com.tech_hunt.tailorpass.model.Garment
 import com.tech_hunt.tailorpass.model.MeasureMethod
+import com.tech_hunt.tailorpass.model.Gender
 import com.tech_hunt.tailorpass.resources.Res
-import com.tech_hunt.tailorpass.resources.settings_title
-import com.tech_hunt.tailorpass.resources.size_chart_title
-import com.tech_hunt.tailorpass.ui.components.BottomNav
+import com.tech_hunt.tailorpass.resources.about_contact_email
 import com.tech_hunt.tailorpass.ui.components.BottomTab
-import com.tech_hunt.tailorpass.ui.components.MaapScaffold
-import com.tech_hunt.tailorpass.ui.components.TopBar
 import com.tech_hunt.tailorpass.ui.screens.capture.AiFailedAction
 import com.tech_hunt.tailorpass.ui.screens.capture.AiFailedScreen
 import com.tech_hunt.tailorpass.ui.screens.capture.CameraAction
@@ -82,10 +80,21 @@ import com.tech_hunt.tailorpass.ui.screens.result.ResultAction
 import com.tech_hunt.tailorpass.ui.screens.result.ResultScreen
 import com.tech_hunt.tailorpass.ui.screens.result.ResultState
 import com.tech_hunt.tailorpass.ui.screens.result.reduce
+import com.tech_hunt.tailorpass.ui.screens.settings.AboutAction
+import com.tech_hunt.tailorpass.ui.screens.settings.AboutScreen
+import com.tech_hunt.tailorpass.ui.screens.settings.PrivacyPolicyScreen
+import com.tech_hunt.tailorpass.ui.screens.settings.SettingsAction
+import com.tech_hunt.tailorpass.ui.screens.settings.SettingsScreen
+import com.tech_hunt.tailorpass.ui.screens.settings.SettingsState
+import com.tech_hunt.tailorpass.ui.screens.settings.reduce
+import com.tech_hunt.tailorpass.ui.screens.sizechart.SizeChartScreen
+import com.tech_hunt.tailorpass.ui.screens.sizechart.SizeChartState
+import com.tech_hunt.tailorpass.ui.screens.sizechart.reduce
 import com.tech_hunt.tailorpass.ui.screens.verify.VerifyAction
 import com.tech_hunt.tailorpass.ui.screens.verify.VerifyScreen
 import com.tech_hunt.tailorpass.ui.screens.verify.VerifyState
 import com.tech_hunt.tailorpass.ui.screens.verify.reduce
+import com.tech_hunt.tailorpass.ui.util.LocalAppLocale
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 
@@ -118,6 +127,11 @@ fun AppNavHost(
     var verifyState by remember { mutableStateOf<VerifyState?>(null) }
     // Design phase: the result being shown (9.1–9.3), set just before Result opens; a ViewModel replaces it in Step 10.
     var resultState by remember { mutableStateOf<ResultState?>(null) }
+    // Design phase: the app's display unit (Settings "মাপের একক") and the Settings sample (last backup, overlays);
+    // DataStore and a ViewModel replace them in Step 10. New results, the tape preparation and the size chart start
+    // in this unit.
+    var displayUnit by remember { mutableStateOf(MeasureUnit.Inch) }
+    var settingsState by remember { mutableStateOf(SettingsState.Sample) }
     val onTabSelect: (BottomTab) -> Unit = { navController.navigateToTab(it) }
 
     NavHost(navController = navController, startDestination = LanguageRoute, modifier = modifier) {
@@ -144,9 +158,10 @@ fun AppNavHost(
             ProfileCreateScreen(state) { action ->
                 when (action) {
                     ProfileCreateAction.Back -> navController.popBackStack()
-                    // Opened from Home's profile sheet: go back to Home. First launch: Home replaces the whole flow.
+                    // Opened from Home's profile sheet: go back to Home. First launch (or after "delete all data"):
+                    // Home replaces the whole flow.
                     ProfileCreateAction.Save -> if (!navController.popBackStack(MainRoute, inclusive = false)) {
-                        navController.navigate(MainRoute) { popUpTo(LanguageRoute) { inclusive = true } }
+                        navController.navigate(MainRoute) { popUpTo(navController.graph.id) { inclusive = true } }
                     }
                     else -> state = state.reduce(action)
                 }
@@ -167,6 +182,7 @@ fun AppNavHost(
                     // Design phase: a saved measurement's values are the design sample of its garment.
                     is HomeAction.OpenSaved -> homeState.saved.firstOrNull { it.id == action.savedId }?.let {
                         resultState = ResultState.sample(measureTarget(it.garment.name, homeState.currentProfile), it.date)
+                            .copy(unit = displayUnit)
                         navController.navigate(ResultRoute(action.savedId))
                     }
                     // Design phase: a saved measurement's values are the design sample of its garment.
@@ -185,10 +201,65 @@ fun AppNavHost(
             }
         }
         composable<SizeChartRoute> {
-            TabPlaceholder(stringResource(Res.string.size_chart_title), BottomTab.SizeChart, onTabSelect)
+            val profile = homeState.currentProfile
+            // Tab and chip survive a tab switch; they start on the current profile's gender.
+            var gender by rememberSaveable(profile.id) { mutableStateOf(profile.gender.name) }
+            var garment by rememberSaveable(profile.id) { mutableStateOf(SizeChartState.garmentsFor(profile.gender).first().name) }
+            // Design phase: a profile with saved measurements has the design's chest (40"); Step 10 reads the latest one.
+            val chest = if (homeState.savedCount(profile.id) > 0) SizeChartState.SAMPLE_CHEST else null
+            val state = SizeChartState(
+                profile.name, profile.gender, chest, Gender.valueOf(gender), Garment.valueOf(garment), displayUnit,
+            )
+            SizeChartScreen(state, onTabSelect) { action ->
+                val next = state.reduce(action)
+                gender = next.gender.name
+                garment = next.garment.name
+            }
         }
         composable<SettingsRoute> {
-            TabPlaceholder(stringResource(Res.string.settings_title), BottomTab.Settings, onTabSelect)
+            val state = settingsState.copy(
+                language = LocalAppLocale.current,
+                unit = displayUnit,
+                profileCount = homeState.profiles.size,
+                measurementCount = homeState.saved.size,
+            )
+            SettingsScreen(state, onTabSelect) { action ->
+                val next = state.reduce(action)
+                settingsState = next
+                when (action) {
+                    SettingsAction.ToggleLanguage -> onLanguageChosen(next.language)
+                    SettingsAction.ToggleUnit -> displayUnit = next.unit
+                    SettingsAction.OpenPrivacy -> navController.navigate(PrivacyPolicyRoute)
+                    SettingsAction.OpenAbout -> navController.navigate(AboutRoute)
+                    // Design phase: removes the sample measurements and unfinished sessions, then starts again at
+                    // profile creation; Step 10 deletes every profile and measurement from the database.
+                    SettingsAction.ConfirmDelete -> {
+                        homeState = homeState.copy(saved = emptyList(), incomplete = emptyList(), overlay = null)
+                        pausedSessions = emptyMap()
+                        manualState = null
+                        verifyState = null
+                        resultState = null
+                        navController.navigate(ProfileCreateRoute) { popUpTo(navController.graph.id) { inclusive = true } }
+                    }
+                    // Backup / restore files come with FileKit in Step 10.
+                    else -> Unit
+                }
+            }
+        }
+        composable<PrivacyPolicyRoute> {
+            PrivacyPolicyScreen(onBack = { navController.popBackStack() })
+        }
+        composable<AboutRoute> {
+            val uriHandler = LocalUriHandler.current
+            val email = stringResource(Res.string.about_contact_email)
+            AboutScreen { action ->
+                when (action) {
+                    AboutAction.Back -> navController.popBackStack()
+                    AboutAction.OpenPrivacy -> navController.navigate(PrivacyPolicyRoute)
+                    // The address is still a placeholder (plan.md §3), so only a real one is opened.
+                    AboutAction.Contact -> if ('@' in email) uriHandler.openUri("mailto:$email")
+                }
+            }
         }
         composable<MethodRoute> { entry ->
             val garment = entry.toRoute<MethodRoute>().garment
@@ -322,6 +393,7 @@ fun AppNavHost(
                     VerifyAction.Back -> navController.popBackStack()
                     VerifyAction.ShowResult -> {
                         resultState = ResultState.fromVerify(verifyState ?: state, ResultState.SampleDate, Fit.Regular)
+                            .copy(unit = displayUnit)
                         navController.navigate(ResultNewRoute(garment))
                     }
                     else -> Unit
@@ -330,7 +402,7 @@ fun AppNavHost(
         }
         composable<ManualPrepRoute> { entry ->
             val garment = entry.toRoute<ManualPrepRoute>().garment
-            var unit by rememberSaveable { mutableStateOf(MeasureUnit.Inch) }
+            var unit by rememberSaveable { mutableStateOf(displayUnit) }
             ManualPrepScreen(ManualState(measureTarget(garment, homeState.currentProfile), unit)) { action ->
                 when (action) {
                     ManualPrepAction.Back -> navController.popBackStack()
@@ -429,12 +501,13 @@ fun AppNavHost(
             val state = resultState ?: ResultState.sample(
                 measureTarget((saved?.garment ?: Garment.Panjabi).name, homeState.currentProfile),
                 saved?.date ?: ResultState.SampleDate,
-            )
+            ).copy(unit = displayUnit)
             ResultScreen(state, onTabSelect) { action -> resultAction(state, action, navController) { resultState = it } }
         }
         composable<ResultNewRoute> { entry ->
             val garment = entry.toRoute<ResultNewRoute>().garment
-            val state = resultState ?: ResultState.sample(measureTarget(garment, homeState.currentProfile), ResultState.SampleDate)
+            val state = resultState
+                ?: ResultState.sample(measureTarget(garment, homeState.currentProfile), ResultState.SampleDate).copy(unit = displayUnit)
             ResultScreen(state, onTabSelect) { action -> resultAction(state, action, navController) { resultState = it } }
         }
         composable<VerifyRoute> { entry ->
@@ -447,6 +520,7 @@ fun AppNavHost(
                     VerifyAction.Back -> navController.popBackStack()
                     VerifyAction.ShowResult -> {
                         resultState = ResultState.fromVerify(verifyState ?: state, ResultState.SampleDate, Fit.Regular)
+                            .copy(unit = displayUnit)
                         navController.navigate(ResultRoute(savedId)) {
                             popUpTo(VerifyRoute(savedId)) { inclusive = true }
                         }
@@ -484,15 +558,6 @@ private fun resultAction(
         ResultAction.Back -> navController.popBackStack()
         else -> Unit
     }
-}
-
-/** Stand-in for the Size chart / Settings tabs (Step 9), with the bottom nav. */
-@Composable
-private fun TabPlaceholder(title: String, tab: BottomTab, onTabSelect: (BottomTab) -> Unit) {
-    MaapScaffold(
-        topBar = { TopBar(title = title) },
-        bottomNav = { BottomNav(selected = tab, onSelect = onTabSelect) },
-    ) {}
 }
 
 /** Measuring-flow target from a route argument (Garment.name) and Home's current profile. */

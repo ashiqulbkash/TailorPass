@@ -14,10 +14,17 @@ import kotlinx.serialization.Serializable
 /** Home tab (2.1–2.3; ProfileSheet and SavedMenuSheet are overlays on it). */
 @Serializable data object MainRoute
 
-/** Bottom-nav tabs — placeholders until Step 9. */
+/** Size chart tab (11.1). */
 @Serializable data object SizeChartRoute
 
+/** Settings tab (12.1; 12.2–12.4 are overlays on it). */
 @Serializable data object SettingsRoute
+
+/** Privacy policy (12.5), from Settings and About. */
+@Serializable data object PrivacyPolicyRoute
+
+/** About the app (12.6). */
+@Serializable data object AboutRoute
 
 /** Choose method (3.1). [garment] = Garment.name in all measuring-flow routes; the profile is Home's current one. */
 @Serializable data class MethodRoute(val garment: String)

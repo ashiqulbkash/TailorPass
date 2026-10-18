@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
@@ -60,7 +61,10 @@ fun FieldLabel(text: String, modifier: Modifier = Modifier) {
     )
 }
 
-/** Single-line text input: 56dp high, 12dp corners, 1dp outline (2dp primary when focused), 18 text. */
+/**
+ * Single-line text input: 56dp high, 12dp corners, 1dp outline (2dp primary when focused), 18 text.
+ * Type-to-confirm field (12.4): 52dp, 14dp padding, 2dp red [accentColor], grey [placeholder] while empty.
+ */
 @Composable
 fun MaapTextField(
     value: String,
@@ -68,6 +72,10 @@ fun MaapTextField(
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    placeholder: String? = null,
+    height: Dp = Dimens.textFieldHeight,
+    horizontalPadding: Dp = Dimens.space16,
+    accentColor: Color = MaterialTheme.colorScheme.primary,
 ) {
     val interaction = remember { MutableInteractionSource() }
     val focused by interaction.collectIsFocusedAsState()
@@ -85,10 +93,15 @@ fun MaapTextField(
         decorationBox = { inner ->
             Box(
                 Modifier
-                    .fieldFrame(focused, Dimens.textFieldHeight)
-                    .padding(horizontal = Dimens.space16),
+                    .fieldFrame(focused, height, accentColor)
+                    .padding(horizontal = horizontalPadding),
                 contentAlignment = Alignment.CenterStart,
-            ) { inner() }
+            ) {
+                if (placeholder != null && value.isEmpty()) {
+                    Text(placeholder, fontSize = 18.sp, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                inner()
+            }
         },
     )
 }
@@ -183,12 +196,16 @@ fun NoteField(
 }
 
 @Composable
-private fun Modifier.fieldFrame(focused: Boolean, height: Dp): Modifier = this
+private fun Modifier.fieldFrame(
+    focused: Boolean,
+    height: Dp,
+    accentColor: Color = MaterialTheme.colorScheme.primary,
+): Modifier = this
     .fillMaxWidth()
     .height(height)
     .background(MaterialTheme.colorScheme.surface, FieldShape)
     .border(
         width = if (focused) 2.dp else 1.dp,
-        color = if (focused) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+        color = if (focused) accentColor else MaterialTheme.colorScheme.outline,
         shape = FieldShape,
     )

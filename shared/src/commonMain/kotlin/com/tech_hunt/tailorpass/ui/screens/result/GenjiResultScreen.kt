@@ -37,13 +37,11 @@ import com.tech_hunt.tailorpass.resources.genji_compare
 import com.tech_hunt.tailorpass.resources.genji_compare_hint
 import com.tech_hunt.tailorpass.resources.genji_title
 import com.tech_hunt.tailorpass.resources.genji_your_size
-import com.tech_hunt.tailorpass.resources.ic_info
 import com.tech_hunt.tailorpass.resources.ic_share
 import com.tech_hunt.tailorpass.resources.ic_size_chart
 import com.tech_hunt.tailorpass.resources.text_dot_pair
 import com.tech_hunt.tailorpass.ui.components.BottomNav
 import com.tech_hunt.tailorpass.ui.components.BottomTab
-import com.tech_hunt.tailorpass.ui.components.InfoBanner
 import com.tech_hunt.tailorpass.ui.components.MaapCard
 import com.tech_hunt.tailorpass.ui.components.MaapScaffold
 import com.tech_hunt.tailorpass.ui.components.OutlinedPillButton
@@ -51,6 +49,7 @@ import com.tech_hunt.tailorpass.ui.components.PrimaryButton
 import com.tech_hunt.tailorpass.ui.components.SavedMark
 import com.tech_hunt.tailorpass.ui.components.TextBadge
 import com.tech_hunt.tailorpass.ui.components.TopBar
+import com.tech_hunt.tailorpass.ui.components.WarningNote
 import com.tech_hunt.tailorpass.ui.theme.Dimens
 import com.tech_hunt.tailorpass.ui.theme.MaapTheme
 import com.tech_hunt.tailorpass.ui.util.formatDayMonth
@@ -107,25 +106,7 @@ fun GenjiResultScreen(state: GenjiState, onTabSelect: (BottomTab) -> Unit, onAct
         Column(verticalArrangement = Arrangement.spacedBy(Dimens.space12)) {
             SizeCard(state)
             if (state.compared.isNotEmpty()) CompareCard(state)
-            InfoBanner(
-                icon = painterResource(Res.drawable.ic_info),
-                iconTint = MaapTheme.colors.warning,
-                background = MaapTheme.colors.warningContainer,
-                iconSize = 20.dp,
-                gap = Dimens.space8,
-                centerIcon = false,
-                horizontalPadding = Dimens.space12,
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text = stringResource(Res.string.brand_varies),
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontSize = 15.sp,
-                    lineHeight = 21.sp,
-                    color = MaapTheme.colors.onWarningContainerBody,
-                )
-            }
+            WarningNote(stringResource(Res.string.brand_varies))
         }
     }
 }

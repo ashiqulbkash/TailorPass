@@ -410,6 +410,15 @@ Summary:
 | 12.5 | Privacy policy `PrivacyPolicy` | [html](html/51_12-5_PrivacyPolicy.html) | [png](screens/51_12-5_PrivacyPolicy.png) |
 | 12.6 | About the app `About` | [html](html/52_12-6_About.html) | [png](screens/52_12-6_About.png) |
 
+**Found in Step 9 (2026-10-18):**
+- [ ] **Needs data:** the women's size chart (11.1 "মেয়ে" tab) is missing — the tab shows a salwar kameez chip and "এই পোশাকের সাইজ চার্ট এখনো যোগ করা হয়নি" instead of inventing one. All four men's chips (shirt, panjabi, genji, pants) show the one sample chart (`SampleMenShirtChart`), as the design does.
+- [ ] **Decide:** in cm (Settings unit), the size chart rounds ranges to whole cm ("১০২–১০৭"); decimals do not fit the highlighted row. Result keeps one decimal.
+- [ ] **Decide:** the language and unit rows toggle in place on tap (two options each, no picker in the design). Confirm, or design a picker sheet.
+- [ ] **Decide:** 12.3 / 12.4 dialogs are centred like 7.8 (the HTML pins them at `top:120px` / `top:150px`) — same open item as Step 6.
+- [ ] **Decide:** the replace option on 12.3 shows `restore_replace_warning` in an orange note (the design has the string but no drawing of it).
+- [ ] **Step 10:** backup / restore only show their overlays (sample file `tailorpass-backup-2026-10-10.json`, 3 profiles, 5 measurements); "delete all" clears the sample measurements and opens profile creation with an empty back stack. Real files (FileKit), real deletion, the stored unit/language and the last-backup date come in Step 10. On Android a language change recreates the activity, so design-phase sample state resets — ViewModels fix this.
+- [ ] **Note:** the size chart's "your" row uses the design chest (40") for any profile with saved measurements; Step 10 reads the profile's latest chest. App version "1.0" is a constant (`SettingsState.APP_VERSION`).
+
 **New components:** size table (user's row highlighted "আপনার" (Yours)), garment chips, `SettingsRow`/section header, green snackbar, radio option cards (merge/replace, with a warning on replace), type-to-confirm ("মুছুন" (Delete)) red button, numbered policy sections.
 **Note:** Step 2's `BottomNav` placeholder tabs are replaced with the real screens here. Language switching via `setAppLanguage` + `LocalAppLocale`. The "মাপের একক" (Unit) row switches inch/cm for the whole app. There is **no theme row** in the design: light/dark follows the system (`isSystemInDarkTheme()`). The About screen shows the app name from `app_name` (TailorPass). `about_contact_email` is a placeholder.
 

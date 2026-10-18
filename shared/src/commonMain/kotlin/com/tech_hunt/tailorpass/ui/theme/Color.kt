@@ -178,6 +178,10 @@ data class MaapExtendedColors(
     val darkPhotoEdge: Color,
     val onWarningContainerBody: Color, // Body text in the orange alert card (6.2)
     val warningCircle: Color,          // Large warning circle (6.3)
+    val errorBorder: Color,            // "Delete all data" card border (12.1)
+    val successSnackbar: Color,        // Green snackbar (12.2)
+    val onSuccessSnackbar: Color,
+    val successText: Color,            // Green summary / offline badge text (12.5, 12.6)
 )
 
 val MaapLightExtended = MaapExtendedColors(
@@ -231,6 +235,10 @@ val MaapLightExtended = MaapExtendedColors(
     darkPhotoEdge = Color(0xFF30353B),
     onWarningContainerBody = Color(0xFF3D2414),
     warningCircle = Color(0xFFFFEDD5),
+    errorBorder = Color(0xFFF2B8B5),
+    successSnackbar = Color(0xFF166534),
+    onSuccessSnackbar = Color.White,
+    successText = Color(0xFF14532D),
 )
 
 val MaapDarkExtended = MaapExtendedColors(
@@ -284,4 +292,8 @@ val MaapDarkExtended = MaapExtendedColors(
     darkPhotoEdge = Color(0xFF30353B),
     onWarningContainerBody = Color(0xFFFFD9B8),
     warningCircle = Color(0xFF4A2A12),
+    errorBorder = Color(0xFF8C1D18),    // No dark Settings design: the dark errorContainer
+    successSnackbar = Color(0xFF173A25),
+    onSuccessSnackbar = Color(0xFFDCFCE7),
+    successText = Color(0xFF8FE3A9),
 )

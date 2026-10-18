@@ -5,10 +5,13 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,7 +20,12 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.tech_hunt.tailorpass.resources.Res
+import com.tech_hunt.tailorpass.resources.ic_info
 import com.tech_hunt.tailorpass.ui.theme.Dimens
+import com.tech_hunt.tailorpass.ui.theme.MaapTheme
+import org.jetbrains.compose.resources.painterResource
 
 /**
  * Icon + text banner: 14dp corners, 10 / 14 padding, optional 1dp border.
@@ -56,5 +64,32 @@ fun InfoBanner(
             modifier = Modifier.padding(top = if (centerIcon) 0.dp else 2.dp).size(iconSize),
         )
         content()
+    }
+}
+
+/**
+ * Full-width orange note with an info icon ("ব্র্যান্ডভেদে আলাদা হতে পারে" 9.4, 11.1): 12dp corners, 10 / 12 padding,
+ * 20dp icon at the top, 15 text with line height 1.4. [icon]: warning sign under the restore options (12.3, replace).
+ */
+@Composable
+fun WarningNote(text: String, modifier: Modifier = Modifier, icon: Painter = painterResource(Res.drawable.ic_info)) {
+    InfoBanner(
+        icon = icon,
+        iconTint = MaapTheme.colors.warning,
+        background = MaapTheme.colors.warningContainer,
+        iconSize = 20.dp,
+        gap = Dimens.space8,
+        centerIcon = false,
+        horizontalPadding = Dimens.space12,
+        shape = RoundedCornerShape(12.dp),
+        modifier = modifier.fillMaxWidth(),
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyMedium,
+            fontSize = 15.sp,
+            lineHeight = 21.sp,
+            color = MaapTheme.colors.onWarningContainerBody,
+        )
     }
 }

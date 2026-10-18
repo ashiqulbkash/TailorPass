@@ -397,6 +397,13 @@
     <string name="size_col_hip">Hip</string>
     <string name="size_yours">Yours</string>
     <string name="size_chart_note">Approximate; may differ between brands</string>
+    <string name="size_chart_for_whom">For whom</string>
+    <string name="size_chart_garments">Garment</string>
+    <string name="size_chart_in_inches">All sizes in inches</string>
+    <string name="size_chart_in_cm">All sizes in cm</string>
+    <string name="size_chart_basis">based on %1$s chest %2$s</string>
+    <string name="size_chart_missing">The size chart for this garment is not added yet</string>
+    <string name="size_range">%1$s–%2$s</string>
 
     <string name="settings_title">Settings</string>
     <string name="settings_general">General</string>
@@ -427,6 +434,7 @@
     <string name="delete_confirm_label">Type "DELETE" below to confirm</string>
     <string name="delete_confirm_word">DELETE</string>
     <string name="delete_action">Delete all</string>
+    <string name="data_counts">%1$s profiles and %2$s measurements</string>
     <string name="privacy_updated">Updated: %1$s</string>
     <string name="privacy_summary">In short: all your data stays only on your phone.</string>
     <string name="privacy_what_title">What is stored</string>

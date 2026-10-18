@@ -17,6 +17,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -106,6 +108,26 @@ fun TopBarChip(text: String, modifier: Modifier = Modifier) {
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.bodyMedium,
+        )
+    }
+}
+
+/** Title bar of the tab screens without a back button (11.1, 12.1): 64dp, 12dp top padding, 22 bold title 16dp in. */
+@Composable
+fun TabTitleBar(title: String, modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(Dimens.appBarHeight)
+            .padding(start = Dimens.screenPadding, end = Dimens.screenPadding, top = Dimens.space12),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = title,
+            modifier = Modifier.semantics { heading() },
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 1,
         )
     }
 }
