@@ -57,7 +57,7 @@ class HomeStateTest {
         val menu = sample.reduce(HomeAction.OpenSavedMenu(1))
         listOf(
             HomeAction.OpenSaved(1), HomeAction.EditSaved(1), HomeAction.RemeasureSaved(1), HomeAction.ShareSaved(1),
-            HomeAction.StartMeasure(Garment.Panjabi), HomeAction.NewProfile, HomeAction.EditProfile(HomeState.RAHAT),
+            HomeAction.StartMeasure(Garment.Panjabi), HomeAction.ContinueIncomplete(Garment.Panjabi), HomeAction.NewProfile, HomeAction.EditProfile(HomeState.RAHAT),
             HomeAction.Help,
         ).forEach { action ->
             assertEquals(sample, menu.reduce(action), action.toString())
@@ -69,5 +69,25 @@ class HomeStateTest {
         assertFailsWith<IllegalArgumentException> { CalendarDate(2026, 13, 1) }
         assertFailsWith<IllegalArgumentException> { CalendarDate(2026, 0, 1) }
         assertFailsWith<IllegalArgumentException> { CalendarDate(2026, 1, 32) }
+    }
+
+    @Test
+    fun incompleteSampleMatchesTheDesign() {
+        val s = HomeState.SampleIncomplete
+        assertEquals(listOf(IncompleteMeasurement(HomeState.RAHAT, Garment.Panjabi, 4, 8)), s.currentIncomplete)
+        assertEquals(4, s.listedCount)                // "সংরক্ষিত মাপ ৪টি" = 3 saved + 1 unfinished
+        assertEquals(3, sample.listedCount)
+        assertTrue(s.reduce(HomeAction.SelectProfile(HomeState.FARHANA)).currentIncomplete.isEmpty())
+    }
+
+    @Test
+    fun anUnfinishedMeasurementIsReplacedPerProfileAndGarment() {
+        val first = sample.withIncomplete(IncompleteMeasurement(HomeState.RAHAT, Garment.Panjabi, 2, 8))
+        val again = first.withIncomplete(IncompleteMeasurement(HomeState.RAHAT, Garment.Panjabi, 5, 8))
+        assertEquals(listOf(5), again.incomplete.map { it.done })
+        val other = again.withIncomplete(IncompleteMeasurement(HomeState.FARHANA, Garment.SalwarKameez, 3, 14))
+        assertEquals(2, other.incomplete.size)
+        val finished = other.withoutIncomplete(HomeState.RAHAT, Garment.Panjabi)
+        assertEquals(listOf(Garment.SalwarKameez), finished.incomplete.map { it.garment })
     }
 }

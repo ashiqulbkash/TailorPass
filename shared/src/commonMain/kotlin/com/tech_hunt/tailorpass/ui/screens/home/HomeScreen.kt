@@ -42,7 +42,10 @@ import com.tech_hunt.tailorpass.resources.action_help
 import com.tech_hunt.tailorpass.resources.garment_for_men
 import com.tech_hunt.tailorpass.resources.garment_for_women
 import com.tech_hunt.tailorpass.resources.garment_size_suggestion
+import com.tech_hunt.tailorpass.resources.home_continue
 import com.tech_hunt.tailorpass.resources.home_empty
+import com.tech_hunt.tailorpass.resources.home_incomplete
+import com.tech_hunt.tailorpass.resources.home_incomplete_progress
 import com.tech_hunt.tailorpass.resources.home_new_measure
 import com.tech_hunt.tailorpass.resources.home_profile_chip_cd
 import com.tech_hunt.tailorpass.resources.home_saved
@@ -70,12 +73,14 @@ import com.tech_hunt.tailorpass.resources.saved_menu_delete
 import com.tech_hunt.tailorpass.resources.saved_menu_edit
 import com.tech_hunt.tailorpass.resources.saved_menu_remeasure
 import com.tech_hunt.tailorpass.resources.saved_menu_view_share
+import com.tech_hunt.tailorpass.resources.text_dot_pair
 import com.tech_hunt.tailorpass.ui.components.Avatar
 import com.tech_hunt.tailorpass.ui.components.BottomNav
 import com.tech_hunt.tailorpass.ui.components.BottomSheetContent
 import com.tech_hunt.tailorpass.ui.components.BottomTab
 import com.tech_hunt.tailorpass.ui.components.GarmentCard
 import com.tech_hunt.tailorpass.ui.components.GarmentTile
+import com.tech_hunt.tailorpass.ui.components.IncompleteCard
 import com.tech_hunt.tailorpass.ui.components.MaapBottomSheet
 import com.tech_hunt.tailorpass.ui.components.MaapCard
 import com.tech_hunt.tailorpass.ui.components.MaapIconButton
@@ -102,23 +107,34 @@ private val SavedMenuPadding = PaddingValues(start = Dimens.space8, end = Dimens
 
 /**
  * Home (2.1–2.3) with its two sheets (2.4 profiles, 2.5 saved-measurement menu).
- * 2.3 is the same screen when the current profile has nothing saved.
+ * 2.3 is the same screen when the current profile has nothing saved; 7.9 when it has an unfinished tape measurement
+ * (card on top of the saved list, and a tighter garment grid to make room for it).
  */
 @Composable
 fun HomeScreen(state: HomeState, onTabSelect: (BottomTab) -> Unit, onAction: (HomeAction) -> Unit) {
     val saved = state.currentSaved
+    val incomplete = state.currentIncomplete
+    val compact = incomplete.isNotEmpty()
     MaapScaffold(
         topBar = { HomeHeader(state.currentProfile, onAction) },
         bottomNav = { BottomNav(selected = BottomTab.Home, onSelect = onTabSelect) },
         contentPadding = PaddingValues(start = Dimens.screenPadding, end = Dimens.screenPadding, top = Dimens.space4, bottom = Dimens.space16),
     ) {
-        SectionTitle(stringResource(Res.string.home_new_measure), Modifier.padding(top = Dimens.space4, bottom = Dimens.space12))
-        GarmentGrid(onAction)
-        Row(Modifier.fillMaxWidth().padding(top = Dimens.space24, bottom = Dimens.space10)) {
+        SectionTitle(
+            stringResource(Res.string.home_new_measure),
+            Modifier.padding(top = Dimens.space4, bottom = if (compact) Dimens.space10 else Dimens.space12),
+        )
+        GarmentGrid(onAction, compact)
+        Row(
+            Modifier.fillMaxWidth().padding(
+                top = if (compact) 18.dp else Dimens.space24,
+                bottom = if (compact) Dimens.space8 else Dimens.space10,
+            ),
+        ) {
             SectionTitle(stringResource(Res.string.home_saved), Modifier.weight(1f).alignByBaseline())
-            if (saved.isNotEmpty()) {
+            if (state.listedCount > 0) {
                 Text(
-                    text = stringResource(Res.string.home_saved_count, localDigits(saved.size.toString())),
+                    text = stringResource(Res.string.home_saved_count, localDigits(state.listedCount.toString())),
                     modifier = Modifier.alignByBaseline(),
                     style = MaterialTheme.typography.bodyMedium,
                     fontSize = 15.sp,
@@ -126,10 +142,13 @@ fun HomeScreen(state: HomeState, onTabSelect: (BottomTab) -> Unit, onAction: (Ho
                 )
             }
         }
-        if (saved.isEmpty()) {
+        if (state.listedCount == 0) {
             EmptySaved()
         } else {
-            SavedList(saved, onAction)
+            Column(verticalArrangement = Arrangement.spacedBy(Dimens.space8)) {
+                incomplete.forEach { IncompleteItem(it, onAction) }
+                if (saved.isNotEmpty()) SavedList(saved, onAction)
+            }
         }
     }
 
@@ -186,12 +205,16 @@ private fun SectionTitle(text: String, modifier: Modifier = Modifier) {
     )
 }
 
-/** The 6 garments in 2 columns, in Garment order (shirt, pants, panjabi, pajama, salwar kameez, genji). */
+/**
+ * The 6 garments in 2 columns, in Garment order (shirt, pants, panjabi, pajama, salwar kameez, genji).
+ * [compact] (7.9): 70dp cards, 8dp apart (80 / 10 otherwise).
+ */
 @Composable
-private fun GarmentGrid(onAction: (HomeAction) -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(Dimens.space10)) {
+private fun GarmentGrid(onAction: (HomeAction) -> Unit, compact: Boolean) {
+    val gap = if (compact) Dimens.space8 else Dimens.space10
+    Column(verticalArrangement = Arrangement.spacedBy(gap)) {
         Garment.entries.chunked(2).forEach { row ->
-            Row(horizontalArrangement = Arrangement.spacedBy(Dimens.space10)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(gap)) {
                 row.forEach { garment ->
                     GarmentCard(
                         icon = painterResource(drawable(garment.iconName)),
@@ -206,11 +229,33 @@ private fun GarmentGrid(onAction: (HomeAction) -> Unit) {
                         onClick = { onAction(HomeAction.StartMeasure(garment)) },
                         modifier = Modifier.weight(1f),
                         titleFontSize = if (garment == Garment.SalwarKameez) 16.sp else 17.sp,
+                        height = if (compact) 70.dp else Dimens.garmentCardHeight,
                     )
                 }
             }
         }
     }
+}
+
+/** 7.9: "পাঞ্জাবি · অসমাপ্ত", "৪/৮ মাপ নেওয়া হয়েছে", Continue → back into the tape flow. */
+@Composable
+private fun IncompleteItem(item: IncompleteMeasurement, onAction: (HomeAction) -> Unit) {
+    val status = stringResource(Res.string.home_incomplete)
+    val progressText = stringResource(
+        Res.string.home_incomplete_progress,
+        localDigits(item.done.toString()),
+        localDigits(item.total.toString()),
+    )
+    IncompleteCard(
+        title = stringResource(Res.string.text_dot_pair, str(item.garment.labelKey), status),
+        status = status,
+        progressText = progressText,
+        progress = if (item.total > 0) item.done.toFloat() / item.total else 0f,
+        progressDescription = progressText,
+        actionText = stringResource(Res.string.home_continue),
+        onAction = { onAction(HomeAction.ContinueIncomplete(item.garment)) },
+        modifier = Modifier.fillMaxWidth(),
+    )
 }
 
 @Composable
@@ -497,6 +542,12 @@ private fun HomeScreenDarkPreview() {
 @Composable
 private fun HomeEmptyPreview() {
     MaapTheme(darkTheme = false) { HomeScreen(HomeState.SampleEmpty, {}) {} }
+}
+
+@Preview(widthDp = 360, heightDp = 800)
+@Composable
+private fun HomeIncompletePreview() {
+    MaapTheme(darkTheme = false) { HomeScreen(HomeState.SampleIncomplete, {}) {} }
 }
 
 @Preview(widthDp = 360, heightDp = 800)

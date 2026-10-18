@@ -43,7 +43,7 @@ import kotlinx.serialization.Serializable
 /** The AI could not measure (6.3). */
 @Serializable data class AiFailedRoute(val garment: String)
 
-/** Verify a new measurement (Step 7 placeholder). */
+/** Verify a new measurement, after the photos or the tape summary (Step 7 placeholder). */
 @Serializable data class VerifyNewRoute(val garment: String)
 
 /** Tape-measure preparation (7.1). */
@@ -55,7 +55,7 @@ import kotlinx.serialization.Serializable
 /** One tape measurement (7.3 / 7.4 / 7.10; 7.5 is a sheet on it). The current step lives in the flow state. */
 @Serializable data class ManualEntryRoute(val garment: String)
 
-/** Tape summary (Step 6 placeholder). */
+/** Tape summary (7.7). */
 @Serializable data class ManualSummaryRoute(val garment: String)
 
 /** Genji size suggestion (Step 8 placeholder). */

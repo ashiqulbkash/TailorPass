@@ -327,10 +327,19 @@ Summary:
 | 7.9 | Home — incomplete measurement `HomeIncomplete` | [html](html/32_7-9_HomeIncomplete.html) | [png](screens/32_7-9_HomeIncomplete.png) |
 
 **Carried over from Step 5 (user decisions, 2026-10-18):**
-- [ ] **Do in Step 6:** English `manual_next` "Next measurement" → "Next" (the long label clips the arrow in the 1.5-wide button on 7.3–7.10).
+- [x] **Do in Step 6:** English `manual_next` "Next measurement" → "Next" (the long label clips the arrow in the 1.5-wide button on 7.3–7.10).
 - [ ] **Later (not Step 6):** cm entry in the tape flow. The 7.1 inch/cm toggle is stored in `ManualState.unit`, but the entry screens (7.3–7.10) show and step in inches only (hint/stepper strings say "আধা ইঞ্চি", `outlier_body` uses `"`). Decide whether entry follows the chosen unit (needs cm strings and a cm step) or the unit only affects display (Result/Summary).
 - [ ] **Later:** tape how-to text, diagrams and "ভুল এড়াতে" tips for chest (7.3 shows the panel; no chest tips exist yet) and for neck, shoulder, hip, bust, armhole and the salwar measurements. Only chest/belly/sleeve/neck depth have resources now (`ManualPlan.guide`).
 - [ ] **Later:** replace Hind Siliguri with Roboto (user decision) and delete the Hind Siliguri TTFs. Reason: the bundled Hind Siliguri regular/medium/semibold draw the Bengali digit "১" without its upper stroke (bold is fine). ⚠ Before doing it, verify: Roboto has no Bengali glyphs of its own (Android falls back to the system Bengali font), but the PDF/PNG must use a bundled font and render conjuncts — a Bengali companion font (e.g. Noto Sans Bengali) may be needed alongside Roboto. Also update `CLAUDE.md` §4, `ResourceKeysTest.fontsAreBundled` and the §2 font row here.
+
+**Found in the Step 6 device check (2026-10-18):**
+- [x] **Fixed in Step 6:** a preference step without a value now starts at its suggested preset — the middle card, as the designs show (length "হাঁটু পর্যন্ত" 42″, neck depth medium 7″; `ManualPlan.suggestedPreset`). It is saved only on "next"; "পরে দেব" keeps it missing. Overview §3 "with a suggested default".
+- [ ] **Decide:** confirm "middle card" as the default rule, or give a default per garment/preset (`Measurements.kt` marks none). Step 10 also computes length values from the profile's height (now the 5′7″ samples).
+- [ ] **Decide (needs data):** Overview §3 lists choice cards for **cuff** (হাতার মুখ), but `Measurements.kt` has no cuff presets, so cuff is a plain number entry on 7.3-style screens. Provide the cuff options (labels, values, pictures) or confirm number entry.
+- [ ] **Decide:** 7.8 `ConfirmDialog` is vertically centred (~60dp lower than the HTML's fixed `top:210px`), and its scrim is the platform dialog dim (darker grey) instead of `rgba(13,17,23,.55)`. Match the HTML exactly, or keep centring (safer on other screen heights; the same dialog is reused in 12.3/12.4).
+- [ ] **Decide:** the 7.9 design is inconsistent with 2.1 — it lists only 2 saved rows under "৪টি" (the app shows all 3 + the card, scrolling) and draws "দর্জিকে পাঠানো" grey without the green ✓ that 2.1 has. Kept the 2.1 style and the full list; confirm.
+- [ ] **Decide:** in English the 7.8 dialog's "Later" (`পরে করব`) and the entry screen's "Later" (`পরে দেব`) read the same; Bengali uses two words. Keep, or rename one (e.g. dialog "Finish later").
+- [ ] **Note (no action):** 7.7 rows follow the HTML's `min-height:48px`; the PNG rows look ~53dp only because of the fallback font's line height (§2 font note).
 
 **New components:** `ConfirmDialog`, summary row (edit icon; if missing, an orange row + "এখন মাপুন" (Measure now)), `IncompleteCard` (orange left border, 4/8 progress).
 **Note:** 7.6 uses Step 5's `PresetPictureCard` (`LengthPreset`, values from height). 7.9 is not a new screen — it is the incomplete-card state of Step 2's home. 7.8 uses `BackHandler` to catch back (Android back / iOS swipe).

@@ -32,6 +32,7 @@ import com.tech_hunt.tailorpass.ui.theme.PillShape
  * Primary button — only one per screen. 56dp pill, primary color, 18 bold.
  * Grey when disabled (#DDE1E6 / #6B7280). Pass Modifier.fillMaxWidth() for full width.
  * trailingIcon: 22dp icon after the text (onboarding "Next →").
+ * height/fontSize: 52 / 17 in dialogs (7.8), 44 / 16 on the incomplete card (7.9).
  * containerColor/contentColor: only for the camera panel (5.x), whose button is white on dark.
  */
 @Composable
@@ -45,10 +46,12 @@ fun PrimaryButton(
     iconSize: Dp = Dimens.iconSize,
     containerColor: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
+    height: Dp = Dimens.buttonHeight,
+    fontSize: TextUnit = MaterialTheme.typography.labelLarge.fontSize,
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.height(Dimens.buttonHeight),
+        modifier = modifier.height(height),
         enabled = enabled,
         shape = PillShape,
         colors = ButtonDefaults.buttonColors(
@@ -59,7 +62,7 @@ fun PrimaryButton(
         ),
         contentPadding = PaddingValues(horizontal = Dimens.space16),
     ) {
-        ButtonContent(text, icon, MaterialTheme.typography.labelLarge.fontSize, trailingIcon, iconSize)
+        ButtonContent(text, icon, fontSize, trailingIcon, iconSize)
     }
 }
 

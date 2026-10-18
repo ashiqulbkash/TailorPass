@@ -6,14 +6,20 @@ import com.tech_hunt.tailorpass.model.Gender
 /**
  * Who and what is being measured (3.1–4.4). The name is user data, not a resource key.
  * female: female checklist/pose (4.2, 4.4) — by profile gender, or a women's garment.
+ * [heightInches]: the profile's height (7.6 length cards), null when unknown.
  */
-data class MeasureTarget(val garment: Garment, val gender: Gender, val profileName: String) {
+data class MeasureTarget(
+    val garment: Garment,
+    val gender: Gender,
+    val profileName: String,
+    val heightInches: Int? = null,
+) {
     val female: Boolean get() = gender == Gender.Female || garment.forWomen
 
     companion object {
-        /** Design samples: Rahat's panjabi (3.1, 4.1, 4.3), Farhana's salwar kameez (4.2, 4.4). */
-        val SampleRahat = MeasureTarget(Garment.Panjabi, Gender.Male, "রাহাত")
-        val SampleFarhana = MeasureTarget(Garment.SalwarKameez, Gender.Female, "ফারহানা")
+        /** Design samples: Rahat's panjabi (3.1, 4.1, 4.3; 5′7″), Farhana's salwar kameez (4.2, 4.4; 5′3″). */
+        val SampleRahat = MeasureTarget(Garment.Panjabi, Gender.Male, "রাহাত", heightInches = 67)
+        val SampleFarhana = MeasureTarget(Garment.SalwarKameez, Gender.Female, "ফারহানা", heightInches = 63)
     }
 }
 

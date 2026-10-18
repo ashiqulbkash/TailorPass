@@ -210,3 +210,36 @@ fun NecklineFigure(depth: Float, selected: Boolean, modifier: Modifier = Modifie
         }
     }
 }
+
+/**
+ * Body with a garment of one length, for a length card (7.6): head, legs, dashed orange knee line (y = 84) and the
+ * garment down to [hem], 60×120 viewport. [hemHalfWidth] widens the hem a little for longer garments (10 / 11 / 12).
+ * Selected: primary garment outline on surface; else grey on light grey.
+ */
+@Composable
+fun LengthFigure(hem: Float, hemHalfWidth: Float, selected: Boolean, modifier: Modifier = Modifier) {
+    val head = remember { PathParser().parsePathString(circle(30f, 10f, 6f)).toPath() }
+    val legs = remember(hem) { PathParser().parsePathString("M25 $hem V116 M35 $hem V116").toPath() }
+    val knee = remember { PathParser().parsePathString("M8 84 H52").toPath() }
+    val garment = remember(hem, hemHalfWidth) {
+        PathParser().parsePathString(
+            "M22 18 L38 18 L42 24 L${30 + hemHalfWidth} $hem L${30 - hemHalfWidth} $hem L18 24 Z",
+        ).toPath()
+    }
+    val outlineColor = MaapTheme.colors.diagramOutline
+    val kneeColor = MaapTheme.colors.warning
+    val line = if (selected) MaterialTheme.colorScheme.primary else MaapTheme.colors.textTertiary
+    val fill = if (selected) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surfaceVariant
+    Canvas(modifier) {
+        val s = min(size.width / 60f, size.height / 120f)
+        translate((size.width - 60f * s) / 2f, (size.height - 120f * s) / 2f) {
+            scale(s, s, pivot = Offset.Zero) {
+                drawStroke(head, outlineColor, 2f)
+                drawStroke(legs, outlineColor, 2.4f)
+                drawStroke(knee, kneeColor, 1.4f, floatArrayOf(3f, 3f))
+                drawPath(garment, fill)
+                drawStroke(garment, line, 2f)
+            }
+        }
+    }
+}

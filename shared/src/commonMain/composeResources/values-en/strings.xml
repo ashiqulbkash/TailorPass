@@ -232,7 +232,7 @@
     <string name="manual_avoid_mistakes">Avoid mistakes</string>
     <string name="manual_type_hint">Tap to type · −/+ half inch</string>
     <string name="manual_later">Later</string>
-    <string name="manual_next">Next measurement</string>
+    <string name="manual_next">Next</string>
     <string name="manual_decrease">Decrease by half inch</string>
     <string name="manual_increase">Increase by half inch</string>
     <string name="manual_helper_banner">This is more accurate if someone measures for you</string>
@@ -265,6 +265,9 @@
     <string name="manual_finish">Finish</string>
     <string name="summary_title">All measurements</string>
     <string name="summary_missing_banner">%1$s measurement missing. If skipped, the tailor will be asked to measure it.</string>
+    <string name="summary_missing_bold">%1$s measurement missing.</string>
+    <string name="height_feet_inches">%1$s ft %2$s in</string>
+    <string name="text_dot_pair">%1$s · %2$s</string>
     <string name="summary_missing">Missing</string>
     <string name="summary_measure_now">Measure now</string>
     <string name="summary_verify">Review and see result</string>

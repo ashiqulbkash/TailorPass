@@ -275,6 +275,9 @@
     <string name="manual_finish">শেষ করুন</string>
     <string name="summary_title">সব মাপ একনজরে</string>
     <string name="summary_missing_banner">%1$sটি মাপ বাদ আছে। বাদ রাখলে দর্জিকে মেপে নিতে বলা হবে।</string>
+    <string name="summary_missing_bold">%1$sটি মাপ বাদ আছে।</string>
+    <string name="height_feet_inches">%1$s ফুট %2$s ইঞ্চি</string>
+    <string name="text_dot_pair">%1$s · %2$s</string>
     <string name="summary_missing">বাদ আছে</string>
     <string name="summary_measure_now">এখন মাপুন</string>
     <string name="summary_verify">যাচাই করে ফলাফল দেখুন</string>

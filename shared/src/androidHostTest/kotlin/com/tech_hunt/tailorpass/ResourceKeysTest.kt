@@ -119,7 +119,7 @@ class ResourceKeysTest {
     fun manualStringKeysExist() {
         val keys = stringKeys("values")
         val guides = MeasurementKey.entries.map { ManualPlan.guide(it) }
-        val used = guides.mapNotNull { it.howtoKey } + guides.flatMap { it.tipKeys } +
+        val used = guides.mapNotNull { it.howtoKey } + guides.flatMap { it.tipKeys } + guides.mapNotNull { it.noteKey } +
             TapeDiagram.entries.flatMap { d -> d.labels.map { it.key } } +
             Garment.entries.flatMap { ManualPlan.sections(it) }.mapNotNull { it.titleKey }
         assertEquals(emptyList(), used.filterNot { it in keys }, "keys missing in strings.xml")

@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.semantics
@@ -31,12 +32,16 @@ import com.tech_hunt.tailorpass.ui.theme.MaapTheme
 import com.tech_hunt.tailorpass.ui.theme.PillShape
 import org.jetbrains.compose.resources.painterResource
 
-/** Rounded progress bar: primary fill on a light track. [progress] 0..1. 12dp (6.1) by default. */
+/**
+ * Rounded progress bar: [color] fill (primary by default) on a light track. [progress] 0..1.
+ * 12dp (6.1) by default; 8dp orange on the incomplete card (7.9).
+ */
 @Composable
 fun MaapProgressBar(
     progress: Float,
     modifier: Modifier = Modifier,
     height: Dp = Dimens.progressBarHeight,
+    color: Color = MaterialTheme.colorScheme.primary,
 ) {
     val value = progress.coerceIn(0f, 1f)
     Box(
@@ -47,7 +52,7 @@ fun MaapProgressBar(
             .background(MaapTheme.colors.progressTrack)
             .semantics { progressBarRangeInfo = ProgressBarRangeInfo(value, 0f..1f) },
     ) {
-        Box(Modifier.fillMaxWidth(value).fillMaxHeight().background(MaterialTheme.colorScheme.primary, PillShape))
+        Box(Modifier.fillMaxWidth(value).fillMaxHeight().background(color, PillShape))
     }
 }
 

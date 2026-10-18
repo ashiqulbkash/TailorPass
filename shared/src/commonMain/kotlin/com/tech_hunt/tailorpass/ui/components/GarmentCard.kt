@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,7 +38,7 @@ fun GarmentTile(icon: Painter, modifier: Modifier = Modifier) {
 }
 
 /**
- * Garment grid card (Home): 80dp high, 16dp corners, 1dp border · [GarmentTile] · 17 semibold title over a 13 subtitle.
+ * Garment grid card (Home): 80dp high (70 when Home also lists an incomplete measurement, 7.9), 16dp corners, 1dp border · [GarmentTile] · 17 semibold title over a 13 subtitle.
  * Long titles wrap to two lines; the design uses [titleFontSize] 16 for "সালওয়ার কামিজ".
  */
 @Composable
@@ -48,11 +49,12 @@ fun GarmentCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     titleFontSize: TextUnit = 17.sp,
+    height: Dp = Dimens.garmentCardHeight,
 ) {
     val shape = MaterialTheme.shapes.large
     Row(
         modifier = modifier
-            .height(Dimens.garmentCardHeight)
+            .height(height)
             .clip(shape)
             .background(MaterialTheme.colorScheme.surface)
             .border(1.dp, MaterialTheme.colorScheme.outlineVariant, shape)

@@ -19,7 +19,6 @@ import com.tech_hunt.tailorpass.resources.genji_title
 import com.tech_hunt.tailorpass.resources.result_title
 import com.tech_hunt.tailorpass.resources.settings_title
 import com.tech_hunt.tailorpass.resources.size_chart_title
-import com.tech_hunt.tailorpass.resources.summary_title
 import com.tech_hunt.tailorpass.resources.verify_title
 import com.tech_hunt.tailorpass.ui.components.BottomNav
 import com.tech_hunt.tailorpass.ui.components.BottomTab
@@ -38,10 +37,13 @@ import com.tech_hunt.tailorpass.ui.screens.capture.PhotoProblemState
 import com.tech_hunt.tailorpass.ui.screens.capture.ProcessingAction
 import com.tech_hunt.tailorpass.ui.screens.capture.ProcessingState
 import com.tech_hunt.tailorpass.ui.screens.home.HomeAction
+import com.tech_hunt.tailorpass.ui.screens.home.IncompleteMeasurement
 import com.tech_hunt.tailorpass.ui.screens.home.ProfileSummary
 import com.tech_hunt.tailorpass.ui.screens.home.HomeScreen
 import com.tech_hunt.tailorpass.ui.screens.home.HomeState
 import com.tech_hunt.tailorpass.ui.screens.home.reduce
+import com.tech_hunt.tailorpass.ui.screens.home.withIncomplete
+import com.tech_hunt.tailorpass.ui.screens.home.withoutIncomplete
 import com.tech_hunt.tailorpass.ui.screens.manual.ManualEntryAction
 import com.tech_hunt.tailorpass.ui.screens.manual.ManualEntryScreen
 import com.tech_hunt.tailorpass.ui.screens.manual.ManualListAction
@@ -49,6 +51,8 @@ import com.tech_hunt.tailorpass.ui.screens.manual.ManualListScreen
 import com.tech_hunt.tailorpass.ui.screens.manual.ManualPrepAction
 import com.tech_hunt.tailorpass.ui.screens.manual.ManualPrepScreen
 import com.tech_hunt.tailorpass.ui.screens.manual.ManualState
+import com.tech_hunt.tailorpass.ui.screens.manual.ManualSummaryAction
+import com.tech_hunt.tailorpass.ui.screens.manual.ManualSummaryScreen
 import com.tech_hunt.tailorpass.ui.screens.manual.MeasureUnit
 import com.tech_hunt.tailorpass.ui.screens.manual.goTo
 import com.tech_hunt.tailorpass.ui.screens.manual.reduce
@@ -96,8 +100,10 @@ fun AppNavHost(
     // Design-phase demo of the photo outcomes until the AI arrives (Step 10.8): the 1st photo pair is rejected (6.2),
     // the 2nd cannot be measured (6.3), later ones go on to Verify.
     var photoAttempt by remember { mutableIntStateOf(0) }
-    // Design phase: the tape session is shared by its list and entry screens; a ViewModel replaces it in Step 10.
+    // Design phase: the tape session is shared by its list, entry and summary screens; a ViewModel replaces it in
+    // Step 10. Sessions stopped with "পরে করব" (7.8) wait here by profile and garment until continued from Home (7.9).
     var manualState by remember { mutableStateOf<ManualState?>(null) }
+    var pausedSessions by remember { mutableStateOf(emptyMap<Pair<Long, Garment>, ManualState>()) }
     val onTabSelect: (BottomTab) -> Unit = { navController.navigateToTab(it) }
 
     NavHost(navController = navController, startDestination = LanguageRoute, modifier = modifier) {
@@ -139,6 +145,11 @@ fun AppNavHost(
                     is HomeAction.StartMeasure -> navController.navigate(
                         if (action.garment.sizeOnly) GenjiResultRoute else MethodRoute(action.garment.name),
                     )
+                    is HomeAction.ContinueIncomplete -> {
+                        manualState = pausedSessions[homeState.currentProfileId to action.garment]
+                            ?: ManualState(measureTarget(action.garment.name, homeState.currentProfile))
+                        navController.navigate(ManualListRoute(action.garment.name))
+                    }
                     is HomeAction.OpenSaved -> navController.navigate(ResultRoute(action.savedId))
                     is HomeAction.EditSaved -> navController.navigate(VerifyRoute(action.savedId))
                     is HomeAction.RemeasureSaved -> homeState.saved.firstOrNull { it.id == action.savedId }?.let {
@@ -286,7 +297,7 @@ fun AppNavHost(
                 when (action) {
                     ManualPrepAction.Back -> navController.popBackStack()
                     is ManualPrepAction.SetUnit -> unit = action.unit
-                    // A new tape session starts here; resuming an unfinished one comes with Step 6 (7.9).
+                    // A new tape session starts here; an unfinished one is continued from Home (7.9).
                     ManualPrepAction.Start -> {
                         manualState = ManualState(measureTarget(garment, homeState.currentProfile), unit)
                         navController.navigate(ManualListRoute(garment))
@@ -316,17 +327,52 @@ fun AppNavHost(
                 val next = state.reduce(action)
                 manualState = next
                 when (action) {
-                    // The list is the entry's parent on the stack (7.3 back / list icon / "later" → ManualList).
-                    ManualEntryAction.Back, ManualEntryAction.OpenList, ManualEntryAction.Later ->
-                        navController.popBackStack(ManualListRoute(garment), inclusive = false)
+                    // The list is the entry's parent on the stack (list icon / "later" → ManualList). Back opens the
+                    // 7.8 dialog once something was measured; with nothing to keep it goes straight to the list.
+                    ManualEntryAction.Back ->
+                        if (!next.exitOpen) navController.popBackStack(ManualListRoute(garment), inclusive = false)
+                    ManualEntryAction.OpenList -> navController.popBackStack(ManualListRoute(garment), inclusive = false)
+                    // A step opened from the summary returns there when saved or skipped.
+                    ManualEntryAction.Later ->
+                        if (next.finished) navController.navigate(ManualSummaryRoute(garment))
+                        else navController.popBackStack(ManualListRoute(garment), inclusive = false)
                     ManualEntryAction.Next, ManualEntryAction.ConfirmValue ->
                         if (next.finished) navController.navigate(ManualSummaryRoute(garment))
+                    // 7.8 "পরে করব": keep the session and show it on Home (7.9).
+                    ManualEntryAction.StopForLater -> {
+                        val profileId = homeState.currentProfileId
+                        pausedSessions = pausedSessions + ((profileId to next.target.garment) to next)
+                        homeState = homeState.withIncomplete(
+                            IncompleteMeasurement(profileId, next.target.garment, next.doneCount, next.count),
+                        )
+                        navController.popBackStack(MainRoute, inclusive = false)
+                    }
                     else -> Unit
                 }
             }
         }
-        composable<ManualSummaryRoute> {
-            PlaceholderScreen(stringResource(Res.string.summary_title)) { navController.popBackStack() }
+        composable<ManualSummaryRoute> { entry ->
+            val garment = entry.toRoute<ManualSummaryRoute>().garment
+            val state = manualState ?: ManualState(measureTarget(garment, homeState.currentProfile))
+            ManualSummaryScreen(state) { action ->
+                manualState = state.reduce(action)
+                when (action) {
+                    ManualSummaryAction.Back -> navController.popBackStack()
+                    // The entry screen is below the summary; it now shows the chosen step.
+                    is ManualSummaryAction.Edit ->
+                        if (!navController.popBackStack(ManualEntryRoute(garment), inclusive = false)) {
+                            navController.navigate(ManualEntryRoute(garment))
+                        }
+                    // Done measuring: the session is no longer unfinished on Home. Missing ones go to Verify as
+                    // "the tailor measures it" (Step 7).
+                    ManualSummaryAction.Verify, ManualSummaryAction.ContinueWithoutMissing -> {
+                        val key = homeState.currentProfileId to Garment.valueOf(garment)
+                        pausedSessions = pausedSessions - key
+                        homeState = homeState.withoutIncomplete(key.first, key.second)
+                        navController.navigate(VerifyNewRoute(garment))
+                    }
+                }
+            }
         }
         composable<GenjiResultRoute> {
             PlaceholderScreen(stringResource(Res.string.genji_title)) { navController.popBackStack() }
@@ -374,4 +420,4 @@ private fun TabPlaceholder(title: String, tab: BottomTab, onTabSelect: (BottomTa
 
 /** Measuring-flow target from a route argument (Garment.name) and Home's current profile. */
 private fun measureTarget(garment: String, profile: ProfileSummary): MeasureTarget =
-    MeasureTarget(Garment.valueOf(garment), profile.gender, profile.name)
+    MeasureTarget(Garment.valueOf(garment), profile.gender, profile.name, profile.heightInches)

@@ -14,14 +14,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tech_hunt.tailorpass.ui.theme.Dimens
 import com.tech_hunt.tailorpass.ui.theme.MaapTheme
 
 /**
- * Preference picture card (7.10 neck depth; 7.6 length in Step 6): 128dp high, 14dp corners, picture · 15 label ·
- * 18 bold value, centered. Selected: 2dp primary border, primary container, bold label, primary value and a 20dp
+ * Preference picture card (7.10 neck depth: 128dp high, 15 label; 7.6 length: 168dp, 14 label): 14dp corners,
+ * picture · label · 18 bold value, centered. Selected: 2dp primary border, primary container, bold label, primary value and a 20dp
  * check badge in the top end corner. Not selected: 1dp light border.
  */
 @Composable
@@ -31,11 +33,14 @@ fun PresetPictureCard(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    height: Dp = 128.dp,
+    labelFontSize: TextUnit = 15.sp,
+    labelLineHeight: TextUnit = 20.sp,
     picture: @Composable ColumnScope.() -> Unit,
 ) {
     Box(
         modifier
-            .height(128.dp)
+            .height(height)
             .selectableCard(selected, onClick, unselectedBorder = MaterialTheme.colorScheme.outlineVariant),
     ) {
         Column(
@@ -47,8 +52,8 @@ fun PresetPictureCard(
             Text(
                 text = label,
                 style = MaterialTheme.typography.bodyMedium,
-                fontSize = 15.sp,
-                lineHeight = 20.sp,
+                fontSize = labelFontSize,
+                lineHeight = labelLineHeight,
                 fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
                 color = MaterialTheme.colorScheme.onSurface,
                 textAlign = TextAlign.Center,
