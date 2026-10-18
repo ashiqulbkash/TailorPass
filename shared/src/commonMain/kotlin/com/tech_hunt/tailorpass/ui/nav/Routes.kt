@@ -58,13 +58,13 @@ import kotlinx.serialization.Serializable
 /** Tape summary (7.7). */
 @Serializable data class ManualSummaryRoute(val garment: String)
 
-/** Genji size suggestion (Step 8 placeholder). */
+/** Genji size suggestion. */
 @Serializable data object GenjiResultRoute
 
-/** Result of a saved measurement (Step 8 placeholder). */
+/** Result of a saved measurement. */
 @Serializable data class ResultRoute(val savedId: Long)
 
-/** Result of a new measurement after Verify (Step 8 placeholder). */
+/** Result of a new measurement after Verify. */
 @Serializable data class ResultNewRoute(val garment: String)
 
 /** Verify/edit a saved measurement (8.1–8.5 with the saved values). */

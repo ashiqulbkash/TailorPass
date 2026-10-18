@@ -66,7 +66,7 @@ fun PrimaryButton(
     }
 }
 
-/** Secondary button: 56dp pill, 1.5dp primary border, white background, 17 bold (18 on 2.4 / 6.3). */
+/** Secondary button: 56dp pill, 1.5dp primary border, white background, 17 bold (18 on 2.4 / 6.3; 46dp / 18 on 9.1). */
 @Composable
 fun OutlinedPillButton(
     text: String,
@@ -76,10 +76,11 @@ fun OutlinedPillButton(
     icon: Painter? = null,
     fontSize: TextUnit = 17.sp,
     iconSize: Dp = Dimens.iconSize,
+    height: Dp = Dimens.buttonHeight,
 ) {
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier.height(Dimens.buttonHeight),
+        modifier = modifier.height(height),
         enabled = enabled,
         shape = PillShape,
         border = BorderStroke(1.5.dp, MaterialTheme.colorScheme.primary),

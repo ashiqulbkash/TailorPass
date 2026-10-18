@@ -383,6 +383,14 @@ Summary:
 | 10.2 | PDF — salwar kameez, A4 `TailorPDFSK` (794×1123) | [html](html/44_10-2_TailorPDFSK.html) | [png](screens/44_10-2_TailorPDFSK.png) |
 | 10.3 | Share as image, PNG `SharePNG` (1080×2600) | [html](html/45_10-3_SharePNG.html) | [png](screens/45_10-3_SharePNG.png) |
 
+**Found in Step 8 (2026-10-18):**
+- [ ] **Needs data:** 9.3's size "M" is a design sample (`ResultPlan.DESIGN_SAMPLE_WOMEN_SIZE`) — no women's chart yet. 9.4 uses the sample men's chart (chest only) — the genji chart (S–XXL from chest, shoulder, length) is missing. Genji shows the design values (40/18/28) for every profile until Step 10.
+- [ ] **Decide:** the 9.3 design has no inch/cm toggle (only 9.1 does). Salwar kameez follows the design; cm for it comes from the Settings unit row (Step 9). Add the toggle to 9.3, or keep.
+- [ ] **Decide:** file markers — "*" marks "your choice" values (10.2), a low-accuracy value gets "* ফিতায় মিলিয়ে নিন" under its row on the full layout (10.1) and is named in the footer on the compact layout (10.2) and the PNG (10.3). Panjabi length/cuff carry AI badges in the sample (Step 7 item), so 10.1 stars nothing, as designed.
+- [ ] **Step 10.5:** the compact PDF (10.2) fills the A4 page exactly with Hind Siliguri; a long tailor note can push the footer off. Limit the note length, shrink, or add a second page. The PNG height follows its content (the 10.3 frame is 2600; a wrapped note makes it taller).
+- [ ] **Note:** the PDF/PNG logo is `app_logo` (filled blue tile), not the design's outline tape mark. The salwar diagram crop of `body_female_front` shows the hands (the 10.2 design draws legs only).
+- [ ] **Note:** new results are dated with the design date (`ResultState.SampleDate`) until Step 10 stores real dates; fit is "Regular" (profiles have no stored fit yet).
+
 **New components:** use `NumberedDiagram` (provided), suggested size card (`suggestSize()`), numbered measurement list, inch/cm `SegmentedToggle` (`inchesToCmText()`), kameez/salwar tabs, size comparison (M|L|XL), "সেভ হয়েছে" (Saved) chip.
 **Note:** 9.1/9.2/9.3 are the same `ResultScreen` (with bottom nav). 10.x are not app screens — they are the files to share. Build the file layouts as common Compose composables (`TailorSheetPdfPage`, `TailorSharePng`) + match them with the PNGs via previews; PNG rendering is common (`GraphicsLayer.toImageBitmap()`, 1080 px wide). PNG/PDF file writing and the share sheet are **not** done in this step — they come in Step 10.5 (`ImageEncoder`, `PdfRenderer`, `FileSharer`); here the share buttons only call `onAction`.
 

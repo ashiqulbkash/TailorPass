@@ -13,11 +13,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.tech_hunt.tailorpass.model.Fit
 import com.tech_hunt.tailorpass.model.Garment
 import com.tech_hunt.tailorpass.model.MeasureMethod
 import com.tech_hunt.tailorpass.resources.Res
-import com.tech_hunt.tailorpass.resources.genji_title
-import com.tech_hunt.tailorpass.resources.result_title
 import com.tech_hunt.tailorpass.resources.settings_title
 import com.tech_hunt.tailorpass.resources.size_chart_title
 import com.tech_hunt.tailorpass.ui.components.BottomNav
@@ -76,11 +75,17 @@ import com.tech_hunt.tailorpass.ui.screens.profile.ProfileCreateAction
 import com.tech_hunt.tailorpass.ui.screens.profile.ProfileCreateScreen
 import com.tech_hunt.tailorpass.ui.screens.profile.ProfileCreateState
 import com.tech_hunt.tailorpass.ui.screens.profile.reduce
+import com.tech_hunt.tailorpass.ui.screens.result.GenjiAction
+import com.tech_hunt.tailorpass.ui.screens.result.GenjiResultScreen
+import com.tech_hunt.tailorpass.ui.screens.result.GenjiState
+import com.tech_hunt.tailorpass.ui.screens.result.ResultAction
+import com.tech_hunt.tailorpass.ui.screens.result.ResultScreen
+import com.tech_hunt.tailorpass.ui.screens.result.ResultState
+import com.tech_hunt.tailorpass.ui.screens.result.reduce
 import com.tech_hunt.tailorpass.ui.screens.verify.VerifyAction
 import com.tech_hunt.tailorpass.ui.screens.verify.VerifyScreen
 import com.tech_hunt.tailorpass.ui.screens.verify.VerifyState
 import com.tech_hunt.tailorpass.ui.screens.verify.reduce
-import com.tech_hunt.tailorpass.ui.util.str
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 
@@ -111,6 +116,8 @@ fun AppNavHost(
     // Design phase: the measurement being verified (8.1–8.5), set just before Verify opens; a ViewModel replaces it in
     // Step 10.
     var verifyState by remember { mutableStateOf<VerifyState?>(null) }
+    // Design phase: the result being shown (9.1–9.3), set just before Result opens; a ViewModel replaces it in Step 10.
+    var resultState by remember { mutableStateOf<ResultState?>(null) }
     val onTabSelect: (BottomTab) -> Unit = { navController.navigateToTab(it) }
 
     NavHost(navController = navController, startDestination = LanguageRoute, modifier = modifier) {
@@ -157,7 +164,11 @@ fun AppNavHost(
                             ?: ManualState(measureTarget(action.garment.name, homeState.currentProfile))
                         navController.navigate(ManualListRoute(action.garment.name))
                     }
-                    is HomeAction.OpenSaved -> navController.navigate(ResultRoute(action.savedId))
+                    // Design phase: a saved measurement's values are the design sample of its garment.
+                    is HomeAction.OpenSaved -> homeState.saved.firstOrNull { it.id == action.savedId }?.let {
+                        resultState = ResultState.sample(measureTarget(it.garment.name, homeState.currentProfile), it.date)
+                        navController.navigate(ResultRoute(action.savedId))
+                    }
                     // Design phase: a saved measurement's values are the design sample of its garment.
                     is HomeAction.EditSaved -> homeState.saved.firstOrNull { it.id == action.savedId }?.let {
                         verifyState = VerifyState.sampleAi(measureTarget(it.garment.name, homeState.currentProfile))
@@ -309,7 +320,10 @@ fun AppNavHost(
                 when (action) {
                     // Photos: back to Method (the camera screens left the stack with the photos). Tape: the summary.
                     VerifyAction.Back -> navController.popBackStack()
-                    VerifyAction.ShowResult -> navController.navigate(ResultNewRoute(garment))
+                    VerifyAction.ShowResult -> {
+                        resultState = ResultState.fromVerify(verifyState ?: state, ResultState.SampleDate, Fit.Regular)
+                        navController.navigate(ResultNewRoute(garment))
+                    }
                     else -> Unit
                 }
             }
@@ -400,17 +414,28 @@ fun AppNavHost(
             }
         }
         composable<GenjiResultRoute> {
-            PlaceholderScreen(stringResource(Res.string.genji_title)) { navController.popBackStack() }
-        }
-        composable<ResultRoute> { entry ->
-            val garment = homeState.saved.firstOrNull { it.id == entry.toRoute<ResultRoute>().savedId }?.garment
-            PlaceholderScreen(stringResource(Res.string.result_title, garment?.let { str(it.labelKey) } ?: "")) {
-                navController.popBackStack()
+            // Design phase: every profile gets the design's genji values (chest 40", shoulder 18", length 28").
+            GenjiResultScreen(GenjiState.Sample.copy(profileName = homeState.currentProfile.name), onTabSelect) { action ->
+                when (action) {
+                    GenjiAction.Back -> navController.popBackStack()
+                    GenjiAction.OpenSizeChart -> navController.navigateToTab(BottomTab.SizeChart)
+                    // Real share in Step 10.5.
+                    GenjiAction.Share -> Unit
+                }
             }
         }
+        composable<ResultRoute> { entry ->
+            val saved = homeState.saved.firstOrNull { it.id == entry.toRoute<ResultRoute>().savedId }
+            val state = resultState ?: ResultState.sample(
+                measureTarget((saved?.garment ?: Garment.Panjabi).name, homeState.currentProfile),
+                saved?.date ?: ResultState.SampleDate,
+            )
+            ResultScreen(state, onTabSelect) { action -> resultAction(state, action, navController) { resultState = it } }
+        }
         composable<ResultNewRoute> { entry ->
-            val garment = Garment.valueOf(entry.toRoute<ResultNewRoute>().garment)
-            PlaceholderScreen(stringResource(Res.string.result_title, str(garment.labelKey))) { navController.popBackStack() }
+            val garment = entry.toRoute<ResultNewRoute>().garment
+            val state = resultState ?: ResultState.sample(measureTarget(garment, homeState.currentProfile), ResultState.SampleDate)
+            ResultScreen(state, onTabSelect) { action -> resultAction(state, action, navController) { resultState = it } }
         }
         composable<VerifyRoute> { entry ->
             val savedId = entry.toRoute<VerifyRoute>().savedId
@@ -420,8 +445,11 @@ fun AppNavHost(
                 verifyState = state.reduce(action)
                 when (action) {
                     VerifyAction.Back -> navController.popBackStack()
-                    VerifyAction.ShowResult -> navController.navigate(ResultRoute(savedId)) {
-                        popUpTo(VerifyRoute(savedId)) { inclusive = true }
+                    VerifyAction.ShowResult -> {
+                        resultState = ResultState.fromVerify(verifyState ?: state, ResultState.SampleDate, Fit.Regular)
+                        navController.navigate(ResultRoute(savedId)) {
+                            popUpTo(VerifyRoute(savedId)) { inclusive = true }
+                        }
                     }
                     else -> Unit
                 }
@@ -444,10 +472,18 @@ private fun NavHostController.navigateToTab(tab: BottomTab) {
     }
 }
 
-/** Stand-in for screens of later steps, with a back action. */
-@Composable
-private fun PlaceholderScreen(title: String, subtitle: String? = null, onBack: () -> Unit) {
-    MaapScaffold(topBar = { TopBar(title = title, subtitle = subtitle, onBack = onBack) }) {}
+/** Result (9.1–9.3): back to Verify (or Home for a saved one); the share buttons get real files in Step 10.5. */
+private fun resultAction(
+    state: ResultState,
+    action: ResultAction,
+    navController: NavHostController,
+    update: (ResultState) -> Unit,
+) {
+    update(state.reduce(action))
+    when (action) {
+        ResultAction.Back -> navController.popBackStack()
+        else -> Unit
+    }
 }
 
 /** Stand-in for the Size chart / Settings tabs (Step 9), with the bottom nav. */

@@ -21,6 +21,8 @@ import com.tech_hunt.tailorpass.ui.screens.home.SavedDetail
 import com.tech_hunt.tailorpass.ui.screens.manual.ManualPlan
 import com.tech_hunt.tailorpass.ui.diagram.TapeDiagram
 import com.tech_hunt.tailorpass.ui.screens.prep.PrepGuide
+import com.tech_hunt.tailorpass.ui.screens.result.ResultPlan
+import com.tech_hunt.tailorpass.ui.screens.result.ResultState
 import com.tech_hunt.tailorpass.ui.screens.verify.VerifyState
 import java.io.File
 import kotlin.test.Test
@@ -136,6 +138,15 @@ class ResourceKeysTest {
             samples.map { it.noteHintKey }
         assertEquals(emptyList(), usedKeys.filterNot { it in keys }, "keys missing in strings.xml")
         assertEquals(emptyList(), sections.mapNotNull { it.iconName }.filterNot { it in drawables }, "drawables missing")
+    }
+
+    @Test
+    fun resultStringKeysExist() {
+        val keys = stringKeys("values")
+        val used = Garment.entries.flatMap { listOf(ResultPlan.titleKey(it), ResultPlan.readymadeKey(it)) } +
+            MeasurementKey.entries.flatMap { listOf(ResultPlan.shortKey(it), ResultPlan.termKey(it)) } +
+            listOf(ResultState.SamplePanjabi, ResultState.SampleSalwarKameez).flatMap { s -> s.sections.mapNotNull { it.titleKey } }
+        assertEquals(emptyList(), used.filterNot { it in keys }, "keys missing in strings.xml")
     }
 
     @Test

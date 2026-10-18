@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -29,22 +30,24 @@ import com.tech_hunt.tailorpass.ui.theme.Dimens
 
 /**
  * Content card used on most screens: 16dp corners, 1dp light border (#D5DAE1), surface background.
- * Default padding 14 / 16 (privacy note 1.1, reasons 6.3).
+ * Default padding 14 / 16 (privacy note 1.1, reasons 6.3). [shape]: 20dp corners on the genji size card (9.4).
  */
 @Composable
 fun MaapCard(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(horizontal = Dimens.space16, vertical = Dimens.space14),
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
+    shape: Shape = MaterialTheme.shapes.large,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val shape = MaterialTheme.shapes.large
     Column(
         modifier = modifier
             .background(MaterialTheme.colorScheme.surface, shape)
             .border(1.dp, MaterialTheme.colorScheme.outlineVariant, shape)
             .padding(contentPadding),
         verticalArrangement = verticalArrangement,
+        horizontalAlignment = horizontalAlignment,
         content = content,
     )
 }

@@ -33,6 +33,7 @@ import org.jetbrains.compose.resources.stringResource
  * Top bar (HTML `<header>`): 48dp back button · title (21, bold) + subtitle (14) · trailing chip/icon.
  * Height is 60–68 in the design, mostly 64 (Dimens.appBarHeight). onBack = null hides the back button.
  * endPadding: 6 when the bar ends with a 48dp icon button (tape entry 7.3–7.10).
+ * subtitleTrailing: shown 4dp after the subtitle on the same line ("· ✓ সেভ হয়েছে" 9.3, 9.4).
  */
 @Composable
 fun TopBar(
@@ -42,6 +43,7 @@ fun TopBar(
     onBack: (() -> Unit)? = null,
     height: Dp = Dimens.appBarHeight,
     endPadding: Dp = Dimens.space12,
+    subtitleTrailing: (@Composable () -> Unit)? = null,
     trailing: @Composable RowScope.() -> Unit = {},
 ) {
     Row(
@@ -72,12 +74,16 @@ fun TopBar(
                 maxLines = 1,
             )
             if (subtitle != null) {
-                Text(
-                    text = subtitle,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                )
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.space4)) {
+                    Text(
+                        text = subtitle,
+                        modifier = Modifier.weight(1f, fill = false),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                    )
+                    subtitleTrailing?.invoke()
+                }
             }
         }
         trailing()

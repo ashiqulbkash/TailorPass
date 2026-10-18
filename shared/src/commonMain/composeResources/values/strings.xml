@@ -355,6 +355,55 @@
     <string name="pdf_verify_with_tape">* ফিতায় মিলিয়ে নিন</string>
     <string name="pdf_page">পৃষ্ঠা %1$s/%2$s</string>
 
+    <!-- Result screen titles per garment (the genitive differs: পাঞ্জাবির / কামিজের) -->
+    <string name="result_title_shirt">শার্টের মাপ</string>
+    <string name="result_title_pants">প্যান্টের মাপ</string>
+    <string name="result_title_panjabi">পাঞ্জাবির মাপ</string>
+    <string name="result_title_pajama">পায়জামার মাপ</string>
+    <string name="result_title_salwar_kameez">সালওয়ার কামিজের মাপ</string>
+    <string name="result_title_tshirt">গেঞ্জির মাপ</string>
+    <string name="fit_with_label">%1$s ফিট</string>
+    <string name="genji_chest_range">বুক %1$s–%2$s</string>
+    <string name="date_day_month">%1$s %2$s</string>
+
+    <!-- Share files (10.1–10.3): tailor's short word + English term per measurement -->
+    <string name="pdf_for_readymade">রেডিমেড কেনার জন্য</string>
+    <string name="pdf_col_value_cm">মান (সেমি)</string>
+    <string name="pdf_approx">অ্যাপ দিয়ে নেওয়া আনুমানিক মাপ।</string>
+    <string name="pdf_check_names">%1$s ফিতায় মিলিয়ে নিন।</string>
+    <string name="png_approx">অ্যাপ দিয়ে নেওয়া আনুমানিক মাপ</string>
+    <string name="png_check_names">%1$s মাপ ফিতায় মিলিয়ে নিন</string>
+    <string name="m_neck_short">গলা</string>
+    <string name="m_neck_term">Neck</string>
+    <string name="m_shoulder_short">পুট</string>
+    <string name="m_shoulder_term">Shoulder</string>
+    <string name="m_chest_short">বুক</string>
+    <string name="m_chest_term">Chest</string>
+    <string name="m_bust_short">বুক</string>
+    <string name="m_bust_term">Bust</string>
+    <string name="m_waist_belly_short">পেট</string>
+    <string name="m_waist_belly_term">Waist</string>
+    <string name="m_waist_short">কোমর</string>
+    <string name="m_waist_term">Waist</string>
+    <string name="m_hip_short">হিপ</string>
+    <string name="m_hip_term">Hip</string>
+    <string name="m_armhole_short">আর্মহোল</string>
+    <string name="m_armhole_term">Armhole</string>
+    <string name="m_sleeve_short">হাতা</string>
+    <string name="m_sleeve_term">Sleeve</string>
+    <string name="m_cuff_short">হাতার মুখ</string>
+    <string name="m_cuff_term">Cuff</string>
+    <string name="m_length_short">ঝুল</string>
+    <string name="m_length_term">Length</string>
+    <string name="m_neck_front_short">গলার গভীরতা, সামনে</string>
+    <string name="m_neck_front_term">Front neck</string>
+    <string name="m_neck_back_short">গলার গভীরতা, পেছনে</string>
+    <string name="m_neck_back_term">Back neck</string>
+    <string name="m_salwar_length_short">মোট লম্বা</string>
+    <string name="m_salwar_length_term">Length</string>
+    <string name="m_bottom_short">মোহরি</string>
+    <string name="m_bottom_term">Bottom</string>
+
     <!-- 11. Size chart -->
     <string name="size_chart_title">সাইজ চার্ট</string>
     <string name="size_col_size">সাইজ</string>

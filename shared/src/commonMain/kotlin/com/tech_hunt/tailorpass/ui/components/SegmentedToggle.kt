@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tech_hunt.tailorpass.resources.Res
@@ -33,7 +34,8 @@ import org.jetbrains.compose.resources.painterResource
 /**
  * Pill toggle (feet-inch / cm, later inch / cm on Result): 44dp high, 1dp outline border.
  * Selected segment: primary background, 15 bold white; others: surface, 15 medium.
- * segmentWidth: fixed width of every segment (72dp on 7.1); null sizes each segment to its text.
+ * segmentWidth: fixed width of every segment (72dp on 7.1, 64dp on 9.1); null sizes each segment to its text.
+ * fill = true: equal segments across the given width (kameez / salwar tabs 9.3, 48dp high, 17sp; later 11.1).
  */
 @Composable
 fun SegmentedToggle(
@@ -43,10 +45,13 @@ fun SegmentedToggle(
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
     segmentWidth: Dp? = null,
+    height: Dp = Dimens.segmentedHeight,
+    fontSize: TextUnit = 15.sp,
+    fill: Boolean = false,
 ) {
     Row(
         modifier = modifier
-            .height(Dimens.segmentedHeight)
+            .height(height)
             .clip(PillShape)
             .border(1.dp, MaterialTheme.colorScheme.outline, PillShape)
             .selectableGroup()
@@ -57,11 +62,17 @@ fun SegmentedToggle(
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .then(if (segmentWidth != null) Modifier.width(segmentWidth) else Modifier)
+                    .then(
+                        when {
+                            fill -> Modifier.weight(1f)
+                            segmentWidth != null -> Modifier.width(segmentWidth)
+                            else -> Modifier
+                        },
+                    )
                     .background(if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
                     .selectable(selected = selected, role = Role.RadioButton, onClick = { onSelect(index) })
                     .then(
-                        if (segmentWidth != null) Modifier
+                        if (fill || segmentWidth != null) Modifier
                         else Modifier.padding(horizontal = if (selected) Dimens.space14 else Dimens.space16),
                     ),
                 contentAlignment = Alignment.Center,
@@ -69,7 +80,7 @@ fun SegmentedToggle(
                 Text(
                     text = label,
                     style = MaterialTheme.typography.bodyMedium,
-                    fontSize = 15.sp,
+                    fontSize = fontSize,
                     fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
                     color = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,

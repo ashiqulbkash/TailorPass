@@ -341,6 +341,55 @@
     <string name="pdf_verify_with_tape">* check with tape</string>
     <string name="pdf_page">Page %1$s/%2$s</string>
 
+    <!-- Result screen titles per garment (the genitive differs: পাঞ্জাবির / কামিজের) -->
+    <string name="result_title_shirt">Shirt measurements</string>
+    <string name="result_title_pants">Trousers measurements</string>
+    <string name="result_title_panjabi">Panjabi measurements</string>
+    <string name="result_title_pajama">Pajama measurements</string>
+    <string name="result_title_salwar_kameez">Salwar kameez measurements</string>
+    <string name="result_title_tshirt">T-shirt measurements</string>
+    <string name="fit_with_label">%1$s fit</string>
+    <string name="genji_chest_range">Chest %1$s–%2$s</string>
+    <string name="date_day_month">%1$s %2$s</string>
+
+    <!-- Share files (10.1–10.3): short name + term; the term is hidden when it repeats the name (English) -->
+    <string name="pdf_for_readymade">For ready-made</string>
+    <string name="pdf_col_value_cm">Value (cm)</string>
+    <string name="pdf_approx">Approximate measurements taken with the app.</string>
+    <string name="pdf_check_names">Check %1$s with a tape.</string>
+    <string name="png_approx">Approximate measurements taken with the app</string>
+    <string name="png_check_names">check %1$s with a tape</string>
+    <string name="m_neck_short">Neck</string>
+    <string name="m_neck_term">Neck</string>
+    <string name="m_shoulder_short">Shoulder</string>
+    <string name="m_shoulder_term">Shoulder</string>
+    <string name="m_chest_short">Chest</string>
+    <string name="m_chest_term">Chest</string>
+    <string name="m_bust_short">Bust</string>
+    <string name="m_bust_term">Bust</string>
+    <string name="m_waist_belly_short">Waist</string>
+    <string name="m_waist_belly_term">Waist</string>
+    <string name="m_waist_short">Waist</string>
+    <string name="m_waist_term">Waist</string>
+    <string name="m_hip_short">Hip</string>
+    <string name="m_hip_term">Hip</string>
+    <string name="m_armhole_short">Armhole</string>
+    <string name="m_armhole_term">Armhole</string>
+    <string name="m_sleeve_short">Sleeve</string>
+    <string name="m_sleeve_term">Sleeve</string>
+    <string name="m_cuff_short">Cuff</string>
+    <string name="m_cuff_term">Cuff</string>
+    <string name="m_length_short">Length</string>
+    <string name="m_length_term">Length</string>
+    <string name="m_neck_front_short">Front neck depth</string>
+    <string name="m_neck_front_term">Front neck depth</string>
+    <string name="m_neck_back_short">Back neck depth</string>
+    <string name="m_neck_back_term">Back neck depth</string>
+    <string name="m_salwar_length_short">Total length</string>
+    <string name="m_salwar_length_term">Total length</string>
+    <string name="m_bottom_short">Bottom opening</string>
+    <string name="m_bottom_term">Bottom opening</string>
+
     <string name="size_chart_title">Size chart</string>
     <string name="size_col_size">Size</string>
     <string name="size_col_chest">Chest</string>

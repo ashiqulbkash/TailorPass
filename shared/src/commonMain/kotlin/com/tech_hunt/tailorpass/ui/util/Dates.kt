@@ -2,6 +2,7 @@ package com.tech_hunt.tailorpass.ui.util
 
 import androidx.compose.runtime.Composable
 import com.tech_hunt.tailorpass.resources.Res
+import com.tech_hunt.tailorpass.resources.date_day_month
 import com.tech_hunt.tailorpass.resources.date_day_month_year
 import com.tech_hunt.tailorpass.resources.month_1
 import com.tech_hunt.tailorpass.resources.month_10
@@ -38,4 +39,12 @@ fun formatDate(date: CalendarDate): String = stringResource(
     localDigits(date.day.toString()),
     stringResource(MonthNames[date.month - 1]),
     localDigits(date.year.toString()),
+)
+
+/** "১৬ অক্টোবর" — without the year, next to the "saved" mark (9.3, 9.4). */
+@Composable
+fun formatDayMonth(date: CalendarDate): String = stringResource(
+    Res.string.date_day_month,
+    localDigits(date.day.toString()),
+    stringResource(MonthNames[date.month - 1]),
 )
