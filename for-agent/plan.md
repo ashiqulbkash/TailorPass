@@ -109,12 +109,17 @@ Other: [`README.md`](README.md) (package index), [`maap-design-screens.pdf`](maa
 ### To be replaced later with real information (Placeholders)
 Contact email (`about_contact_email`), the real size chart (`SampleMenShirtChart`), the normal ranges for the outlier warning (`minInches/maxInches`), sample values for length/neck depth, privacy policy text (matched to the app's real behavior), blue/green brand choice, app icon/logo (if `app_logo` is still the old "মাপ" design).
 
-### Missing garment data (user provides — never invent)
-`Measurements.kt` defines measurement lists only for **Panjabi** (`panjabi`, `panjabiManualOrder`) and **Salwar kameez** (`salwarKameez`), and one size chart (`SampleMenShirtChart`, chest only). Still missing:
-- measurement lists for **Shirt, Pants, Pajama** (Project Overview §4), incl. `MeasurementKey`s and strings that do not exist yet: thigh, knee, crotch, inseam, biceps, full length (pants/pajama);
-- the T-shirt/genji chart (S–XXL from chest, shoulder, length) and women's size chart (size chart 11.1).
-
-Steps 1–9 only use Panjabi/Salwar kameez/Genji sample data (that is all the designs show); the Shirt/Pants/Pajama cards on Home still navigate to `Method` with their garment name. Before Step 10.4 the agent asks the user for this data; it never adds or changes values in `Measurements.kt` on its own.
+### Garment data sources (added 2026-10-18 at the user's request, from web sources)
+The user asked the agent to find the missing garment data on the web and use it. Now in `Measurements.kt`; the agent still never changes these values on its own — new values come from the user.
+- **Shirt / Pants / Pajama lists** (`shirt`, `pants`, `pajama` + `…ManualOrder`): the measurement names are Project Overview §4. Where and how each is measured follows tailoring guides (shirt: [Proper Cloth](https://propercloth.com/reference/dress-shirt-body-measurements/), [Luxire](https://luxire.com/pages/shirt-body-measurement-guide); trousers: [Luxire pant guide](https://mtm.luxire.com/pages/pant-measurement-guide)). Shirt waist = belly (`WaistBelly`, like panjabi); shirt length = `ShirtLength` (preference, number entry, no knee-length cards). New keys: `Biceps`, `ShirtLength`, `Thigh`, `Knee`, `Crotch` (rise), `Inseam`, `FullLength`. Their plausible ranges are rough starting values like the existing ones.
+- **Bangla terms:** রান (Thigh), হাঁটু (Knee), হাই (Crotch) and মুহুরি/মোহরি (Bottom) as in Bangla tailoring guides ([textilegoln](https://textilegoln.com/%E0%A6%AE%E0%A6%BE%E0%A6%AA-%E0%A6%A8%E0%A7%87%E0%A6%AF%E0%A6%BC%E0%A6%BE%E0%A6%B0-%E0%A6%AA%E0%A6%A6%E0%A7%8D%E0%A6%A7%E0%A6%A4%E0%A6%BF/), [sattacademy](https://sattacademy.com/academy/%E0%A6%AA%E0%A7%8B%E0%A6%B6%E0%A6%BE%E0%A6%95-%E0%A6%A4%E0%A7%88%E0%A6%B0%E0%A6%BF)). হাই is the tailors' full crotch: navel, between the legs, to the back waist. ⚠ Not found in any source: মাসল (Biceps), ভেতরের লম্বা (Inseam), মোট লম্বা (Full length) — confirm with a tailor (Overview §7).
+- **Plausible ranges** of the new keys contain the [ANSUR II](https://ergoassessment.cam/ansur-2-data-explorer/) men's 5th–95th percentiles (US Army body data) with room below for smaller builds; values in the `MeasurementKey` comment. Crotch (হাই) 18–32" (ANSUR 21.6–27.6"), knee 12–22".
+- **Genji / T-shirt chart** (`TShirtChart`, S–XXL): shoulder and length from the [Urturms T-shirt chart](https://urturms.com/pages/artax-size-chart) (South Asian brand); body chest = the brand's chest less 0–2" ease, which reproduces the 9.4 design (M 38–40, L 40–42, XL 42–44; Rahat 40/18/28 → L). Size = the chest's size, one up while the shirt's shoulder is narrower than the person's (`suggestTShirtSize`). Bangladeshi brand charts ([Ecstasy](https://ecstasybd.com/?page=sizeGuide), [Easy](https://easyfashion.com.bd/size-guide/)) list chest/length only; a [Bangladeshi study](https://zenodo.org/records/13827292) gives size L as 26.8" long and 17.3" across the shoulder — slightly shorter/narrower than the chart.
+- **Women's chart** (`WomenChart`, XS–XXXL, body bust/waist/hip): [Lord & Taylor women's size guide](https://lordandtaylor.com/pages/womens-size-guide). No Bangladeshi kameez chart with hip/waist was found ([Ecstasy](https://ecstasybd.com/?page=sizeGuide) gives kameez bust 36–44 for S–XXL only). Salwar kameez sizes now come from the bust (Farhana 36" → M, as 9.3 shows).
+- **Men's chart** (`MenChart`, XS–XXXL, body chest/waist/hip; was `SampleMenShirtChart`): chest from the [ASOS men's shirt chart](https://www.asos.com/discover/size-charts/men/) (XS 34–36 … XXXL 46–48) and waist from the ASOS men's chart (XS 28–30 … XXXL 40–42) — the sample chart already matched both; hip from the [James Perse men's body chart](https://www.jamesperse.com/collections/men) (low hip XS 34 … XXL 44, ±1"), XXXL continued by its 2" step (45–47). ⚠ Western brand charts.
+- **Pants size** = the waist number, as ASOS sizes trousers (W26–W44, even; `suggestTrouserSize`: waist 33 → 34). **Pajama size** = the men's chart size from the waist (`suggestSizeByWaist`).
+- **Diagrams** (`Diagrams.shirt / pants / pajama`, `diagram_{shirt,pants,pajama}_marks.xml`): drawn by the agent on the existing outlines — shirt = panjabi marks with a shorter length arrow and a biceps arrow; pants / pajama on `body_male_front`, cropped to the lower body like salwar. Not from the design export; replace if the designer draws them.
+- Design-phase samples: shirt / pants / pajama reuse Rahat's panjabi values and 2.1's pants waist (34"); the other measurements are "the tailor measures it" — no values are invented.
 
 ---
 
@@ -384,7 +389,7 @@ Summary:
 | 10.3 | Share as image, PNG `SharePNG` (1080×2600) | [html](html/45_10-3_SharePNG.html) | [png](screens/45_10-3_SharePNG.png) |
 
 **Found in Step 8 (2026-10-18):**
-- [ ] **Needs data:** 9.3's size "M" is a design sample (`ResultPlan.DESIGN_SAMPLE_WOMEN_SIZE`) — no women's chart yet. 9.4 uses the sample men's chart (chest only) — the genji chart (S–XXL from chest, shoulder, length) is missing. Genji shows the design values (40/18/28) for every profile until Step 10.
+- [x] **Resolved 2026-10-18:** 9.3's size now comes from the bust and the women's chart; 9.4 uses the T-shirt chart (chest + shoulder) — see §3 "Garment data sources". Genji still shows the design values (40/18/28) for every profile until Step 10.
 - [ ] **Decide:** the 9.3 design has no inch/cm toggle (only 9.1 does). Salwar kameez follows the design; cm for it comes from the Settings unit row (Step 9). Add the toggle to 9.3, or keep.
 - [ ] **Decide:** file markers — "*" marks "your choice" values (10.2), a low-accuracy value gets "* ফিতায় মিলিয়ে নিন" under its row on the full layout (10.1) and is named in the footer on the compact layout (10.2) and the PNG (10.3). Panjabi length/cuff carry AI badges in the sample (Step 7 item), so 10.1 stars nothing, as designed.
 - [ ] **Step 10.5:** the compact PDF (10.2) fills the A4 page exactly with Hind Siliguri; a long tailor note can push the footer off. Limit the note length, shrink, or add a second page. The PNG height follows its content (the 10.3 frame is 2600; a wrapped note makes it taller).
@@ -411,7 +416,7 @@ Summary:
 | 12.6 | About the app `About` | [html](html/52_12-6_About.html) | [png](screens/52_12-6_About.png) |
 
 **Found in Step 9 (2026-10-18):**
-- [ ] **Needs data:** the women's size chart (11.1 "মেয়ে" tab) is missing — the tab shows a salwar kameez chip and "এই পোশাকের সাইজ চার্ট এখনো যোগ করা হয়নি" instead of inventing one. All four men's chips (shirt, panjabi, genji, pants) show the one sample chart (`SampleMenShirtChart`), as the design does.
+- [x] **Resolved 2026-10-18:** the women's tab shows the women's chart (bust/waist/hip) and the genji chip the T-shirt chart (chest/shoulder/length) — §3 "Garment data sources". Shirt, panjabi and pants chips still show the sample men's chart.
 - [ ] **Decide:** in cm (Settings unit), the size chart rounds ranges to whole cm ("১০২–১০৭"); decimals do not fit the highlighted row. Result keeps one decimal.
 - [ ] **Decide:** the language and unit rows toggle in place on tap (two options each, no picker in the design). Confirm, or design a picker sheet.
 - [ ] **Decide:** 12.3 / 12.4 dialogs are centred like 7.8 (the HTML pins them at `top:120px` / `top:150px`) — same open item as Step 6.
@@ -460,7 +465,41 @@ The UI is already common — no new UI is written here; the iOS shell, iOS `actu
 
 ---
 
-## 7. File index (`for-agent/`, next to this file)
+## 7. Open items for the user (review list, 2026-10-18)
+
+All open "missing" and "decide" items from Steps 5–9 and the garment-data work, in one place. The user reviews them later; the agent does not resolve them on its own. Tick an item (or write the answer next to it) when decided — the step notes above keep the details.
+
+### A. Missing data / confirmation needed
+- [ ] **Bangla terms not found in any source:** মাসল (Biceps), ভেতরের লম্বা (Inseam), মোট লম্বা (Full length). Confirm with a tailor. (রান, হাঁটু, হাই, মুহুরি are sourced — §3.)
+- [ ] **Size charts are brand charts, not Bangladeshi:** men's (`MenChart`, ASOS + James Perse; XXXL hip 45–47 extended by the agent), women's (`WomenChart`, Lord & Taylor, US), genji (`TShirtChart`, Urturms; body chest = brand chest less 0–2" ease). Confirm or replace with a tailor / local brand chart (Overview §7).
+- [ ] **Shirt / pants / pajama diagrams** were drawn by the agent on existing outlines (`diagram_{shirt,pants,pajama}_marks.xml`). Replace if the designer draws them. On the shirt, badge 7 (biceps) covers its short arrow.
+- [ ] **Cuff choice cards:** Overview §3 promises picture cards for cuff, but there are no cuff presets — cuff is a number entry now. Give the options (labels, values, pictures) or confirm number entry. (Step 6)
+- [ ] **Tape how-to text, diagrams and "ভুল এড়াতে" tips** exist only for chest, belly, sleeve and neck depth. Missing for neck, shoulder, hip, bust, armhole, salwar measurements and the new keys (biceps, thigh, knee, হাই, inseam, full length). (Step 5)
+- [ ] **Placeholders:** contact email (`about_contact_email`), app icon/logo (`app_logo` is still the "মাপ" design?), blue/green brand choice, privacy policy text matched to the final behaviour.
+- [ ] **Plausible ranges** (unusual-value warning): the new keys are checked against ANSUR II (§3); the older ones are still rough starting values. Fit allowances per garment are not defined (Overview §7).
+- [ ] **Voice-guide clips** (Bangla / English) still to be recorded (Overview §7, Step 10).
+
+### B. Decisions
+- [ ] **Default preference card:** keep "middle card" (length at knee, neck depth medium) or set a default per garment. (Step 6)
+- [ ] **Dialog position and scrim** (7.8, 12.3, 12.4): centred with the platform dim (now) or fixed at the HTML's `top` with `rgba(13,17,23,.55)`. (Steps 6, 9)
+- [ ] **7.9 Home:** keep the full saved list and the green ✓ of 2.1, or follow the 7.9 design (2 rows, grey). (Step 6)
+- [ ] **English "Later":** the 7.8 dialog (`পরে করব`) and the entry screen (`পরে দেব`) both read "Later" — keep or rename one (e.g. "Finish later"). (Step 6)
+- [ ] **Preferences after photos:** show panjabi length/cuff as "✎ your choice" (like 8.4) instead of the AI badges in 8.1. (Step 7)
+- [ ] **Badge after an edit** on the edit sheet: "ফিতায় মাপা" / "✎ আপনার পছন্দ" (now) or no badge. (Step 7)
+- [ ] **9.3 inch/cm toggle:** add it to salwar kameez like 9.1, or keep the design (unit from Settings). (Step 8)
+- [ ] **File markers** on the PDF/PNG: "*" for "your choice", "* ফিতায় মিলিয়ে নিন" for low accuracy — confirm the rules. (Step 8)
+- [ ] **Size chart in cm:** ranges rounded to whole cm (now) or one decimal. (Step 9)
+- [ ] **Language / unit rows:** toggle on tap (now) or a picker sheet. (Step 9)
+- [ ] **12.3 replace warning:** the orange note under the options (now) — confirm the look. (Step 9)
+- [ ] **cm entry in the tape flow:** entry follows the chosen unit (needs cm strings and step) or the unit only affects display. (Step 5)
+- [ ] **Font:** switch Hind Siliguri → Roboto + a bundled Bengali font (e.g. Noto Sans Bengali) to fix the "১" glyph — verify PDF/PNG conjuncts first. (Step 5)
+- [ ] **Long tailor note** on the compact PDF (10.2): limit the length, shrink, or add a second page. (Step 8, for 10.5)
+- [ ] **Garment rules chosen by the agent:** genji size = chest size, one up while the shoulder is wider (length ignored); pants size = waist number (W26–W44), pajama = letter size from the waist; shirt length = number entry without picture cards; হাই = full crotch (navel → between the legs → back waist). Confirm. (§3)
+- [ ] **Bookkeeping:** tick the Step 0–9 checklists in §6 (the work is done; boxes were never ticked).
+
+---
+
+## 8. File index (`for-agent/`, next to this file)
 
 | File/folder | Contents |
 |---|---|

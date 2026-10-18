@@ -29,9 +29,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tech_hunt.tailorpass.model.Gender
-import com.tech_hunt.tailorpass.model.SizeRow
 import com.tech_hunt.tailorpass.resources.Res
 import com.tech_hunt.tailorpass.resources.size_chart_basis
+import com.tech_hunt.tailorpass.resources.size_chart_basis_bust
 import com.tech_hunt.tailorpass.resources.size_chart_for_whom
 import com.tech_hunt.tailorpass.resources.size_chart_garments
 import com.tech_hunt.tailorpass.resources.size_chart_in_cm
@@ -39,10 +39,7 @@ import com.tech_hunt.tailorpass.resources.size_chart_in_inches
 import com.tech_hunt.tailorpass.resources.size_chart_missing
 import com.tech_hunt.tailorpass.resources.size_chart_note
 import com.tech_hunt.tailorpass.resources.size_chart_title
-import com.tech_hunt.tailorpass.resources.size_col_chest
-import com.tech_hunt.tailorpass.resources.size_col_hip
 import com.tech_hunt.tailorpass.resources.size_col_size
-import com.tech_hunt.tailorpass.resources.size_col_waist
 import com.tech_hunt.tailorpass.resources.size_range
 import com.tech_hunt.tailorpass.resources.size_yours
 import com.tech_hunt.tailorpass.resources.text_dot_pair
@@ -133,7 +130,7 @@ private fun footnote(state: SizeChartState): String {
     val chest = state.chestInches
     if (state.yourSize == null || chest == null) return unit
     val basis = stringResource(
-        Res.string.size_chart_basis,
+        if (state.gender == Gender.Female) Res.string.size_chart_basis_bust else Res.string.size_chart_basis,
         possessiveOf(state.profileName, useBanglaDigits()),
         resultValue(chest, state.unit),
     )
@@ -145,7 +142,8 @@ private fun footnote(state: SizeChartState): String {
  * the profile's row 52dp, 17 bold primary on primary container, 2dp primary frame, "আপনার" badge.
  */
 @Composable
-private fun SizeTable(rows: List<SizeRow>, yourSize: String?, unit: MeasureUnit) {
+private fun SizeTable(chart: ChartTable, yourSize: String?, unit: MeasureUnit) {
+    val rows = chart.rows
     MaapCard(Modifier.fillMaxWidth().clip(MaterialTheme.shapes.large), contentPadding = PaddingValues()) {
         TableRow(
             height = 44.dp,
@@ -153,9 +151,7 @@ private fun SizeTable(rows: List<SizeRow>, yourSize: String?, unit: MeasureUnit)
         ) {
             val header = MaapTheme.colors.textEmphasis
             Cell(stringResource(Res.string.size_col_size), header, FontWeight.Bold, 15, TextAlign.Start)
-            Cell(stringResource(Res.string.size_col_chest), header, FontWeight.Bold, 15)
-            Cell(stringResource(Res.string.size_col_waist), header, FontWeight.Bold, 15)
-            Cell(stringResource(Res.string.size_col_hip), header, FontWeight.Bold, 15)
+            chart.columnKeys.forEach { Cell(str(it), header, FontWeight.Bold, 15) }
         }
         val line = MaterialTheme.colorScheme.surfaceVariant
         rows.forEachIndexed { index, row ->
@@ -192,9 +188,7 @@ private fun SizeTable(rows: List<SizeRow>, yourSize: String?, unit: MeasureUnit)
                         )
                     }
                 }
-                Cell(range(row.chestMin, row.chestMax, unit), color, weight, fontSize)
-                Cell(range(row.waistMin, row.waistMax, unit), color, weight, fontSize)
-                Cell(range(row.hipMin, row.hipMax, unit), color, weight, fontSize)
+                row.cells.forEach { Cell(range(it.start, it.endInclusive, unit), color, weight, fontSize) }
             }
         }
     }
@@ -229,7 +223,10 @@ private fun RowScope.Cell(
     )
 }
 
-/** "৩৪–৩৬" in inches; whole centimeters in cm ("৮৬–৯১"), so the widest rows still fit their column. */
+/**
+ * "৩৪–৩৬" in inches; whole centimeters in cm ("৮৬–৯১"), so the widest rows still fit their column. A single value
+ * (genji shoulder, length) has no dash.
+ */
 @Composable
 private fun range(min: Float, max: Float, unit: MeasureUnit): String {
     val bangla = useBanglaDigits()
@@ -237,7 +234,7 @@ private fun range(min: Float, max: Float, unit: MeasureUnit): String {
         MeasureUnit.Inch -> { v -> formatInches(v, bangla) }
         MeasureUnit.Cm -> { v -> formatInches(inchesToWholeCm(v).toFloat(), bangla) }
     }
-    return stringResource(Res.string.size_range, format(min), format(max))
+    return if (min == max) format(min) else stringResource(Res.string.size_range, format(min), format(max))
 }
 
 @Preview(widthDp = 360, heightDp = 800)

@@ -272,6 +272,7 @@
     <string name="length_below_knee">হাঁটুর নিচে</string>
     <string name="length_by_height">আপনার উচ্চতা (%1$s) অনুযায়ী হিসাব</string>
     <string name="length_tip_old_garment">পছন্দের পুরনো পাঞ্জাবি থাকলে সেটার ঝুল মেপে লিখুন</string>
+    <string name="shirt_length_tip">পছন্দের পুরনো শার্ট থাকলে সেটার ঝুল মেপে লিখুন</string>
     <string name="manual_finish">শেষ করুন</string>
     <string name="summary_title">সব মাপ একনজরে</string>
     <string name="summary_missing_banner">%1$sটি মাপ বাদ আছে। বাদ রাখলে দর্জিকে মেপে নিতে বলা হবে।</string>
@@ -325,6 +326,12 @@
     <string name="m_neck_back">গলার গভীরতা — পেছনে</string>
     <string name="m_salwar_length">মোট লম্বা (Length)</string>
     <string name="m_bottom">মোহরি (Bottom)</string>
+    <string name="m_biceps">মাসল (Biceps)</string>
+    <string name="m_thigh">রান (Thigh)</string>
+    <string name="m_knee">হাঁটু (Knee)</string>
+    <string name="m_crotch">হাই (Crotch)</string>
+    <string name="m_inseam">ভেতরের লম্বা (Inseam)</string>
+    <string name="m_full_length">মোট লম্বা (Full length)</string>
 
     <!-- 9. Result -->
     <string name="result_title">%1$sর মাপ</string>
@@ -403,6 +410,18 @@
     <string name="m_salwar_length_term">Length</string>
     <string name="m_bottom_short">মোহরি</string>
     <string name="m_bottom_term">Bottom</string>
+    <string name="m_biceps_short">মাসল</string>
+    <string name="m_biceps_term">Biceps</string>
+    <string name="m_thigh_short">রান</string>
+    <string name="m_thigh_term">Thigh</string>
+    <string name="m_knee_short">হাঁটু</string>
+    <string name="m_knee_term">Knee</string>
+    <string name="m_crotch_short">হাই</string>
+    <string name="m_crotch_term">Crotch</string>
+    <string name="m_inseam_short">ভেতরের লম্বা</string>
+    <string name="m_inseam_term">Inseam</string>
+    <string name="m_full_length_short">মোট লম্বা</string>
+    <string name="m_full_length_term">Full length</string>
 
     <!-- 11. Size chart -->
     <string name="size_chart_title">সাইজ চার্ট</string>
@@ -410,6 +429,8 @@
     <string name="size_col_chest">বুক</string>
     <string name="size_col_waist">কোমর</string>
     <string name="size_col_hip">হিপ</string>
+    <string name="size_col_shoulder">পুট</string>
+    <string name="size_col_length">ঝুল</string>
     <string name="size_yours">আপনার</string>
     <string name="size_chart_note">আনুমানিক মাপ, ব্র্যান্ডভেদে আলাদা হতে পারে</string>
     <string name="size_chart_for_whom">কার জন্য</string>
@@ -417,6 +438,7 @@
     <string name="size_chart_in_inches">সব মাপ ইঞ্চিতে</string>
     <string name="size_chart_in_cm">সব মাপ সেন্টিমিটারে</string>
     <string name="size_chart_basis">%1$s বুক %2$s অনুযায়ী</string>
+    <string name="size_chart_basis_bust">%1$s বুক %2$s অনুযায়ী</string>
     <string name="size_chart_missing">এই পোশাকের সাইজ চার্ট এখনো যোগ করা হয়নি</string>
     <string name="size_range">%1$s–%2$s</string>
 

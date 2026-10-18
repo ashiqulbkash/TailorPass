@@ -33,11 +33,14 @@ data class VerifySection(val titleKey: String?, val rows: List<VerifyRow>) {
 private val SectionIcons = mapOf("garment_kameez" to "ic_garment_salwar_kameez", "garment_salwar" to "ic_garment_pajama")
 
 object VerifyPlan {
-    /** Order on verify / result / PDF (Measurements.kt). Shirt, Pants and Pajama lists are not defined yet (plan.md §3). */
+    /** Order on verify / result / PDF (Measurements.kt). Genji is size-only (no list). */
     fun sections(garment: Garment): List<MeasurementSection> = when (garment) {
         Garment.Panjabi -> GarmentMeasurements.panjabi
         Garment.SalwarKameez -> GarmentMeasurements.salwarKameez
-        Garment.Shirt, Garment.Pants, Garment.Pajama, Garment.TShirt -> emptyList()
+        Garment.Shirt -> GarmentMeasurements.shirt
+        Garment.Pants -> GarmentMeasurements.pants
+        Garment.Pajama -> GarmentMeasurements.pajama
+        Garment.TShirt -> emptyList()
     }
 
     /** A value the user typed on the edit sheet: a preference stays "your choice", a body value counts as tape-measured. */
@@ -147,11 +150,25 @@ data class VerifyState(
         /** 8.5: Rahat's panjabi after the tape summary (7.7) — hip skipped. */
         val SampleManual: VerifyState get() = fromTape(ManualState.SampleSummary)
 
-        /** Design phase: the AI's result for [target] is the design sample of its garment (none for undefined lists). */
+        /** Design phase: the AI's result for [target] is the design sample of its garment. */
         fun sampleAi(target: MeasureTarget): VerifyState = when (target.garment) {
             Garment.Panjabi -> SamplePanjabi.copy(target = target)
             Garment.SalwarKameez -> SampleSalwarKameez.copy(target = target)
-            Garment.Shirt, Garment.Pants, Garment.Pajama, Garment.TShirt -> VerifyState(target, MeasureMethod.Ai, emptyList())
+            Garment.Shirt, Garment.Pants, Garment.Pajama -> sampleFromKnownValues(target)
+            Garment.TShirt -> VerifyState(target, MeasureMethod.Ai, emptyList())
+        }
+
+        /**
+         * Shirt / pants / pajama have no design: Rahat's values from the panjabi sample (8.1) and the pants waist of
+         * 2.1 (34"); any other measurement is left for the tailor rather than invented.
+         */
+        private fun sampleFromKnownValues(target: MeasureTarget): VerifyState {
+            val known = SamplePanjabi.rows.associateBy { it.key } +
+                (MeasurementKey.Waist to ai(MeasurementKey.Waist, 34f, SourceBadge.AccuracyMedium))
+            val sections = VerifyPlan.sections(target.garment).map { section ->
+                VerifySection(section.titleKey, section.keys.map { known[it] ?: VerifyRow(it, null, SourceBadge.Missing) })
+            }
+            return VerifyState(target, MeasureMethod.Ai, sections)
         }
 
         /**

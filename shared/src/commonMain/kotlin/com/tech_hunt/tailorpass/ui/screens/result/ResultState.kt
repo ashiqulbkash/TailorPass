@@ -5,10 +5,14 @@ import com.tech_hunt.tailorpass.model.Diagrams
 import com.tech_hunt.tailorpass.model.Fit
 import com.tech_hunt.tailorpass.model.Garment
 import com.tech_hunt.tailorpass.model.MeasurementKey
-import com.tech_hunt.tailorpass.model.SampleMenShirtChart
-import com.tech_hunt.tailorpass.model.SizeRow
 import com.tech_hunt.tailorpass.model.SourceBadge
+import com.tech_hunt.tailorpass.model.TShirtChart
+import com.tech_hunt.tailorpass.model.TShirtSizeRow
+import com.tech_hunt.tailorpass.model.WomenChart
 import com.tech_hunt.tailorpass.model.suggestSize
+import com.tech_hunt.tailorpass.model.suggestSizeByWaist
+import com.tech_hunt.tailorpass.model.suggestTrouserSize
+import com.tech_hunt.tailorpass.model.suggestTShirtSize
 import com.tech_hunt.tailorpass.ui.screens.manual.MeasureUnit
 import com.tech_hunt.tailorpass.ui.screens.prep.MeasureTarget
 import com.tech_hunt.tailorpass.ui.screens.verify.VerifyState
@@ -102,26 +106,29 @@ data class ResultState(
 }
 
 object ResultPlan {
-    /**
-     * 9.3's "M": there is no women's size chart yet (plan.md §3 — the user provides it), so salwar kameez shows the
-     * design's sample size until Step 10.
-     */
-    const val DESIGN_SAMPLE_WOMEN_SIZE = "M"
-
-    /** Diagram of section [section]; Shirt, Pants and Pajama have no measurement list or diagram yet. */
+    /** Numbered diagram of section [section] (badge numbers follow the list order). Genji has none. */
     fun diagram(garment: Garment, section: Int): DiagramSpec? = when (garment) {
         Garment.Panjabi -> Diagrams.panjabi.takeIf { section == 0 }
         Garment.SalwarKameez -> listOf(Diagrams.kameez, Diagrams.salwar).getOrNull(section)
-        Garment.Shirt, Garment.Pants, Garment.Pajama, Garment.TShirt -> null
+        Garment.Shirt -> Diagrams.shirt.takeIf { section == 0 }
+        Garment.Pants -> Diagrams.pants.takeIf { section == 0 }
+        Garment.Pajama -> Diagrams.pajama.takeIf { section == 0 }
+        Garment.TShirt -> null
     }
 
-    /** Men's tops from the chest (suggestSize); salwar kameez the design sample; others have no chart yet. */
+    /**
+     * Men's tops from the chest (men's chart), salwar kameez from the bust (women's chart), pants as the waist number
+     * ("34"), pajama from the waist (men's chart). Genji has its own screen (9.4).
+     */
     fun suggestedSize(garment: Garment, rows: List<ResultRow>): String? = when (garment) {
-        Garment.Panjabi, Garment.Shirt ->
-            rows.firstOrNull { it.key == MeasurementKey.Chest }?.inches?.let { suggestSize(it) }
-        Garment.SalwarKameez -> DESIGN_SAMPLE_WOMEN_SIZE
-        Garment.Pants, Garment.Pajama, Garment.TShirt -> null
+        Garment.Panjabi, Garment.Shirt -> valueOf(rows, MeasurementKey.Chest)?.let { suggestSize(it) }
+        Garment.SalwarKameez -> valueOf(rows, MeasurementKey.Bust)?.let { suggestSize(it, WomenChart) }
+        Garment.Pants -> valueOf(rows, MeasurementKey.Waist)?.let { suggestTrouserSize(it) }
+        Garment.Pajama -> valueOf(rows, MeasurementKey.Waist)?.let { suggestSizeByWaist(it) }
+        Garment.TShirt -> null
     }
+
+    private fun valueOf(rows: List<ResultRow>, key: MeasurementKey): Float? = rows.firstOrNull { it.key == key }?.inches
 
     /** "পাঞ্জাবির মাপ" — one key per garment, because the Bangla genitive ending differs (-র / -এর). */
     fun titleKey(garment: Garment): String = "result_title_" + garment.labelKey.removePrefix("garment_")
@@ -153,8 +160,8 @@ fun ResultState.reduce(action: ResultAction): ResultState = when (action) {
 }
 
 /**
- * Genji / T-shirt size (9.4): the size from chest, shoulder and length, with its neighbours for a tighter or looser
- * fit. ⚠ The T-shirt chart is missing (plan.md §3), so [chart] is the sample men's chart, which only uses the chest.
+ * Genji / T-shirt size (9.4): the size from chest and shoulder ([suggestTShirtSize]; length is shown, not used),
+ * with its neighbours for a tighter or looser fit.
  */
 data class GenjiState(
     val profileName: String,
@@ -163,15 +170,15 @@ data class GenjiState(
     val chestInches: Float,
     val shoulderInches: Float,
     val lengthInches: Float,
-    val chart: List<SizeRow> = SampleMenShirtChart,
+    val chart: List<TShirtSizeRow> = TShirtChart,
 ) {
-    val size: String? get() = suggestSize(chestInches, chart)
+    val size: String? get() = suggestTShirtSize(chestInches, shoulderInches, chart)
     private val index: Int get() = chart.indexOfFirst { it.size == size }
 
     /** The size and its neighbours in chart order (M | L | XL); fewer at the ends of the chart. */
-    val compared: List<SizeRow> get() = if (index < 0) emptyList() else chart.subList(maxOf(0, index - 1), minOf(chart.size, index + 2))
-    val tighter: SizeRow? get() = chart.getOrNull(index - 1)?.takeIf { index > 0 }
-    val looser: SizeRow? get() = if (index < 0) null else chart.getOrNull(index + 1)
+    val compared: List<TShirtSizeRow> get() = if (index < 0) emptyList() else chart.subList(maxOf(0, index - 1), minOf(chart.size, index + 2))
+    val tighter: TShirtSizeRow? get() = chart.getOrNull(index - 1)?.takeIf { index > 0 }
+    val looser: TShirtSizeRow? get() = if (index < 0) null else chart.getOrNull(index + 1)
 
     companion object {
         /** 9.4: Rahat — chest 40", shoulder 18", length 28" → L. */

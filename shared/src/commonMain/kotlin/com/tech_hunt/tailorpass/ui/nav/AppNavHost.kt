@@ -205,8 +205,13 @@ fun AppNavHost(
             // Tab and chip survive a tab switch; they start on the current profile's gender.
             var gender by rememberSaveable(profile.id) { mutableStateOf(profile.gender.name) }
             var garment by rememberSaveable(profile.id) { mutableStateOf(SizeChartState.garmentsFor(profile.gender).first().name) }
-            // Design phase: a profile with saved measurements has the design's chest (40"); Step 10 reads the latest one.
-            val chest = if (homeState.savedCount(profile.id) > 0) SizeChartState.SAMPLE_CHEST else null
+            // Design phase: a profile with saved measurements has the design's chest (40") or bust (36"); Step 10 reads
+            // the latest one.
+            val chest = when {
+                homeState.savedCount(profile.id) == 0 -> null
+                profile.gender == Gender.Female -> SizeChartState.SAMPLE_BUST
+                else -> SizeChartState.SAMPLE_CHEST
+            }
             val state = SizeChartState(
                 profile.name, profile.gender, chest, Gender.valueOf(gender), Garment.valueOf(garment), displayUnit,
             )

@@ -319,7 +319,7 @@ private fun PdfSize(state: ResultState, compact: Boolean, modifier: Modifier) {
     ) {
         FileText(stringResource(Res.string.result_suggested_size), 15.sp, weight = FontWeight.SemiBold, color = MaapTheme.colors.textEmphasis)
         SizeLetter(
-            state.size ?: "—",
+            localDigits(state.size ?: "—"),
             if (compact) 50.sp else 54.sp,
             if (compact) 52.5.dp else 56.7.dp,
             MaterialTheme.colorScheme.primary,
@@ -455,7 +455,7 @@ private fun PngHeader(state: ResultState) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             state.size?.let {
-                PngChip(stringResource(Res.string.home_saved_size, it), filled = true)
+                PngChip(stringResource(Res.string.home_saved_size, localDigits(it)), filled = true)
             }
             PngChip(stringResource(Res.string.fit_with_label, str(state.fit.labelKey)), filled = false)
             PngChip(unitName(state.unit), filled = false)

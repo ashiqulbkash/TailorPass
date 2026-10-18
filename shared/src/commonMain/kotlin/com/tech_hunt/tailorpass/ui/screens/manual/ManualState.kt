@@ -46,13 +46,15 @@ data class SummaryGroup(val titleKey: String?, val indices: List<Int>)
 object ManualPlan {
     /**
      * Tape order per garment (top of the body to bottom). Salwar kameez has no separate tape order in
-     * Measurements.kt; its list order matches 7.10 (front neck depth = 8/14). Shirt/Pants/Pajama lists are
-     * not defined yet (plan.md §3), so they have no steps.
+     * Measurements.kt; its list order matches 7.10 (front neck depth = 8/14). Genji is size-only (no steps).
      */
     fun sections(garment: Garment): List<MeasurementSection> = when (garment) {
         Garment.Panjabi -> GarmentMeasurements.panjabiManualOrder
         Garment.SalwarKameez -> GarmentMeasurements.salwarKameez
-        Garment.Shirt, Garment.Pants, Garment.Pajama, Garment.TShirt -> emptyList()
+        Garment.Shirt -> GarmentMeasurements.shirtManualOrder
+        Garment.Pants -> GarmentMeasurements.pantsManualOrder
+        Garment.Pajama -> GarmentMeasurements.pajamaManualOrder
+        Garment.TShirt -> emptyList()
     }
 
     /** Only chest, belly, sleeve and neck depth have instructions/diagrams in the design resources. */
@@ -64,6 +66,7 @@ object ManualPlan {
         MeasurementKey.NeckDepthFront, MeasurementKey.NeckDepthBack ->
             TapeGuide("neck_depth_question", diagram = TapeDiagram.NeckDepth)
         MeasurementKey.Length -> TapeGuide("length_question", noteKey = "length_tip_old_garment")
+        MeasurementKey.ShirtLength -> TapeGuide(noteKey = "shirt_length_tip")
         else -> TapeGuide()
     }
 

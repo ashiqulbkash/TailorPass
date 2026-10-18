@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tech_hunt.tailorpass.model.SizeRow
+import com.tech_hunt.tailorpass.model.TShirtSizeRow
 import com.tech_hunt.tailorpass.resources.Res
 import com.tech_hunt.tailorpass.resources.action_see_size_chart
 import com.tech_hunt.tailorpass.resources.action_share
@@ -200,7 +200,7 @@ private fun CompareCard(state: GenjiState) {
 
 /** 60dp tile: size (24 bold; 26 when current) over "বুক ৩৮–৪০"; the current one is filled primary. */
 @Composable
-private fun SizeTile(row: SizeRow, current: Boolean, modifier: Modifier) {
+private fun SizeTile(row: TShirtSizeRow, current: Boolean, modifier: Modifier) {
     val bangla = useBanglaDigits()
     val content = if (current) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
     Column(

@@ -153,7 +153,7 @@ class ResourceKeysTest {
     fun modelDrawableNamesExist() {
         val drawables = File(resDir, "drawable").listFiles()!!.map { it.nameWithoutExtension }.toSet()
         val used = Garment.entries.map { it.iconName } +
-            listOf(Diagrams.panjabi, Diagrams.kameez, Diagrams.salwar).flatMap { listOf(it.outlineName, it.marksName) }
+            listOf(Diagrams.panjabi, Diagrams.kameez, Diagrams.salwar, Diagrams.shirt, Diagrams.pants, Diagrams.pajama).flatMap { listOf(it.outlineName, it.marksName) }
         assertEquals(emptyList(), used.filterNot { it in drawables }, "drawables missing")
     }
 

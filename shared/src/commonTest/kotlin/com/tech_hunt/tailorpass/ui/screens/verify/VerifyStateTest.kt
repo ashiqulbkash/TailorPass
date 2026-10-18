@@ -72,10 +72,18 @@ class VerifyStateTest {
     }
 
     @Test
-    fun undefinedGarmentListsHaveNoRows() {
+    fun shirtSampleUsesKnownValuesAndLeavesTheRestToTheTailor() {
         val target = MeasureTarget.SampleRahat.copy(garment = Garment.Shirt)
-        assertEquals(0, VerifyState.sampleAi(target).count)
-        assertEquals(target, VerifyState.sampleAi(target).target)
+        val s = VerifyState.sampleAi(target)
+        assertEquals(target, s.target)
+        assertEquals(GarmentMeasurements.shirt.single().keys, s.rows.map { it.key })
+        assertEquals(40f, s.rows.single { it.key == MeasurementKey.Chest }.inches)
+        val biceps = s.rows.single { it.key == MeasurementKey.Biceps }
+        assertNull(biceps.inches)                                        // no design value: not invented
+        assertEquals(SourceBadge.Missing, biceps.badge)
+        val pants = VerifyState.sampleAi(target.copy(garment = Garment.Pants))
+        assertEquals(34f, pants.rows.single { it.key == MeasurementKey.Waist }.inches)    // 2.1 "কোমর ৩৪""
+        assertEquals(0, VerifyState.sampleAi(target.copy(garment = Garment.TShirt)).count)  // genji is size-only
     }
 
     @Test

@@ -220,7 +220,7 @@ private fun SizeBox(state: ResultState, modifier: Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CenteredText(stringResource(Res.string.result_suggested_size), 14.sp, secondary)
-        SizeLetter(state.size ?: "—", MaterialTheme.typography.displayMedium.fontSize, 56.7.dp, MaterialTheme.colorScheme.primary)
+        SizeLetter(localDigits(state.size ?: "—"), MaterialTheme.typography.displayMedium.fontSize, 56.7.dp, MaterialTheme.colorScheme.primary)
         CenteredText(stringResource(Res.string.result_for_readymade, str(state.readymadeKey)), 14.sp, MaapTheme.colors.textEmphasis)
         CenteredText(
             stringResource(Res.string.result_by_fit, str(state.fit.labelKey)),

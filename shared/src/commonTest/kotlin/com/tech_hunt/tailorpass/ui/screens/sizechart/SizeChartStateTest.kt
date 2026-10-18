@@ -2,7 +2,9 @@ package com.tech_hunt.tailorpass.ui.screens.sizechart
 
 import com.tech_hunt.tailorpass.model.Garment
 import com.tech_hunt.tailorpass.model.Gender
-import com.tech_hunt.tailorpass.model.SampleMenShirtChart
+import com.tech_hunt.tailorpass.model.MenChart
+import com.tech_hunt.tailorpass.model.TShirtChart
+import com.tech_hunt.tailorpass.model.WomenChart
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -15,7 +17,9 @@ class SizeChartStateTest {
         assertEquals(Gender.Male, sample.gender)
         assertEquals(listOf(Garment.Shirt, Garment.Panjabi, Garment.TShirt, Garment.Pants), sample.garments)
         assertEquals(Garment.Shirt, sample.garment)
-        assertEquals(SampleMenShirtChart, sample.chart)
+        assertEquals(listOf("size_col_chest", "size_col_waist", "size_col_hip"), sample.chart?.columnKeys)
+        assertEquals(MenChart.map { it.size }, sample.chart?.rows?.map { it.size })
+        assertEquals(34f..36f, sample.chart?.rows?.first()?.cells?.first())
         assertEquals("L", sample.yourSize)
     }
 
@@ -31,21 +35,30 @@ class SizeChartStateTest {
     }
 
     @Test
-    fun womensChartIsMissingAndMarksNothing() {
-        val women = sample.reduce(SizeChartAction.SetGender(Gender.Female))
-        assertEquals(listOf(Garment.SalwarKameez), women.garments)
-        assertEquals(Garment.SalwarKameez, women.garment)
-        assertNull(women.chart)
-        assertNull(women.yourSize)
+    fun genjiChipShowsChestShoulderAndLength() {
+        val genji = sample.reduce(SizeChartAction.SelectGarment(Garment.TShirt))
+        val chart = genji.chart!!
+        assertEquals(listOf("size_col_chest", "size_col_shoulder", "size_col_length"), chart.columnKeys)
+        assertEquals(TShirtChart.map { it.size }, chart.rows.map { it.size })
+        assertEquals(listOf(40f..42f, 18f..18f, 28f..28f), chart.rows.single { it.size == "L" }.cells)
+        assertEquals("L", genji.yourSize)
+    }
+
+    @Test
+    fun womensTabShowsTheWomensChartByBust() {
+        val farhana = SizeChartState("ফারহানা", Gender.Female, chestInches = SizeChartState.SAMPLE_BUST)
+        assertEquals(listOf(Garment.SalwarKameez), farhana.garments)
+        assertEquals(WomenChart.map { it.size }, farhana.chart?.rows?.map { it.size })
+        assertEquals("M", farhana.yourSize)
     }
 
     @Test
     fun otherGendersTabDoesNotMarkTheProfilesRow() {
         val farhana = SizeChartState("ফারহানা", Gender.Female, chestInches = 36f)
-        assertEquals(Gender.Female, farhana.gender)
         val menTab = farhana.reduce(SizeChartAction.SetGender(Gender.Male))
-        assertEquals(SampleMenShirtChart, menTab.chart)
+        assertEquals(Garment.Shirt, menTab.garment)
         assertNull(menTab.yourSize)
+        assertNull(sample.reduce(SizeChartAction.SetGender(Gender.Female)).yourSize)
     }
 
     @Test
@@ -61,6 +74,7 @@ class SizeChartStateTest {
         assertEquals(sample, sample.reduce(SizeChartAction.SelectGarment(Garment.SalwarKameez)))
         val panjabi = sample.reduce(SizeChartAction.SelectGarment(Garment.Panjabi))
         assertEquals(panjabi, panjabi.reduce(SizeChartAction.SetGender(Gender.Male)))
+        assertNull(SizeChartState.chartFor(Gender.Female, Garment.Shirt))
     }
 
     @Test

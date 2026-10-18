@@ -38,7 +38,7 @@ class ResultStateTest {
         assertTrue(s.sectioned)
         assertEquals(listOf(10, 4), s.sections.map { it.rows.size })
         assertEquals(listOf(Diagrams.kameez, Diagrams.salwar), s.sections.map { it.diagram })
-        assertEquals("M", s.size)                                      // design sample: no women's chart yet
+        assertEquals("M", s.size)                                      // bust 36 on the women's chart
         assertTrue(s.hasChoices)                                       // cuff, neck depths, length, bottom starred
         assertEquals(listOf(MeasurementKey.Armhole), s.checkKeys)      // 10.2 footer: "আর্মহোল ফিতায় মিলিয়ে নিন"
         assertEquals("result_title_salwar_kameez", s.titleKey)
@@ -81,13 +81,19 @@ class ResultStateTest {
     }
 
     @Test
-    fun garmentsWithoutAListShowNothingYet() {
-        listOf(Garment.Shirt, Garment.Pants, Garment.Pajama).forEach { g ->
+    fun shirtPantsPajamaShowTheirListsDiagramsAndSizes() {
+        mapOf(Garment.Shirt to 9, Garment.Pants to 8, Garment.Pajama to 5).forEach { (g, count) ->
             val s = ResultState.sample(MeasureTarget.SampleRahat.copy(garment = g), ResultState.SampleDate)
-            assertTrue(s.sections.isEmpty(), g.name)
-            assertNull(s.currentSection)
-            assertNull(ResultPlan.diagram(g, 0))
+            assertEquals(count, s.rows.size, g.name)
+            assertEquals(1, s.sections.size, g.name)
+            // One badge per row, numbered in list order.
+            assertEquals((1..count).toList(), ResultPlan.diagram(g, 0)?.badges?.map { it.number }, g.name)
+            assertNull(ResultPlan.diagram(g, 1))
         }
+        fun size(g: Garment) = ResultState.sample(MeasureTarget.SampleRahat.copy(garment = g), ResultState.SampleDate).size
+        assertEquals("L", size(Garment.Shirt))                          // chest 40 on the men's chart
+        assertEquals("34", size(Garment.Pants))                         // waist 34 → trouser size 34
+        assertEquals("L", size(Garment.Pajama))                         // waist 34 on the men's chart
     }
 
     @Test
@@ -113,18 +119,23 @@ class ResultStateTest {
 
     @Test
     fun genjiAtTheChartEndsHasOneNeighbour() {
-        val smallest = GenjiState.Sample.copy(chestInches = 34f)
-        assertEquals("XS", smallest.size)
-        assertEquals(listOf("XS", "S"), smallest.compared.map { it.size })
+        val smallest = GenjiState.Sample.copy(chestInches = 36f, shoulderInches = 16.5f)
+        assertEquals("S", smallest.size)
+        assertEquals(listOf("S", "M"), smallest.compared.map { it.size })
         assertNull(smallest.tighter)
-        val largest = GenjiState.Sample.copy(chestInches = 50f)
-        assertEquals("XXXL", largest.size)
-        assertEquals(listOf("XXL", "XXXL"), largest.compared.map { it.size })
+        val largest = GenjiState.Sample.copy(chestInches = 50f, shoulderInches = 19f)
+        assertEquals("XXL", largest.size)
+        assertEquals(listOf("XL", "XXL"), largest.compared.map { it.size })
         assertNull(largest.looser)
         val tooSmall = GenjiState.Sample.copy(chestInches = 30f)
         assertNull(tooSmall.size)
         assertTrue(tooSmall.compared.isEmpty())
         assertNull(tooSmall.tighter)
         assertNull(tooSmall.looser)
+    }
+
+    @Test
+    fun genjiBroadShoulderMovesUpASize() {
+        assertEquals("XL", GenjiState.Sample.copy(shoulderInches = 18.5f).size)    // chest says L, shoulder needs XL
     }
 }

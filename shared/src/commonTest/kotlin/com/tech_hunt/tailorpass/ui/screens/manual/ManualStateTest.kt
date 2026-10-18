@@ -39,8 +39,19 @@ class ManualStateTest {
     }
 
     @Test
-    fun garmentsWithoutAListHaveNoSteps() {
-        val s = ManualState(MeasureTarget(Garment.Shirt, Gender.Male, "x"))
+    fun shirtPantsPajamaFollowTheirTapeOrder() {
+        val shirt = ManualState(MeasureTarget(Garment.Shirt, Gender.Male, "x"))
+        assertEquals(9, shirt.count)
+        assertEquals(MeasurementKey.Neck, shirt.currentKey)
+        assertEquals(listOf(MeasurementKey.Cuff, MeasurementKey.ShirtLength), shirt.steps.takeLast(2))
+        assertEquals(8, ManualState(MeasureTarget(Garment.Pants, Gender.Male, "x")).count)
+        assertEquals(5, ManualState(MeasureTarget(Garment.Pajama, Gender.Male, "x")).count)
+        assertTrue(ManualPlan.presets(MeasurementKey.ShirtLength).isEmpty())       // number entry, no knee-length cards
+    }
+
+    @Test
+    fun genjiHasNoSteps() {
+        val s = ManualState(MeasureTarget(Garment.TShirt, Gender.Male, "x"))
         assertEquals(0, s.count)
         assertNull(s.currentKey)
         assertFalse(s.isOutlier)

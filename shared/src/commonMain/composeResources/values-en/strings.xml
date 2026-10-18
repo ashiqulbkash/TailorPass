@@ -262,6 +262,7 @@
     <string name="length_below_knee">Below knee</string>
     <string name="length_by_height">Based on your height (%1$s)</string>
     <string name="length_tip_old_garment">Have a panjabi you like? Measure its length and enter it</string>
+    <string name="shirt_length_tip">Have a shirt you like? Measure its length and enter it</string>
     <string name="manual_finish">Finish</string>
     <string name="summary_title">All measurements</string>
     <string name="summary_missing_banner">%1$s measurement missing. If skipped, the tailor will be asked to measure it.</string>
@@ -313,6 +314,12 @@
     <string name="m_neck_back">Neck depth — back</string>
     <string name="m_salwar_length">Total length</string>
     <string name="m_bottom">Bottom opening</string>
+    <string name="m_biceps">Biceps</string>
+    <string name="m_thigh">Thigh</string>
+    <string name="m_knee">Knee</string>
+    <string name="m_crotch">Crotch</string>
+    <string name="m_inseam">Inseam</string>
+    <string name="m_full_length">Full length</string>
 
     <string name="result_title">%1$s measurements</string>
     <string name="result_suggested_size">Suggested size</string>
@@ -389,12 +396,26 @@
     <string name="m_salwar_length_term">Total length</string>
     <string name="m_bottom_short">Bottom opening</string>
     <string name="m_bottom_term">Bottom opening</string>
+    <string name="m_biceps_short">Biceps</string>
+    <string name="m_biceps_term">Biceps</string>
+    <string name="m_thigh_short">Thigh</string>
+    <string name="m_thigh_term">Thigh</string>
+    <string name="m_knee_short">Knee</string>
+    <string name="m_knee_term">Knee</string>
+    <string name="m_crotch_short">Crotch</string>
+    <string name="m_crotch_term">Crotch</string>
+    <string name="m_inseam_short">Inseam</string>
+    <string name="m_inseam_term">Inseam</string>
+    <string name="m_full_length_short">Full length</string>
+    <string name="m_full_length_term">Full length</string>
 
     <string name="size_chart_title">Size chart</string>
     <string name="size_col_size">Size</string>
     <string name="size_col_chest">Chest</string>
     <string name="size_col_waist">Waist</string>
     <string name="size_col_hip">Hip</string>
+    <string name="size_col_shoulder">Shoulder</string>
+    <string name="size_col_length">Length</string>
     <string name="size_yours">Yours</string>
     <string name="size_chart_note">Approximate; may differ between brands</string>
     <string name="size_chart_for_whom">For whom</string>
@@ -402,6 +423,7 @@
     <string name="size_chart_in_inches">All sizes in inches</string>
     <string name="size_chart_in_cm">All sizes in cm</string>
     <string name="size_chart_basis">based on %1$s chest %2$s</string>
+    <string name="size_chart_basis_bust">based on %1$s bust %2$s</string>
     <string name="size_chart_missing">The size chart for this garment is not added yet</string>
     <string name="size_range">%1$s–%2$s</string>
 
