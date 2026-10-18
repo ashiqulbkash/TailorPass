@@ -358,6 +358,12 @@ Summary:
 | 8.4 | Verify measurements — salwar kameez `VerifySK` | [html](html/37_8-4_VerifySK.html) | [png](screens/37_8-4_VerifySK.png) |
 | 8.5 | Verify measurements — measured with tape `VerifyManual` | [html](html/38_8-5_VerifyManual.html) | [png](screens/38_8-5_VerifyManual.png) |
 
+**Found in Step 7 (2026-10-18):**
+- [ ] **Decide:** 8.1 shows panjabi length and cuff with AI accuracy badges, but `Measurements.kt` marks them as preference measurements (not AI-measurable) and 8.4 shows them as "✎ আপনার পছন্দ". The sample keeps the 8.1 badges; Step 10 should show preferences as "your choice" after photos too — confirm.
+- [ ] **Decide:** a value changed on the edit sheet becomes "ফিতায় মাপা" (body) or "✎ আপনার পছন্দ" (preference); the design shows no badge after editing. Confirm.
+- [ ] **Decide:** edits made on Verify are not copied back to the tape session — going back to the summary (7.7) and on to Verify again rebuilds the list from the tape values. Fine for the design phase; Step 10's ViewModel keeps one measurement.
+- [ ] **Note:** the edit sheet shows a diagram/how-to only for keys with tape resources (chest, belly, sleeve, neck depth — see the Step 6 "Later" item); other keys show only the number field.
+
 **New components:** `MeasurementRow` + `SourceBadge` badge (● high / ◐ medium / ▲ low / ✎ your preference / measured with tape / skipped), section header (kameez 10 / salwar 4), tailor's note field.
 **Note:** all five are the same `VerifyScreen` — only the data and badge sources differ. In 8.4 the list scrolls and "ফলাফল দেখুন" (See result) stays fixed at the bottom (`Scaffold(bottomBar)` + `LazyColumn`). The edit sheet reuses `NumberStepperField` (Step 5).
 

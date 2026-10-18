@@ -43,8 +43,8 @@ import kotlinx.serialization.Serializable
 /** The AI could not measure (6.3). */
 @Serializable data class AiFailedRoute(val garment: String)
 
-/** Verify a new measurement, after the photos or the tape summary (Step 7 placeholder). */
-@Serializable data class VerifyNewRoute(val garment: String)
+/** Verify a new measurement (8.1–8.5), after the photos or the tape summary. [method] = MeasureMethod.name. */
+@Serializable data class VerifyNewRoute(val garment: String, val method: String)
 
 /** Tape-measure preparation (7.1). */
 @Serializable data class ManualPrepRoute(val garment: String)
@@ -64,5 +64,8 @@ import kotlinx.serialization.Serializable
 /** Result of a saved measurement (Step 8 placeholder). */
 @Serializable data class ResultRoute(val savedId: Long)
 
-/** Verify/edit a saved measurement (Step 7 placeholder). */
+/** Result of a new measurement after Verify (Step 8 placeholder). */
+@Serializable data class ResultNewRoute(val garment: String)
+
+/** Verify/edit a saved measurement (8.1–8.5 with the saved values). */
 @Serializable data class VerifyRoute(val savedId: Long)

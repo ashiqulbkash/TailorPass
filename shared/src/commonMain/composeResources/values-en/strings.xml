@@ -283,6 +283,8 @@
 
     <string name="verify_title">Check measurements</string>
     <string name="verify_banner">If a value looks wrong, tap it to fix</string>
+    <string name="verify_banner_short">If a value looks wrong, tap to fix</string>
+    <string name="verify_count">%1$s measurements</string>
     <string name="verify_pref_hint">Values marked "Your choice" are not from AI; set them as you like</string>
     <string name="accuracy_high">● High accuracy</string>
     <string name="accuracy_mid">◐ Medium accuracy</string>
@@ -292,6 +294,7 @@
     <string name="badge_missing_tailor">Missing · tailor will measure</string>
     <string name="tailor_note">Note for tailor</string>
     <string name="tailor_note_hint">e.g. keep sleeves slightly loose, buttons in fabric colour</string>
+    <string name="tailor_note_hint_sk">e.g. 8-inch side slits on the kameez, pockets on the salwar</string>
     <string name="edit_ai_value">AI: %1$s"</string>
     <string name="edit_changed">Changed by you</string>
 

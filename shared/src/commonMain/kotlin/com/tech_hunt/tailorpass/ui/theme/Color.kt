@@ -133,6 +133,8 @@ data class MaapExtendedColors(
     // Medium accuracy / neutral badges ("Tape-measured", "Helper needed")
     val neutralBadge: Color,
     val onNeutralBadge: Color,
+    // "ফিতায় মাপা" badge text, on surfaceVariant (8.5)
+    val onTapeBadge: Color,
     // Diagram
     val diagramOutline: Color,
     // Camera screens (always dark)
@@ -195,6 +197,7 @@ val MaapLightExtended = MaapExtendedColors(
     warningRow = Color(0xFFFFF6EC),
     neutralBadge = Color(0xFFE8ECF2),
     onNeutralBadge = Color(0xFF33415C),
+    onTapeBadge = Color(0xFF3F4652),
     diagramOutline = Color(0xFF9AA2AE),
     cameraTop = Color(0xFF2B3037),
     cameraFloor = Color(0xFF1E2125),
@@ -247,6 +250,7 @@ val MaapDarkExtended = MaapExtendedColors(
     warningRow = Color(0xFF2A1E15),
     neutralBadge = Color(0xFF2C333D),
     onNeutralBadge = Color(0xFFC9D1DC),
+    onTapeBadge = Color(0xFFC9CED6),   // No dark 8.5 design: light grey on the dark surfaceVariant
     diagramOutline = Color(0xFF6B7380),
     cameraTop = Color(0xFF22262B),
     cameraFloor = Color(0xFF17191C),

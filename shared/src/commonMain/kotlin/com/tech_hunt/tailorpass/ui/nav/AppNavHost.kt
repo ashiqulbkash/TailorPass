@@ -14,12 +14,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.tech_hunt.tailorpass.model.Garment
+import com.tech_hunt.tailorpass.model.MeasureMethod
 import com.tech_hunt.tailorpass.resources.Res
 import com.tech_hunt.tailorpass.resources.genji_title
 import com.tech_hunt.tailorpass.resources.result_title
 import com.tech_hunt.tailorpass.resources.settings_title
 import com.tech_hunt.tailorpass.resources.size_chart_title
-import com.tech_hunt.tailorpass.resources.verify_title
 import com.tech_hunt.tailorpass.ui.components.BottomNav
 import com.tech_hunt.tailorpass.ui.components.BottomTab
 import com.tech_hunt.tailorpass.ui.components.MaapScaffold
@@ -76,6 +76,10 @@ import com.tech_hunt.tailorpass.ui.screens.profile.ProfileCreateAction
 import com.tech_hunt.tailorpass.ui.screens.profile.ProfileCreateScreen
 import com.tech_hunt.tailorpass.ui.screens.profile.ProfileCreateState
 import com.tech_hunt.tailorpass.ui.screens.profile.reduce
+import com.tech_hunt.tailorpass.ui.screens.verify.VerifyAction
+import com.tech_hunt.tailorpass.ui.screens.verify.VerifyScreen
+import com.tech_hunt.tailorpass.ui.screens.verify.VerifyState
+import com.tech_hunt.tailorpass.ui.screens.verify.reduce
 import com.tech_hunt.tailorpass.ui.util.str
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
@@ -104,6 +108,9 @@ fun AppNavHost(
     // Step 10. Sessions stopped with "পরে করব" (7.8) wait here by profile and garment until continued from Home (7.9).
     var manualState by remember { mutableStateOf<ManualState?>(null) }
     var pausedSessions by remember { mutableStateOf(emptyMap<Pair<Long, Garment>, ManualState>()) }
+    // Design phase: the measurement being verified (8.1–8.5), set just before Verify opens; a ViewModel replaces it in
+    // Step 10.
+    var verifyState by remember { mutableStateOf<VerifyState?>(null) }
     val onTabSelect: (BottomTab) -> Unit = { navController.navigateToTab(it) }
 
     NavHost(navController = navController, startDestination = LanguageRoute, modifier = modifier) {
@@ -151,7 +158,11 @@ fun AppNavHost(
                         navController.navigate(ManualListRoute(action.garment.name))
                     }
                     is HomeAction.OpenSaved -> navController.navigate(ResultRoute(action.savedId))
-                    is HomeAction.EditSaved -> navController.navigate(VerifyRoute(action.savedId))
+                    // Design phase: a saved measurement's values are the design sample of its garment.
+                    is HomeAction.EditSaved -> homeState.saved.firstOrNull { it.id == action.savedId }?.let {
+                        verifyState = VerifyState.sampleAi(measureTarget(it.garment.name, homeState.currentProfile))
+                        navController.navigate(VerifyRoute(action.savedId))
+                    }
                     is HomeAction.RemeasureSaved -> homeState.saved.firstOrNull { it.id == action.savedId }?.let {
                         navController.navigate(MethodRoute(it.garment.name))
                     }
@@ -266,7 +277,10 @@ fun AppNavHost(
                     delay(40)
                     progress += 1
                 }
-                navController.navigate(if (photoAttempt == 2) AiFailedRoute(garment) else VerifyNewRoute(garment)) {
+                if (photoAttempt != 2) verifyState = VerifyState.sampleAi(measureTarget(garment, homeState.currentProfile))
+                navController.navigate(
+                    if (photoAttempt == 2) AiFailedRoute(garment) else VerifyNewRoute(garment, MeasureMethod.Ai.name),
+                ) {
                     popUpTo(MethodRoute(garment))
                 }
             }
@@ -287,8 +301,18 @@ fun AppNavHost(
                 }
             }
         }
-        composable<VerifyNewRoute> {
-            PlaceholderScreen(stringResource(Res.string.verify_title)) { navController.popBackStack() }
+        composable<VerifyNewRoute> { entry ->
+            val garment = entry.toRoute<VerifyNewRoute>().garment
+            val state = verifyState ?: VerifyState.sampleAi(measureTarget(garment, homeState.currentProfile))
+            VerifyScreen(state) { action ->
+                verifyState = state.reduce(action)
+                when (action) {
+                    // Photos: back to Method (the camera screens left the stack with the photos). Tape: the summary.
+                    VerifyAction.Back -> navController.popBackStack()
+                    VerifyAction.ShowResult -> navController.navigate(ResultNewRoute(garment))
+                    else -> Unit
+                }
+            }
         }
         composable<ManualPrepRoute> { entry ->
             val garment = entry.toRoute<ManualPrepRoute>().garment
@@ -364,12 +388,13 @@ fun AppNavHost(
                             navController.navigate(ManualEntryRoute(garment))
                         }
                     // Done measuring: the session is no longer unfinished on Home. Missing ones go to Verify as
-                    // "the tailor measures it" (Step 7).
+                    // "the tailor measures it".
                     ManualSummaryAction.Verify, ManualSummaryAction.ContinueWithoutMissing -> {
                         val key = homeState.currentProfileId to Garment.valueOf(garment)
                         pausedSessions = pausedSessions - key
                         homeState = homeState.withoutIncomplete(key.first, key.second)
-                        navController.navigate(VerifyNewRoute(garment))
+                        verifyState = VerifyState.fromTape(state)
+                        navController.navigate(VerifyNewRoute(garment, MeasureMethod.Tape.name))
                     }
                 }
             }
@@ -383,8 +408,24 @@ fun AppNavHost(
                 navController.popBackStack()
             }
         }
-        composable<VerifyRoute> {
-            PlaceholderScreen(stringResource(Res.string.verify_title)) { navController.popBackStack() }
+        composable<ResultNewRoute> { entry ->
+            val garment = Garment.valueOf(entry.toRoute<ResultNewRoute>().garment)
+            PlaceholderScreen(stringResource(Res.string.result_title, str(garment.labelKey))) { navController.popBackStack() }
+        }
+        composable<VerifyRoute> { entry ->
+            val savedId = entry.toRoute<VerifyRoute>().savedId
+            val garment = homeState.saved.firstOrNull { it.id == savedId }?.garment ?: Garment.Panjabi
+            val state = verifyState ?: VerifyState.sampleAi(measureTarget(garment.name, homeState.currentProfile))
+            VerifyScreen(state) { action ->
+                verifyState = state.reduce(action)
+                when (action) {
+                    VerifyAction.Back -> navController.popBackStack()
+                    VerifyAction.ShowResult -> navController.navigate(ResultRoute(savedId)) {
+                        popUpTo(VerifyRoute(savedId)) { inclusive = true }
+                    }
+                    else -> Unit
+                }
+            }
         }
     }
 }

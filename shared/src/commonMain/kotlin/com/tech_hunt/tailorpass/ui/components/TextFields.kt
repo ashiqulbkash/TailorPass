@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -136,6 +137,46 @@ fun UnitNumberField(
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+            }
+        },
+    )
+}
+
+/**
+ * Multi-line note ("দর্জির জন্য নোট", 8.1–8.5): 64dp high, 12dp corners, 1dp outline (2dp primary when focused),
+ * 8 / 14 padding, 16 text with line height 1.4; grey [placeholder] while empty. Long text scrolls inside the box.
+ */
+@Composable
+fun NoteField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    placeholder: String,
+    modifier: Modifier = Modifier,
+    contentDescription: String? = null,
+) {
+    val interaction = remember { MutableInteractionSource() }
+    val focused by interaction.collectIsFocusedAsState()
+    val style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 22.4.sp, color = MaterialTheme.colorScheme.onSurface)
+    BasicTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier
+            .fillMaxWidth()
+            .optionalContentDescription(contentDescription),
+        textStyle = style,
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+        interactionSource = interaction,
+        decorationBox = { inner ->
+            Box(
+                Modifier
+                    .fieldFrame(focused, 64.dp)
+                    .padding(horizontal = Dimens.space14, vertical = Dimens.space8),
+            ) {
+                if (value.isEmpty()) {
+                    Text(placeholder, style = style, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                inner()
             }
         },
     )

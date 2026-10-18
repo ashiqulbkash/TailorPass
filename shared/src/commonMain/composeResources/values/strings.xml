@@ -294,6 +294,8 @@
     <!-- 8. Review and edit measurements -->
     <string name="verify_title">মাপ যাচাই করুন</string>
     <string name="verify_banner">কোনো মাপ ভুল মনে হলে সেটিতে ট্যাপ করে ঠিক করুন</string>
+    <string name="verify_banner_short">ভুল মনে হলে মাপে ট্যাপ করে ঠিক করুন</string>
+    <string name="verify_count">%1$sটি মাপ</string>
     <string name="verify_pref_hint">"আপনার পছন্দ" লেখা মাপ AI বের করে না, পছন্দমতো বসিয়ে নিন</string>
     <string name="accuracy_high">● নির্ভুলতা উচ্চ</string>
     <string name="accuracy_mid">◐ নির্ভুলতা মাঝারি</string>
@@ -303,6 +305,7 @@
     <string name="badge_missing_tailor">বাদ আছে · দর্জি মেপে নেবেন</string>
     <string name="tailor_note">দর্জির জন্য নোট</string>
     <string name="tailor_note_hint">যেমন: হাতা একটু ঢিলা রাখবেন, বোতাম কাপড়ের রঙে</string>
+    <string name="tailor_note_hint_sk">যেমন: কামিজে সাইড কাটা ৮ ইঞ্চি, সালওয়ারে পকেট দেবেন</string>
     <string name="edit_ai_value">AI: %1$s"</string>
     <string name="edit_changed">আপনি বদলেছেন</string>
 

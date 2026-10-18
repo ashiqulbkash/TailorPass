@@ -21,6 +21,7 @@ import com.tech_hunt.tailorpass.ui.screens.home.SavedDetail
 import com.tech_hunt.tailorpass.ui.screens.manual.ManualPlan
 import com.tech_hunt.tailorpass.ui.diagram.TapeDiagram
 import com.tech_hunt.tailorpass.ui.screens.prep.PrepGuide
+import com.tech_hunt.tailorpass.ui.screens.verify.VerifyState
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -123,6 +124,18 @@ class ResourceKeysTest {
             TapeDiagram.entries.flatMap { d -> d.labels.map { it.key } } +
             Garment.entries.flatMap { ManualPlan.sections(it) }.mapNotNull { it.titleKey }
         assertEquals(emptyList(), used.filterNot { it in keys }, "keys missing in strings.xml")
+    }
+
+    @Test
+    fun verifyResourcesExist() {
+        val keys = stringKeys("values")
+        val drawables = File(resDir, "drawable").listFiles()!!.map { it.nameWithoutExtension }.toSet()
+        val samples = listOf(VerifyState.SamplePanjabi, VerifyState.SampleSalwarKameez, VerifyState.SampleManual)
+        val sections = samples.flatMap { it.sections }
+        val usedKeys = sections.mapNotNull { it.titleKey } + samples.flatMap { it.rows }.map { it.badge.labelKey } +
+            samples.map { it.noteHintKey }
+        assertEquals(emptyList(), usedKeys.filterNot { it in keys }, "keys missing in strings.xml")
+        assertEquals(emptyList(), sections.mapNotNull { it.iconName }.filterNot { it in drawables }, "drawables missing")
     }
 
     @Test
